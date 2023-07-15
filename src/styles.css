@@ -1,0 +1,21 @@
+:root {
+    @media (prefers-color-scheme: dark) {
+        --bg-color: #202124;
+        --bg-hovered-color: red;
+        --text-color: white;
+    }
+
+    @media (prefers-color-scheme: light) {
+        --bg-color: blue;
+        --bg-hovered-color: blue;
+        --text-color: black;
+    }
+
+    --primary-button-color: #2d6198;
+    --primary-hover-button-color: #3675b6;
+}
+
+html,
+body {
+    background: var(--bg-color);
+}

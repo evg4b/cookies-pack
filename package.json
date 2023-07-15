@@ -1,12 +1,17 @@
 {
-  "name": "vite-web-extension",
-  "displayName": "Web Extension Boilerplate",
-  "version": "1.1.0",
-  "description": "A simple chrome extension template with Vite, React, TypeScript and Tailwind CSS.",
+  "name": "cookies-pack",
+  "displayName": "Cookies Pack",
+  "version": "0.0.1",
+  "description": "Flexible extensions to control your cookies",
   "license": "MIT",
+  "author": {
+    "name": "Evgeny Abramovich",
+    "email": "evg.abramovitch@gamil.com",
+    "url": "https://github.com/evg4b"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/JohnBra/web-extension.git"
+    "url": "https://github.com/evg4b/cookies-pack.git"
   },
   "scripts": {
     "build": "vite build",
@@ -14,6 +19,7 @@
   },
   "type": "module",
   "dependencies": {
+    "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "webextension-polyfill": "^0.10.0"

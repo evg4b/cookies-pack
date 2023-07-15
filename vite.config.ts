@@ -7,6 +7,8 @@ import { outputFolderName } from './utils/constants';
 const root = resolve(__dirname, 'src');
 const pagesDir = resolve(root, 'pages');
 const assetsDir = resolve(root, 'assets');
+const sharedDir = resolve(root, 'shared');
+const coreDir = resolve(root, 'core');
 const outDir = resolve(__dirname, outputFolderName);
 const publicDir = resolve(__dirname, 'public');
 
@@ -16,6 +18,8 @@ export default defineConfig({
       '@src': root,
       '@assets': assetsDir,
       '@pages': pagesDir,
+      '@core': coreDir,
+      '@shared': sharedDir,
     },
   },
   plugins: [react(), makeManifest()],
