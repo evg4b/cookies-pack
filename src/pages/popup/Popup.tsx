@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { CookiesContainer } from '@core/cookies-tab';
 
-export default function Popup(): JSX.Element {
-  return (
-    <CookiesContainer/>
-  );
-}
+import './Popup.css';
+
+const Popup: FC = () => (
+  <CookiesContainer/>
+);
+
+export default Popup;

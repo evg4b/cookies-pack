@@ -1,15 +1,15 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-export const useTimedValue = (
-  defaultValue: boolean,
-  timing: number,
-): [boolean, Dispatch<SetStateAction<boolean>>] => {
+export const useTimedValue = (defaultValue: boolean, timing: number): [boolean, Dispatch<SetStateAction<boolean>>] => {
   const [timedValue, setTimedValue] = useState(defaultValue);
 
   useEffect(() => {
+    let id: NodeJS.Timeout | null = null;
     if (timedValue) {
-      setTimeout(() => setTimedValue(defaultValue), timing);
+      id = setTimeout(() => setTimedValue(defaultValue), timing);
     }
+
+    return () => { id && clearInterval(id); };
   }, [timedValue, setTimedValue]);
 
   return [timedValue, setTimedValue];

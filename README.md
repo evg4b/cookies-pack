@@ -9,4 +9,4 @@
 
 # About
 
-Created using [JohnBra/vite-web-extension](https://github.com/JohnBra/vite-web-extension) starter.
+Created using [JohnBra/vite-web-extension](https://github.com/JohnBra/vite-web-extension) boilerplate.

@@ -12,18 +12,12 @@ const manifest: Manifest.WebExtensionManifest = {
   action: {
     default_popup: 'src/pages/popup/index.html',
     default_icon: 'icon-34.png',
-    // "default_icon": {
-    //   "32": "icon.png",
-    //   "16": "icon.png",
-    //   "24": "icon.png",
-    //   "128": "icon.png"
-    // },
-    "default_title": "Cookies Pack",
+    default_title: pkg.displayName,
   },
   icons: {
-    '128': 'icon-128.png',
+    128: 'icon-128.png',
+    512: 'icon-512.png',
   },
-  // incognito: "split",
   permissions: ["cookies"],
   host_permissions: [
     "<all_urls>",

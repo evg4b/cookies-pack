@@ -5,7 +5,7 @@ import classnames from 'classnames';
 export type PanelProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
 const Panel: FC<PanelProps> = ({ children, className, ...props }) => (
-  <div { ...props } className={ classnames(styles.panel, className) }>
+  <div className={ classnames(styles.panel, className) } { ...props }>
     { children }
   </div>
 );

@@ -1,13 +1,11 @@
 :root {
     @media (prefers-color-scheme: dark) {
         --bg-color: #202124;
-        --bg-hovered-color: red;
         --text-color: white;
     }
 
     @media (prefers-color-scheme: light) {
         --bg-color: blue;
-        --bg-hovered-color: blue;
         --text-color: black;
     }
 
@@ -18,4 +16,11 @@
 html,
 body {
     background: var(--bg-color);
+    color: var(--text-color);
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
 }

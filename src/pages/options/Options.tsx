@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export default function Options(): JSX.Element {
-  return <div className="container">Options</div>;
-}
+const Options: FC = () => (
+  <div className="container">
+    Options
+  </div>
+);
+
+export default Options;

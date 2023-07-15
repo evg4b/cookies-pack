@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTimedValue } from '@shared/hooks/timed';
-import { Column, Row } from '@shared/components';
+import { Button, Column, Row } from '@shared/components';
 
 interface CookiesParams {
   current: string;
@@ -42,15 +42,11 @@ export const Cookies: FC<CookiesParams> = ({
   return (
     <Column gap={ 8 }>
       <Column gap={ 2 }>
-        <Row justifyContent="space-between" alignItems="end">
+        <Row justifyContent="space-between" alignItems="center">
           <div>Existing cookies</div>
-          <button
-            disabled={ copied }
-            style={ { marginBottom: '6px' } }
-            onClick={ toClipboard }
-          >
+          <Button disabled={ copied } onClick={ toClipboard }>
             { copied ? 'Copied' : 'Copy' }
-          </button>
+          </Button>
         </Row>
         <textarea readOnly={ true } value={ current } rows={ 10 }/>
       </Column>
@@ -89,7 +85,7 @@ export const Cookies: FC<CookiesParams> = ({
           />
           <label>Clear existing cookies first</label>
           <pre>{ clear }</pre>
-          <button onClick={ updateCookies }>Set Cookies</button>
+          <Button variant="primary" onClick={ updateCookies }>Set Cookies</Button>
         </Row>
       </Column>
     </Column>
