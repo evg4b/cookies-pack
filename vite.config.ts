@@ -22,7 +22,10 @@ export default defineConfig({
       '@shared': sharedDir,
     },
   },
-  plugins: [react(), makeManifest()],
+  plugins: [
+    react(),
+    makeManifest(),
+  ],
   publicDir,
   build: {
     outDir,

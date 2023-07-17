@@ -1,10 +1,8 @@
-import React, { DetailedHTMLProps, FC, HTMLAttributes } from 'react';
+import React, { FC } from 'react';
 import styles from './Panel.module.css';
 import classnames from 'classnames';
 
-export type PanelProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
-
-const Panel: FC<PanelProps> = ({ children, className, ...props }) => (
+const Panel: FC<DivProps> = ({ children, className, ...props }) => (
   <div className={ classnames(styles.panel, className) } { ...props }>
     { children }
   </div>

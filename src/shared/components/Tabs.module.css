@@ -1,0 +1,14 @@
+.tabs {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabsHeaders {
+    display: flex;
+    flex-direction: row;
+}
+
+.tabsHeaderItem {
+    padding: 8px;
+    cursor: pointer;
+}

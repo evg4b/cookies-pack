@@ -1,9 +1,12 @@
 /// <reference types="vite/client" />
 
 declare module '*.svg' {
-  import React = require('react');
-  export const ReactComponent: React.SFC<React.SVGProps<SVGSVGElement>>;
+
+  export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
   const src: string;
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   export default src;
 }
 
@@ -11,3 +14,5 @@ declare module '*.json' {
   const content: string;
   export default content;
 }
+
+type DivProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;

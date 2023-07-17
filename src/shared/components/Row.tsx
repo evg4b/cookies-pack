@@ -1,9 +1,9 @@
-import React, { CSSProperties, DetailedHTMLProps, FC, HTMLAttributes } from 'react';
+import React, { CSSProperties, FC } from 'react';
 import styles from './Row.module.css';
 import classnames from 'classnames';
 import { px } from '@shared/helpres/styles';
 
-export type RowProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+export type RowProps = DivProps & {
   justifyContent?: "space-around" | "space-between" | "space-evenly" | "stretch";
   alignItems?: "center" | "end" | "flex-end" | "flex-start" | "self-end" | "self-start" | "start";
   gap?: number;

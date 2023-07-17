@@ -1,9 +1,9 @@
-import React, { CSSProperties, DetailedHTMLProps, FC, HTMLAttributes } from 'react';
+import React, { CSSProperties, FC } from 'react';
 import styles from './Column.module.css';
 import classNames from 'classnames';
 import { px } from '@shared/helpres/styles';
 
-export type ColumnProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+export type ColumnProps = DivProps & {
   gap?: number;
 };
 

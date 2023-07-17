@@ -1,18 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Cookies } from './cookies';
 import { useCookies, useTabs } from '@shared/hooks/with-chrome';
+import { Tab, Tabs } from '@shared/components';
 import Cookie = chrome.cookies.Cookie;
 
 const join = (cookies: Cookie[]): string => {
-  return cookies.map((cookie) => cookie.name + '=' + cookie.value).join('; ');
+  return cookies.map((cookie) => cookie.name + '=' + cookie.value).join(';\n');
 };
 
-const split = (
-  header: string,
-  url: string,
-  path: string,
-): chrome.cookies.SetDetails[] => {
-  const cookiesLines = header.split(/; */);
+const split = (header: string, url: string, path: string): chrome.cookies.SetDetails[] => {
+  const cookiesLines = header.split(/;\n*/);
 
   return cookiesLines.map<chrome.cookies.SetDetails>((line) => {
     const keyVal = line.split('=');
@@ -78,11 +75,16 @@ export const CookiesContainer = () => {
   return (
     <>
       { enabled && (
-        <Cookies
-          current={ currentCookies }
-          currentPath={ currentPath }
-          setCookies={ setCookiesCallback }
-        />
+        <Tabs defaultTab="demo">
+          <Tab tabId="demo" tabName="Bulk editor">
+            <Cookies
+              current={ currentCookies }
+              currentPath={ currentPath }
+              setCookies={ setCookiesCallback }
+            />
+
+          </Tab>
+        </Tabs>
       ) }
       { !enabled && <div>This page is not supported</div> }
     </>
