@@ -4,6 +4,7 @@ import { useCookies, useTabs } from '@shared/hooks/with-chrome';
 import { Result, Tabs as Tabbs } from 'antd';
 import FrownOutlined from '@ant-design/icons/FrownOutlined';
 import Cookie = chrome.cookies.Cookie;
+import { useWindowSize } from '@shared/hooks/page';
 
 const join = (cookies: Cookie[]): string => {
   return cookies.map((cookie) => cookie.name + '=' + cookie.value).join(';\n');
@@ -22,6 +23,8 @@ const split = (header: string, url: string, path: string): chrome.cookies.SetDet
 };
 
 export const CookiesContainer = () => {
+  useWindowSize(800, 600);
+
   const tabs = useTabs();
   const cookies = useCookies();
 

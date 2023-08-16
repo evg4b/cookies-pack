@@ -11,8 +11,9 @@ interface CookiesParams {
 }
 
 const value = (event: Event | React.FormEvent<HTMLElement>) =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (event?.target as any).value;
-const checked = (event: CheckboxChangeEvent) => event.target.checked
+const checked = (event: CheckboxChangeEvent) => event.target.checked;
 
 export const Cookies: FC<CookiesParams> = ({
   current,

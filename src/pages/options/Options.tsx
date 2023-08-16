@@ -1,12 +1,12 @@
+import { Layout } from 'antd';
 import React, { FC } from 'react';
-import { ThemeProvider } from '@shared/components';
 
 const Options: FC = () => (
-  <ThemeProvider>
+  <Layout>
     <div className="container">
       Options
     </div>
-  </ThemeProvider>
+  </Layout>
 );
 
 export default Options;

@@ -22,10 +22,13 @@
       "version": "16"
     }
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
   "rules": {
     "semi": "off",
-    "comma-dangle": "off",
+    "comma-dangle": "error",
     "@typescript-eslint/semi": [
       "error",
       "always"
@@ -39,5 +42,8 @@
   "globals": {
     "chrome": "readonly"
   },
-  "ignorePatterns": ["watch.js", "dist/**"]
+  "ignorePatterns": [
+    "watch.js",
+    "dist/**"
+  ]
 }
