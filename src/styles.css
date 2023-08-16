@@ -1,26 +1,6 @@
-:root {
-    @media (prefers-color-scheme: dark) {
-        --bg-color: #202124;
-        --text-color: white;
-    }
-
-    @media (prefers-color-scheme: light) {
-        --bg-color: blue;
-        --text-color: black;
-    }
-
-    --primary-button-color: #2d6198;
-    --primary-hover-button-color: #3675b6;
-}
 
 html,
 body {
-    background: var(--bg-color);
-    color: var(--text-color);
     padding: 0;
     margin: 0;
-}
-
-* {
-    box-sizing: border-box;
 }

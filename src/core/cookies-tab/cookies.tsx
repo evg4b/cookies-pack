@@ -1,6 +1,8 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTimedValue } from '@shared/hooks/timed';
-import { Button, Column, Row } from '@shared/components';
+import { Column, Row } from '@shared/components';
+import { Button, Checkbox, Input } from 'antd';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 interface CookiesParams {
   current: string;
@@ -10,8 +12,7 @@ interface CookiesParams {
 
 const value = (event: Event | React.FormEvent<HTMLElement>) =>
   (event?.target as any).value;
-const checked = (event: Event | React.FormEvent<HTMLElement>) =>
-  (event?.target as any).checked;
+const checked = (event: CheckboxChangeEvent) => event.target.checked
 
 export const Cookies: FC<CookiesParams> = ({
   current,
@@ -48,44 +49,39 @@ export const Cookies: FC<CookiesParams> = ({
             { copied ? 'Copied' : 'Copy' }
           </Button>
         </Row>
-        <textarea readOnly={ true } value={ current } rows={ 10 }/>
+        <Input.TextArea readOnly={ true } value={ current } rows={ 7 }/>
       </Column>
       <Column gap={ 8 }>
-        <textarea
-          rows={ 10 }
-          value={ newCookies }
-          onInput={ (event) => setNewCookies(value(event)) }
-        >
+        <Input.TextArea rows={ 7 } value={ newCookies } onInput={ (event) => setNewCookies(value(event)) }>
           Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab
-        </textarea>
+        </Input.TextArea>
       </Column>
       <Column gap={ 8 }>
         <Column gap={ 2 }>
           <div>Cookies path</div>
           <Row justifyContent="stretch" alignItems="center" gap={ 18 }>
-            <input
+            <Input
               disabled={ !customPath }
               value={ path }
               onChange={ (event) => setPath(value(event)) }
               style={ { flex: '1 1 auto' } }
             />
-            <input
-              type="checkbox"
+            <Checkbox
               checked={ customPath }
               onChange={ (event) => setCustomPath(checked(event)) }
-            />
-            <label>Custom path</label>
+            >
+              Custom path
+            </Checkbox>
           </Row>
         </Column>
         <Row justifyContent="space-between">
-          <input
-            type="checkbox"
+          <Checkbox
             checked={ clear }
             onChange={ (event) => setClear(checked(event)) }
-          />
-          <label>Clear existing cookies first</label>
-          <pre>{ clear }</pre>
-          <Button variant="primary" onClick={ updateCookies }>Set Cookies</Button>
+          >
+            Clear existing cookies first
+          </Checkbox>
+          <Button type="primary" onClick={ updateCookies }>Set Cookies</Button>
         </Row>
       </Column>
     </Column>

@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Cookies } from './cookies';
 import { useCookies, useTabs } from '@shared/hooks/with-chrome';
-import { Tab, Tabs } from '@shared/components';
+import { Result, Tabs as Tabbs } from 'antd';
+import FrownOutlined from '@ant-design/icons/FrownOutlined';
 import Cookie = chrome.cookies.Cookie;
 
 const join = (cookies: Cookie[]): string => {
@@ -72,21 +73,39 @@ export const CookiesContainer = () => {
     [cookies, currentUrl],
   );
 
+  const onChange = (key: string) => {
+    console.log(key);
+  };
+
   return (
     <>
       { enabled && (
-        <Tabs defaultTab="demo">
-          <Tab tabId="demo" tabName="Bulk editor">
-            <Cookies
-              current={ currentCookies }
-              currentPath={ currentPath }
-              setCookies={ setCookiesCallback }
-            />
-
-          </Tab>
-        </Tabs>
+        <div>
+          <Tabbs
+            onChange={ onChange }
+            items={ [
+              {
+                label: 'Demo2',
+                key: "sads",
+                children: <Cookies
+                  current={ currentCookies }
+                  currentPath={ currentPath }
+                  setCookies={ setCookiesCallback }
+                />,
+              },
+              {
+                label: `Tab 31232`,
+                key: 'asdasd',
+                children: <div>sadlkjklsajd</div>,
+              },
+            ] }
+          />
+        </div>
       ) }
-      { !enabled && <div>This page is not supported</div> }
+      { !enabled && <Result
+        icon={ <FrownOutlined/> }
+        title="This page is not supported"
+      /> }
     </>
   );
 };
