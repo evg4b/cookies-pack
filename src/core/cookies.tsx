@@ -1,0 +1,67 @@
+import React, { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
+import { Button, Checkbox, Divider, Input, Textarea } from '@nextui-org/react';
+import { CookiesTable } from '@core/CookiesTable';
+
+interface CookiesParams {
+  cookies: Cookie[];
+  current: string;
+  currentPath: string;
+  setCookies(clear: boolean, path: string, cookies: string): void;
+}
+
+const value = (event: Event | React.FormEvent<HTMLElement>) =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (event?.target as any).value;
+const checked = (event: ChangeEvent<HTMLInputElement>) => event.target.checked;
+
+export const Cookies: FC<CookiesParams> = ({
+  current,
+  currentPath,
+  setCookies,
+  cookies,
+}) => {
+  const [customPath, setCustomPath] = useState(false);
+  const [path, setPath] = useState('/');
+  const [newCookies, setNewCookies] = useState('');
+  const [clear, setClear] = useState(true);
+
+  useEffect(
+    () => setPath(customPath ? currentPath : '/'),
+    [customPath, currentPath],
+  );
+
+  const updateCookies = useCallback(() => {
+    setCookies(clear, path, newCookies);
+    setNewCookies('');
+  }, [setCookies, clear, path, newCookies]);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <CookiesTable current={ current } cookies={ cookies }/>
+      <Divider className="my-4"/>
+      <Textarea rows={ 7 } minRows={ 7 } value={ newCookies } onInput={ (event) => setNewCookies(value(event)) }
+                placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>
+      <div className="flex flex-row justify-between gap-2">
+        <Input
+          placeholder="Cookies path"
+          disabled={ !customPath }
+          value={ customPath ? path : '' }
+          onChange={ (event) => setPath(value(event)) }
+        />
+        <Checkbox checked={ customPath } onChange={ (event) => setCustomPath(checked(event)) }>
+          <div className="whitespace-nowrap">
+            Custom path
+          </div>
+        </Checkbox>
+      </div>
+      <div className="flex flex-row justify-between">
+        <Checkbox checked={ clear } onChange={ (event) => setClear(checked(event)) }>
+          Clear existing cookies first
+        </Checkbox>
+        <Button size="sm" color="primary" variant="solid" onClick={ updateCookies }>
+          Set Cookies
+        </Button>
+      </div>
+    </div>
+  );
+};

@@ -16,3 +16,5 @@ declare module '*.json' {
 }
 
 type DivProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+
+type Cookie = chrome.cookies.Cookie;

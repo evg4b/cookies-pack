@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Cookies } from './cookies';
 import { useCookies, useTabs } from '@shared/hooks/with-chrome';
 import { useWindowSize } from '@shared/hooks/page';
-import Cookie = chrome.cookies.Cookie;
 
 const join = (cookies: Cookie[]): string => {
   return cookies.map((cookie) => cookie.name + '=' + cookie.value).join(';\n');
@@ -21,7 +20,7 @@ const split = (header: string, url: string, path: string): chrome.cookies.SetDet
 };
 
 export const CookiesContainer = () => {
-  useWindowSize(800, 600);
+  useWindowSize(800, 505);
 
   const tabs = useTabs();
   const cookies = useCookies();
@@ -29,6 +28,7 @@ export const CookiesContainer = () => {
   const [currentPath, setCurrentPath] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
   const [currentCookies, setCurrentCookies] = useState<string>('');
+  const [sss, setSssCookies] = useState<Cookie[]>([]);
 
   useEffect(
     () =>
@@ -40,6 +40,7 @@ export const CookiesContainer = () => {
         setCurrentUrl(tab.url);
         setCurrentPath(new URL(tab.url).pathname);
         const siteCookies = await cookies.getAll({ url: tab.url ?? '' });
+        setSssCookies(siteCookies);
         setCurrentCookies(join(siteCookies));
       }),
     [tabs, cookies],
@@ -64,6 +65,7 @@ export const CookiesContainer = () => {
 
         const siteCookies = await cookies.getAll({ url: currentUrl });
         setCurrentCookies(join(siteCookies));
+        setSssCookies(siteCookies);
       } catch (err: unknown) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -78,6 +80,7 @@ export const CookiesContainer = () => {
       current={ currentCookies }
       currentPath={ currentPath }
       setCookies={ setCookiesCallback }
+      cookies={ sss }
     />
   );
 };

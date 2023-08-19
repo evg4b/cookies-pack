@@ -6,6 +6,21 @@ body > div > main {
     width: 100%;
 }
 
+body > div > main {
+    padding: 4px;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.overflow-scroll {
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.table-height {
+    max-height: 200px;
+    min-height: 200px;
+    width: 100%;
+}

@@ -5,7 +5,6 @@ import makeManifest from './utils/plugins/make-manifest';
 import { outputFolderName } from './utils/constants';
 
 const root = resolve(__dirname, 'src');
-const pagesDir = resolve(root, 'pages');
 const assetsDir = resolve(root, 'assets');
 const sharedDir = resolve(root, 'shared');
 const coreDir = resolve(root, 'core');
@@ -17,7 +16,6 @@ export default defineConfig({
     alias: {
       '@src': root,
       '@assets': assetsDir,
-      '@pages': pagesDir,
       '@core': coreDir,
       '@shared': sharedDir,
     },
@@ -33,8 +31,8 @@ export default defineConfig({
     emptyOutDir: false,
     rollupOptions: {
       input: {
-        popup: resolve(pagesDir, 'popup', 'index.html'),
-        options: resolve(pagesDir, 'options', 'index.html'),
+        popup: resolve(root, 'popup', 'index.html'),
+        options: resolve(root, 'options', 'index.html'),
       },
       output: {
         entryFileNames: (chunk) => `src/pages/${ chunk.name }/index.js`,
