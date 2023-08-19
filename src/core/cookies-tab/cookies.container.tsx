@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Cookies } from './cookies';
 import { useCookies, useTabs } from '@shared/hooks/with-chrome';
-import { Result, Tabs as Tabbs } from 'antd';
-import FrownOutlined from '@ant-design/icons/FrownOutlined';
-import Cookie = chrome.cookies.Cookie;
 import { useWindowSize } from '@shared/hooks/page';
+import Cookie = chrome.cookies.Cookie;
 
 const join = (cookies: Cookie[]): string => {
   return cookies.map((cookie) => cookie.name + '=' + cookie.value).join(';\n');
@@ -28,7 +26,6 @@ export const CookiesContainer = () => {
   const tabs = useTabs();
   const cookies = useCookies();
 
-  const [enabled, setEnabled] = useState(true);
   const [currentPath, setCurrentPath] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
   const [currentCookies, setCurrentCookies] = useState<string>('');
@@ -37,7 +34,7 @@ export const CookiesContainer = () => {
     () =>
       tabs.query({ active: true, currentWindow: true }, async ([tab]) => {
         if (!tab.url) {
-          return setEnabled(false);
+          return;
         }
 
         setCurrentUrl(tab.url);
@@ -76,39 +73,11 @@ export const CookiesContainer = () => {
     [cookies, currentUrl],
   );
 
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-
   return (
-    <>
-      { enabled && (
-        <div>
-          <Tabbs
-            onChange={ onChange }
-            items={ [
-              {
-                label: 'Demo2',
-                key: "sads",
-                children: <Cookies
-                  current={ currentCookies }
-                  currentPath={ currentPath }
-                  setCookies={ setCookiesCallback }
-                />,
-              },
-              {
-                label: `Tab 31232`,
-                key: 'asdasd',
-                children: <div>sadlkjklsajd</div>,
-              },
-            ] }
-          />
-        </div>
-      ) }
-      { !enabled && <Result
-        icon={ <FrownOutlined/> }
-        title="This page is not supported"
-      /> }
-    </>
+    <Cookies
+      current={ currentCookies }
+      currentPath={ currentPath }
+      setCookies={ setCookiesCallback }
+    />
   );
 };

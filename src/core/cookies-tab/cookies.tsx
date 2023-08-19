@@ -1,8 +1,7 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import { useTimedValue } from '@shared/hooks/timed';
 import { Column, Row } from '@shared/components';
-import { Button, Checkbox, Input } from 'antd';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { Button, Checkbox, Input, Textarea } from '@nextui-org/react';
 
 interface CookiesParams {
   current: string;
@@ -13,7 +12,7 @@ interface CookiesParams {
 const value = (event: Event | React.FormEvent<HTMLElement>) =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (event?.target as any).value;
-const checked = (event: CheckboxChangeEvent) => event.target.checked;
+const checked = (event: ChangeEvent<HTMLInputElement>) => event.target.checked;
 
 export const Cookies: FC<CookiesParams> = ({
   current,
@@ -50,12 +49,12 @@ export const Cookies: FC<CookiesParams> = ({
             { copied ? 'Copied' : 'Copy' }
           </Button>
         </Row>
-        <Input.TextArea readOnly={ true } value={ current } rows={ 7 }/>
+        <Textarea readOnly={ true } value={ current } rows={ 7 }/>
       </Column>
       <Column gap={ 8 }>
-        <Input.TextArea rows={ 7 } value={ newCookies } onInput={ (event) => setNewCookies(value(event)) }>
+        <Textarea rows={ 7 } value={ newCookies } onInput={ (event) => setNewCookies(value(event)) }>
           Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab
-        </Input.TextArea>
+        </Textarea>
       </Column>
       <Column gap={ 8 }>
         <Column gap={ 2 }>
@@ -82,7 +81,7 @@ export const Cookies: FC<CookiesParams> = ({
           >
             Clear existing cookies first
           </Checkbox>
-          <Button type="primary" onClick={ updateCookies }>Set Cookies</Button>
+          <Button variant="faded" onClick={ updateCookies }>Set Cookies</Button>
         </Row>
       </Column>
     </Column>

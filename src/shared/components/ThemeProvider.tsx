@@ -1,14 +1,14 @@
 import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
-import { ConfigProvider, MappingAlgorithm, theme } from 'antd';
+import { NextUIProvider } from '@nextui-org/system';
+import classNames from 'classnames';
 
 const colorSchemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
-const defaultAlgorithm: MappingAlgorithm[] = colorSchemeMedia.matches ? [theme.darkAlgorithm] : [];
 
 export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [algorithms, setAlgorithm] = useState<MappingAlgorithm[]>(defaultAlgorithm);
+  const [dark, setDark] = useState(colorSchemeMedia.matches);
 
   useEffect(() => {
-    const handler = (e: MediaQueryListEvent) => setAlgorithm(e.matches ? [theme.darkAlgorithm] : []);
+    const handler = (e: MediaQueryListEvent) => setDark(e.matches);
 
     colorSchemeMedia.addEventListener('change', handler);
 
@@ -16,8 +16,10 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   return (
-    <ConfigProvider theme={ { algorithm: algorithms } }>
-      { children }
-    </ConfigProvider>
+    <NextUIProvider>
+      <main className={classNames({ dark }, 'text-foreground', 'bg-background')}>
+        { children }
+      </main>
+    </NextUIProvider>
   );
 };

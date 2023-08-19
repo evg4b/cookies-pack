@@ -13,5 +13,5 @@ export const useWindowSize = (width: number, height: number) => {
   useEffect(() => {
     document.documentElement.style.width = `${ width }px`;
     document.documentElement.style.height = `${ height }px`;
-  }, [document]);
+  }, [document, width, height]);
 };
