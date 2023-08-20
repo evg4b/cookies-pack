@@ -1,4 +1,5 @@
-import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
+import type { FC, PropsWithChildren } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextUIProvider } from '@nextui-org/system';
 import classNames from 'classnames';
 

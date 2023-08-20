@@ -1,9 +1,10 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 
-const Options: FC = () => (
+const Options: FC = () => 
   <div className="container">
     Options
   </div>
-);
+;
 
 export default Options;

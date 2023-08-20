@@ -3,11 +3,8 @@ import { Cookies } from './cookies';
 import { useCookies, useTabs } from '@shared/hooks/with-chrome';
 import { useWindowSize } from '@shared/hooks/page';
 
-const join = (cookies: Cookie[]): string => {
-  return cookies.map((cookie) => cookie.name + '=' + cookie.value).join(';\n');
-};
 
-const split = (header: string, url: string, path: string): chrome.cookies.SetDetails[] => {
+export const split = (header: string, url: string, path: string): chrome.cookies.SetDetails[] => {
   const cookiesLines = header.split(/;\n*/);
 
   return cookiesLines.map<chrome.cookies.SetDetails>((line) => {
@@ -20,15 +17,14 @@ const split = (header: string, url: string, path: string): chrome.cookies.SetDet
 };
 
 export const CookiesContainer = () => {
-  useWindowSize(800, 505);
+  useWindowSize(800, 500);
 
   const tabs = useTabs();
-  const cookies = useCookies();
+  const cookiesJar = useCookies();
 
   const [currentPath, setCurrentPath] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
-  const [currentCookies, setCurrentCookies] = useState<string>('');
-  const [sss, setSssCookies] = useState<Cookie[]>([]);
+  const [cookies, setCookies] = useState<Cookie[]>([]);
 
   useEffect(
     () =>
@@ -39,48 +35,45 @@ export const CookiesContainer = () => {
 
         setCurrentUrl(tab.url);
         setCurrentPath(new URL(tab.url).pathname);
-        const siteCookies = await cookies.getAll({ url: tab.url ?? '' });
-        setSssCookies(siteCookies);
-        setCurrentCookies(join(siteCookies));
+        const siteCookies = await cookiesJar.getAll({ url: tab.url ?? '' });
+        setCookies(siteCookies);
       }),
-    [tabs, cookies],
+    [tabs, cookiesJar],
   );
 
   const setCookiesCallback = useCallback(
     async (clear: boolean, path: string, newCookies: string) => {
       if (clear) {
-        const cookiesList = await cookies.getAll({ url: currentUrl });
+        const cookiesList = await cookiesJar.getAll({ url: currentUrl });
         const promises = cookiesList.map(({ name }) =>
-          cookies.remove({ url: currentUrl, name }),
+          cookiesJar.remove({ url: currentUrl, name }),
         );
         await Promise.all(promises);
       }
 
       try {
         const promises = split(newCookies, currentUrl, path).map((cookie) =>
-          cookies.set(cookie),
+          cookiesJar.set(cookie),
         );
 
         await Promise.all(promises);
 
-        const siteCookies = await cookies.getAll({ url: currentUrl });
-        setCurrentCookies(join(siteCookies));
-        setSssCookies(siteCookies);
+        const siteCookies = await cookiesJar.getAll({ url: currentUrl });
+        setCookies(siteCookies);
       } catch (err: unknown) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         alert(err.message);
       }
     },
-    [cookies, currentUrl],
+    [cookiesJar, currentUrl],
   );
 
   return (
     <Cookies
-      current={ currentCookies }
       currentPath={ currentPath }
       setCookies={ setCookiesCallback }
-      cookies={ sss }
+      cookies={ cookies }
     />
   );
 };

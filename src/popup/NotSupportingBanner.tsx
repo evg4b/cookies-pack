@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { Card, CardBody } from '@nextui-org/react';
 import { useWindowSize } from '@shared/hooks/page';
 

@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useTimedValue = (defaultValue: boolean, timing: number): [boolean, Dispatch<SetStateAction<boolean>>] => {
   const [timedValue, setTimedValue] = useState(defaultValue);

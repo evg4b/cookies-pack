@@ -1,13 +1,17 @@
-import React, { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
+import type { ChangeEvent, FC } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Checkbox, Divider, Input, Textarea } from '@nextui-org/react';
 import { CookiesTable } from '@core/CookiesTable';
 
 interface CookiesParams {
   cookies: Cookie[];
-  current: string;
   currentPath: string;
   setCookies(clear: boolean, path: string, cookies: string): void;
 }
+
+const join = (cookies: Cookie[]): string => {
+  return cookies.map((cookie) => cookie.name + '=' + cookie.value).join(';\n');
+};
 
 const value = (event: Event | React.FormEvent<HTMLElement>) =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,7 +19,6 @@ const value = (event: Event | React.FormEvent<HTMLElement>) =>
 const checked = (event: ChangeEvent<HTMLInputElement>) => event.target.checked;
 
 export const Cookies: FC<CookiesParams> = ({
-  current,
   currentPath,
   setCookies,
   cookies,
@@ -25,19 +28,23 @@ export const Cookies: FC<CookiesParams> = ({
   const [newCookies, setNewCookies] = useState('');
   const [clear, setClear] = useState(true);
 
-  useEffect(
-    () => setPath(customPath ? currentPath : '/'),
-    [customPath, currentPath],
-  );
+  useEffect(() => {
+    setPath(customPath ? currentPath : '/');
+  }, [customPath, currentPath]);
+
 
   const updateCookies = useCallback(() => {
     setCookies(clear, path, newCookies);
     setNewCookies('');
   }, [setCookies, clear, path, newCookies]);
 
+  const copyToClipboard = useCallback(async () => {
+    await navigator.clipboard.writeText(join(cookies));
+  }, [cookies]);
+
   return (
     <div className="flex flex-col gap-2">
-      <CookiesTable current={ current } cookies={ cookies }/>
+      <CookiesTable cookies={ cookies } copyToClipboard={ copyToClipboard }/>
       <Divider className="my-4"/>
       <Textarea rows={ 7 } minRows={ 7 } value={ newCookies } onInput={ (event) => setNewCookies(value(event)) }
                 placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>

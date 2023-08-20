@@ -1,32 +1,39 @@
-import React, { FC, useCallback } from 'react';
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from '@nextui-org/react';
+import type { FC, MouseEventHandler } from 'react';
+import React from 'react';
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
+import type { TableProps } from '@nextui-org/table/dist/table';
 import { CopyButton } from '@core/CopyButton';
 import { CookiesTableCell } from '@core/CookiesTableCell';
 
 export interface CookiesTableProps {
   cookies: Cookie[];
-  current: string;
+  copyToClipboard: MouseEventHandler<HTMLButtonElement>;
 }
 
-export const CookiesTable: FC<CookiesTableProps> = ({ cookies, current }) => {
-  const toClipboard = useCallback(async () => {
-    await navigator.clipboard.writeText(current);
-  }, [current]);
+const tableProps: TableProps = {
+  layout: 'fixed',
+  removeWrapper: true,
+  isCompact: true,
+  isHeaderSticky: true,
+  classNames: {
+    base: 'table-height overflow-scroll',
+  },
+};
 
+export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard }) => {
   return (
-    <Table layout="fixed" removeWrapper fullWidth={ false } isCompact isHeaderSticky
-           classNames={ { base: "table-height overflow-scroll" } }>
+    <Table { ...tableProps }>
       <TableHeader>
         <TableColumn key="name" width="30%">Name</TableColumn>
         <TableColumn key="value" width="70%">
           <div className="flex flex-row justify-between items-center">
             <span>Value</span>
-            <CopyButton title="Copy all cookies." onClick={ toClipboard }/>
+            <CopyButton title="Copy all cookies." onClick={ copyToClipboard }/>
           </div>
         </TableColumn>
       </TableHeader>
-      <TableBody items={ cookies } emptyContent={ "No cookies." }>
-        { (item) => (
+      <TableBody items={ cookies } emptyContent={ 'No cookies.' }>
+        { (item) =>
           <TableRow key={ item.name }>
             <TableCell>
               <CookiesTableCell value={ item.name }/>
@@ -35,7 +42,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, current }) => {
               <CookiesTableCell value={ item.value }/>
             </TableCell>
           </TableRow>
-        ) }
+        }
       </TableBody>
     </Table>
   );
