@@ -7,10 +7,10 @@ const manifest: Manifest.WebExtensionManifest = {
   version: pkg.version,
   description: pkg.description,
   options_ui: {
-    page: 'src/pages/options/index.html',
+    page: 'src/options/index.html',
   },
   action: {
-    default_popup: 'src/pages/popup/index.html',
+    default_popup: 'src/popup/index.html',
     default_icon: 'icon-34.png',
     default_title: pkg.displayName,
   },
@@ -18,11 +18,10 @@ const manifest: Manifest.WebExtensionManifest = {
     128: 'icon-128.png',
     512: 'icon-512.png',
   },
-  permissions: ["cookies"],
+  permissions: ['cookies'],
   host_permissions: [
-    "<all_urls>",
+    '<all_urls>',
   ],
-  devtools_page: 'src/pages/devtools/index.html',
 };
 
 export default manifest;

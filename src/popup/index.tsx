@@ -1,6 +1,6 @@
 import React from 'react';
-import Popup from '@src/popup/Popup';
 import { createRoot } from 'react-dom/client';
+import Popup from '@src/popup/Popup';
 import { PageContext } from '@shared/hooks/page';
 import '../styles.css';
 import { ThemeProvider } from '@shared/components';

@@ -1,8 +1,0 @@
-.row {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    /*align-items: ${(props) => props.alignItems};*/
-    /*justify-content: ${(props) => props.justifyContent};*/
-    /*gap: ${(props) => props.gap ?? 0}px;*/
-}

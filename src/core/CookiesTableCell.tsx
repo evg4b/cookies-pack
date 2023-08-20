@@ -1,18 +1,19 @@
-import React, { CSSProperties, FC, MouseEventHandler, useCallback } from 'react';
+import type { CSSProperties, FC, MouseEventHandler } from 'react';
+import React, { useCallback } from 'react';
 import { useTimedValue } from '@shared/hooks/timed';
 
 export interface CookiesTableCellProps {
   value: string;
 }
 
-const styles: CSSProperties = {
+const styles: CSSProperties & { 'text-wrap': string, 'text-overflow': string } = {
   'text-wrap': 'nowrap',
   'text-overflow': 'ellipsis',
   'overflow': 'hidden',
-} as any;
+};
 
 const demo = {
-  color: '#545454',
+  color: 'rgb(161, 161, 170)',
 };
 
 export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
@@ -24,7 +25,7 @@ export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   }, [setCopied]);
 
   return (
-    <div className="cursor-pointer" title={value} style={ styles } onClick={ onClickInternal }>
+    <div className="cursor-pointer select-none" title={ value } style={ styles } onClick={ onClickInternal }>
       { !copied && value }
       { copied && <span style={ demo }>Copied</span> }
     </div>
