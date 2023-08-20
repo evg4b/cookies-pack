@@ -1,6 +1,6 @@
+import { useTimedValue } from '@shared/hooks/timed';
 import type { CSSProperties, FC, MouseEventHandler } from 'react';
 import React, { useCallback } from 'react';
-import { useTimedValue } from '@shared/hooks/timed';
 
 export interface CookiesTableCellProps {
   value: string;

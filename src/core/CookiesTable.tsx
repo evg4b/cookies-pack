@@ -1,9 +1,9 @@
-import type { FC, MouseEventHandler } from 'react';
-import React from 'react';
+import { CookiesTableCell } from '@core/CookiesTableCell';
+import { CopyButton } from '@core/CopyButton';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import type { TableProps } from '@nextui-org/table/dist/table';
-import { CopyButton } from '@core/CopyButton';
-import { CookiesTableCell } from '@core/CookiesTableCell';
+import type { FC, MouseEventHandler } from 'react';
+import React from 'react';
 
 export interface CookiesTableProps {
   cookies: Cookie[];
@@ -18,6 +18,7 @@ const tableProps: TableProps = {
   classNames: {
     base: 'table-height overflow-scroll',
   },
+  'aria-label': "Current site cookies",
 };
 
 export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard }) => {

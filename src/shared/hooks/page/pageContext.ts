@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect } from 'react';
 
-interface PageContextType {
+export interface PageContextType {
   document: Document;
+  clipboard: Clipboard,
 }
 
 export const PageContext = createContext<PageContextType>({
   document,
+  clipboard: navigator.clipboard,
 });
 
 export const useWindowSize = (width: number, height: number) => {

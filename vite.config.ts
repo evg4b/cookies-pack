@@ -1,8 +1,8 @@
-import { resolve } from 'path';
 import react from '@vitejs/plugin-react-swc';
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import makeManifest from './utils/plugins/make-manifest';
 import { outputFolderName } from './utils/constants';
+import makeManifest from './utils/plugins/make-manifest';
 
 const root = resolve(__dirname, 'src');
 const assetsDir = resolve(root, 'assets');

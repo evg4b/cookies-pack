@@ -1,7 +1,7 @@
-import type { FC, PropsWithChildren } from 'react';
-import React, { useEffect, useState } from 'react';
 import { NextUIProvider } from '@nextui-org/system';
 import classNames from 'classnames';
+import type { FC, PropsWithChildren } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const colorSchemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -18,7 +18,7 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <NextUIProvider>
-      <main className={classNames({ dark }, 'text-foreground', 'bg-background')}>
+      <main className={ classNames({ dark }, 'text-foreground', 'bg-background') }>
         { children }
       </main>
     </NextUIProvider>

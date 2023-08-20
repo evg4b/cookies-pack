@@ -3,7 +3,9 @@
     "__DEV__": "true"
   },
   "watch": [
-    "src", "utils", "vite.config.ts"
+    "src",
+    "utils",
+    "vite.config.ts"
   ],
   "ext": "tsx,css,html,ts",
   "ignore": [

@@ -1,7 +1,7 @@
+import { CookiesTable } from '@core/CookiesTable';
+import { Button, Checkbox, Divider, Input, Textarea } from '@nextui-org/react';
 import type { ChangeEvent, FC } from 'react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Checkbox, Divider, Input, Textarea } from '@nextui-org/react';
-import { CookiesTable } from '@core/CookiesTable';
 
 interface CookiesParams {
   cookies: Cookie[];
@@ -10,7 +10,7 @@ interface CookiesParams {
 }
 
 const join = (cookies: Cookie[]): string => {
-  return cookies.map((cookie) => cookie.name + '=' + cookie.value).join(';\n');
+  return cookies.map((cookie) => cookie.name + '=' + cookie.value).join(';');
 };
 
 const value = (event: Event | React.FormEvent<HTMLElement>) =>
@@ -18,11 +18,7 @@ const value = (event: Event | React.FormEvent<HTMLElement>) =>
   (event?.target as any).value;
 const checked = (event: ChangeEvent<HTMLInputElement>) => event.target.checked;
 
-export const Cookies: FC<CookiesParams> = ({
-  currentPath,
-  setCookies,
-  cookies,
-}) => {
+export const Cookies: FC<CookiesParams> = ({ currentPath, setCookies, cookies }) => {
   const [customPath, setCustomPath] = useState(false);
   const [path, setPath] = useState('/');
   const [newCookies, setNewCookies] = useState('');
@@ -31,7 +27,6 @@ export const Cookies: FC<CookiesParams> = ({
   useEffect(() => {
     setPath(customPath ? currentPath : '/');
   }, [customPath, currentPath]);
-
 
   const updateCookies = useCallback(() => {
     setCookies(clear, path, newCookies);

@@ -1,7 +1,7 @@
+import { useTabs } from '@shared/hooks/with-chrome';
 import type { FC, PropsWithChildren } from 'react';
 import { useEffect, useState } from 'react';
 import { NotSupportingBanner } from './NotSupportingBanner';
-import { useTabs } from '@shared/hooks/with-chrome';
 
 export const SupportingWrapper: FC<PropsWithChildren> = ({ children }) => {
   const tabs = useTabs();
