@@ -1,8 +1,16 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "types": ["vite/client", "node", "chrome"],
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": [
+      "vite/client",
+      "node",
+      "chrome"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -16,11 +24,23 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"],
-      "@assets/*": ["src/assets/*"],
-      "@core/*": ["src/core/*"],
-      "@shared/*": ["src/shared/*"]
+      "@src/*": [
+        "src/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@core/*": [
+        "src/core/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
+      ]
     }
   },
-  "include": ["src", "utils", "vite.config.ts"],
+  "include": [
+    "src",
+    "utils",
+    "vite.config.ts"
+  ]
 }

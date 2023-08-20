@@ -1,8 +1,7 @@
+import { useWindowSize } from '@shared/hooks/page';
+import { useCookies, useTabs } from '@shared/hooks/with-chrome';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Cookies } from './cookies';
-import { useCookies, useTabs } from '@shared/hooks/with-chrome';
-import { useWindowSize } from '@shared/hooks/page';
-
 
 export const split = (header: string, url: string, path: string): chrome.cookies.SetDetails[] => {
   const cookiesLines = header.split(/;\n*/);

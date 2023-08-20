@@ -18,7 +18,8 @@
     "dev": "nodemon"
   },
   "type": "module",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@nextui-org/button": "^2.0.11",
     "@nextui-org/react": "^2.0.23",
     "@nextui-org/system": "^2.0.5",
@@ -28,9 +29,7 @@
     "framer-motion": "^10.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "webextension-polyfill": "^0.10.0"
-  },
-  "devDependencies": {
+    "webextension-polyfill": "^0.10.0",
     "@types/chrome": "^0.0.241",
     "@types/node": "^20.4.2",
     "@types/react": "^18.2.15",
