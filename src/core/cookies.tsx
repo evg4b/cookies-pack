@@ -31,7 +31,7 @@ export const Cookies: FC<CookiesParams> = ({ currentPath, setCookies, cookies })
   const updateCookies = useCallback(() => {
     setCookies(clear, path, newCookies);
     setNewCookies('');
-  }, [setCookies, clear, path, newCookies]);
+  }, [setCookies, clear, path, newCookies, setNewCookies]);
 
   const copyToClipboard = useCallback(async () => {
     await navigator.clipboard.writeText(join(cookies));
@@ -41,7 +41,7 @@ export const Cookies: FC<CookiesParams> = ({ currentPath, setCookies, cookies })
     <div className="flex flex-col gap-2">
       <CookiesTable cookies={ cookies } copyToClipboard={ copyToClipboard }/>
       <Divider className="my-4"/>
-      <Textarea rows={ 7 } minRows={ 7 } value={ newCookies } onInput={ (event) => setNewCookies(value(event)) }
+      <Textarea rows={ 7 } minRows={ 7 } maxRows={ 7 } value={ newCookies } onInput={ (event) => setNewCookies(value(event)) }
                 placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>
       <div className="flex flex-row justify-between gap-2">
         <Input
@@ -50,14 +50,14 @@ export const Cookies: FC<CookiesParams> = ({ currentPath, setCookies, cookies })
           value={ customPath ? path : '' }
           onChange={ (event) => setPath(value(event)) }
         />
-        <Checkbox checked={ customPath } onChange={ (event) => setCustomPath(checked(event)) }>
+        <Checkbox isSelected={ customPath } onChange={ (event) => setCustomPath(checked(event)) }>
           <div className="whitespace-nowrap">
             Custom path
           </div>
         </Checkbox>
       </div>
       <div className="flex flex-row justify-between">
-        <Checkbox checked={ clear } onChange={ (event) => setClear(checked(event)) }>
+        <Checkbox isSelected={ clear } onChange={ (event) => setClear(checked(event)) }>
           Clear existing cookies first
         </Checkbox>
         <Button size="sm" color="primary" variant="solid" onClick={ updateCookies }>
