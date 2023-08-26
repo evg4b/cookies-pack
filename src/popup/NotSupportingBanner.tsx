@@ -1,5 +1,5 @@
 import { Card, CardBody } from '@nextui-org/react';
-import { px } from '@shared/helpres/styles';
+import { px } from '@shared/helpres';
 import { useWindowSize } from '@shared/hooks/page';
 import type { FC } from 'react';
 

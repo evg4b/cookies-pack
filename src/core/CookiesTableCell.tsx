@@ -1,4 +1,4 @@
-import { useTimedValue } from '@shared/hooks/timed';
+import { useTimedValue } from '@shared/hooks';
 import type { CSSProperties, FC, MouseEventHandler } from 'react';
 import React, { useCallback } from 'react';
 

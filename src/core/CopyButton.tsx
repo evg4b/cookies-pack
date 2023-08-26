@@ -1,5 +1,5 @@
 import { Button } from '@nextui-org/react';
-import { useTimedValue } from '@shared/hooks/timed';
+import { useTimedValue } from '@shared/hooks';
 import type { FC, MouseEventHandler } from 'react';
 import React, { useCallback } from 'react';
 

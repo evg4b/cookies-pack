@@ -1,5 +1,5 @@
 import { useWindowSize } from '@shared/hooks/page';
-import { useCookies, useTabs } from '@shared/hooks/with-chrome';
+import { useCookies, useTabs } from '@shared/hooks';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Cookies } from './cookies';
 

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { assertIsDefined } from '../helpres/assets';
+import { assertIsDefined } from '../helpres';
 
 export const ChromeContext = createContext(chrome);
 
