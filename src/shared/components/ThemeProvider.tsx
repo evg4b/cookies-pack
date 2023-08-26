@@ -1,7 +1,7 @@
 import { NextUIProvider } from '@nextui-org/system';
-import classNames from 'classnames';
 import type { FC, PropsWithChildren } from 'react';
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 const colorSchemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -16,9 +16,14 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     return () => colorSchemeMedia.removeEventListener('change', handler);
   }, []);
 
+  const themeMapping: Record<string, boolean> = {
+    'cookies-pack-light': !dark,
+    'cookies-pack-dark': dark,
+  };
+
   return (
     <NextUIProvider>
-      <main className={ classNames({ dark }, 'text-foreground', 'bg-background') }>
+      <main className={ classNames(themeMapping, 'text-foreground', 'bg-background') }>
         { children }
       </main>
     </NextUIProvider>
