@@ -1,8 +1,8 @@
 import { CookiesTable } from '@core/CookiesTable';
 import { Button, Checkbox, Divider, Input, Textarea } from '@nextui-org/react';
 import { useCookies, useTabs } from '@shared/hooks';
-import { useWindowSize } from '@shared/hooks/page';
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { PageContext, useWindowSize } from '@shared/hooks/page';
+import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
 type SetDetails = chrome.cookies.SetDetails;
 
@@ -11,7 +11,7 @@ export const split = (header: string, url: string, path: string): SetDetails[] =
     return [];
   }
 
-  return header.split(';')
+  return header.split(/;\n?/)
     .map<SetDetails>(line => {
       const keyVal = line.split('=');
       const name = keyVal[0];
@@ -28,7 +28,7 @@ const value = (event: Event | React.FormEvent<HTMLElement>) =>
 const checked = (event: ChangeEvent<HTMLInputElement>) => event.target.checked;
 
 const join = (cookies: Cookie[]): string => {
-  return cookies.map((cookie) => cookie.name + '=' + encodeURIComponent(cookie.value)).join(';');
+  return cookies.map((cookie) => cookie.name + '=' + encodeURIComponent(cookie.value)).join(';\n');
 };
 
 export const Cookies = () => {
@@ -36,6 +36,7 @@ export const Cookies = () => {
 
   const tabs = useTabs();
   const cookiesJar = useCookies();
+  const { clipboard } = useContext(PageContext);
 
   const [currentPath, setCurrentPath] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
@@ -101,13 +102,23 @@ export const Cookies = () => {
     setNewCookies('');
   }, [setCookiesCallback, clear, path, newCookies, setNewCookies]);
 
-  const copyToClipboard = useCallback(async () => {
-    await navigator.clipboard.writeText(join(cookies));
-  }, [cookies]);
+  const copyToClipboard = useCallback(async (value: string | Cookie[]) => {
+    if (Array.isArray(value)) {
+      await clipboard.writeText(join(value));
+    } else {
+      await clipboard.writeText(value);
+    }
+  }, [clipboard]);
+
+  const deleteCookie = useCallback(async ({ name, storeId }: Cookie) => {
+    await cookiesJar.remove({ name, storeId, url: currentUrl });
+    const siteCookies = await cookiesJar.getAll({ url: currentUrl });
+    setCookies(siteCookies);
+  }, [cookies, currentUrl]);
 
   return (
     <div className="flex flex-col gap-2">
-      <CookiesTable cookies={ cookies } copyToClipboard={ copyToClipboard }/>
+      <CookiesTable cookies={ cookies } copyToClipboard={ copyToClipboard } deleteCookie={ deleteCookie }/>
       <Divider className="my-4"/>
       <Textarea rows={ 7 } minRows={ 7 } maxRows={ 7 } value={ newCookies } onInput={ (event) => setNewCookies(value(event)) }
                 placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>

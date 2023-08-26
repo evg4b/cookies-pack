@@ -1,13 +1,15 @@
 import { CookiesTableCell } from '@core/CookiesTableCell';
 import { CopyButton } from '@core/CopyButton';
+import { DeleteButton } from '@core/DeleteButton';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import type { TableProps } from '@nextui-org/table/dist/table';
-import type { FC, MouseEventHandler } from 'react';
-import React from 'react';
+import type { FC } from 'react';
+import React, { useCallback } from 'react';
 
 export interface CookiesTableProps {
   cookies: Cookie[];
-  copyToClipboard: MouseEventHandler<HTMLButtonElement>;
+  copyToClipboard(value: string | Cookie[]): void;
+  deleteCookie(cookie: Cookie): void;
 }
 
 const tableProps: TableProps = {
@@ -21,17 +23,17 @@ const tableProps: TableProps = {
   'aria-label': "Current site cookies",
 };
 
-export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard }) => {
+export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, deleteCookie }) => {
+  const copyAll = useCallback(() => copyToClipboard(cookies), [cookies, copyToClipboard]);
+
   return (
     <Table { ...tableProps }>
       <TableHeader>
         <TableColumn key="name" width="25%">Name</TableColumn>
-        <TableColumn key="path" width="15%">Path</TableColumn>
-        <TableColumn key="value" width="60%">
-          <div className="flex flex-row justify-between items-center">
-            <span>Value</span>
-            <CopyButton title="Copy all cookies." onClick={ copyToClipboard }/>
-          </div>
+        <TableColumn key="path" width="13%">Path</TableColumn>
+        <TableColumn key="value" width="55%">Value</TableColumn>
+        <TableColumn key="action" width="8%">
+          <CopyButton title="Copy all cookies." onClick={ copyAll }/>
         </TableColumn>
       </TableHeader>
       <TableBody items={ cookies } emptyContent={ 'No cookies.' }>
@@ -45,6 +47,9 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard }
             </TableCell>
             <TableCell>
               <CookiesTableCell value={ item.value }/>
+            </TableCell>
+            <TableCell>
+              <DeleteButton title="Delete cookie" onClick={() => deleteCookie(item) }/>
             </TableCell>
           </TableRow>
         }
