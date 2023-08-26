@@ -1,7 +1,7 @@
 import { If } from '@shared/components';
 import { useTimedValue } from '@shared/hooks';
 import { PageContext } from '@shared/hooks/page';
-import type { CSSProperties, FC, MouseEventHandler } from 'react';
+import type { CSSProperties, FC } from 'react';
 import React, { useCallback, useContext } from 'react';
 
 export interface CookiesTableCellProps {
@@ -22,13 +22,19 @@ export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   const { clipboard } = useContext(PageContext);
   const [copied, setCopied] = useTimedValue(false, 1500);
 
-  const onClickInternal: MouseEventHandler<HTMLDivElement> = useCallback(async () => {
+  const onClickInternal = useCallback(async () => {
     await clipboard.writeText(value);
     setCopied(true);
   }, [setCopied, clipboard]);
 
   return (
-    <div role="button" className="cursor-pointer select-none" title={ value } style={ styles } onClick={ onClickInternal }>
+    <div role="button"
+         className="cursor-pointer select-none"
+         tabIndex={ 0 }
+         title={ value }
+         style={ styles }
+         onClick={ onClickInternal }
+         onKeyDown={ onClickInternal }>
       <If condition={ !copied }>
         { value }
       </If>

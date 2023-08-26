@@ -4,16 +4,21 @@ import { useCookies, useTabs } from '@shared/hooks';
 import { useWindowSize } from '@shared/hooks/page';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
-export const split = (header: string, url: string, path: string): chrome.cookies.SetDetails[] => {
-  const cookiesLines = header.split(/;/);
+type SetDetails = chrome.cookies.SetDetails;
 
-  return cookiesLines.map<chrome.cookies.SetDetails>((line) => {
-    const keyVal = line.split('=');
-    const name = keyVal[0];
-    const value = keyVal.length > 1 ? keyVal[1] : '';
+export const split = (header: string, url: string, path: string): SetDetails[] => {
+  if (!header) {
+    return [];
+  }
 
-    return { url, value, name, path };
-  });
+  return header.split(';')
+    .map<SetDetails>(line => {
+      const keyVal = line.split('=');
+      const name = keyVal[0];
+      const value = keyVal.length > 1 ? keyVal[1] : '';
+
+      return { url, value, name, path };
+    });
 };
 
 const value = (event: Event | React.FormEvent<HTMLElement>) =>
