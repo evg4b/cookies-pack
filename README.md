@@ -15,7 +15,7 @@
 
 ## Required permissions:
 
-"cookies" and "activeTab" - to query and modify cookies for any hosts.
+"cookies" and "<all_urls>" - to query and modify cookies for any hosts.
 
 ## Source code:
 
