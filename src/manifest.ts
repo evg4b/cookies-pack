@@ -18,7 +18,8 @@ const manifest: Manifest.WebExtensionManifest = {
     128: 'icon-128.png',
     512: 'icon-512.png',
   },
-  permissions: ['cookies', 'activeTab']
+  permissions: ['cookies'],
+  host_permissions: ['<all_urls>'],
 };
 
 export default manifest;

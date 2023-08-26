@@ -1,14 +1,11 @@
 import { createContext, useContext, useEffect } from 'react';
 
-export interface PageContextType {
-  document: Document;
-  clipboard: Clipboard,
-}
-
-export const PageContext = createContext<PageContextType>({
+const defaultContext = {
   document,
   clipboard: navigator.clipboard,
-});
+};
+
+export const PageContext = createContext(defaultContext);
 
 export const useWindowSize = (width: number, height: number) => {
   const { document } = useContext(PageContext);

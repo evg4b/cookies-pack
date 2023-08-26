@@ -1,4 +1,4 @@
-import { useTabs } from '@shared/hooks/with-chrome';
+import { useTabs } from '@shared/hooks';
 import type { FC, PropsWithChildren } from 'react';
 import { useEffect, useState } from 'react';
 import { NotSupportingBanner } from './NotSupportingBanner';
