@@ -25,8 +25,9 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard }
   return (
     <Table { ...tableProps }>
       <TableHeader>
-        <TableColumn key="name" width="30%">Name</TableColumn>
-        <TableColumn key="value" width="70%">
+        <TableColumn key="name" width="25%">Name</TableColumn>
+        <TableColumn key="path" width="15%">Path</TableColumn>
+        <TableColumn key="value" width="60%">
           <div className="flex flex-row justify-between items-center">
             <span>Value</span>
             <CopyButton title="Copy all cookies." onClick={ copyToClipboard }/>
@@ -38,6 +39,9 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard }
           <TableRow key={ item.name }>
             <TableCell>
               <CookiesTableCell value={ item.name }/>
+            </TableCell>
+            <TableCell>
+              <CookiesTableCell value={ item.path }/>
             </TableCell>
             <TableCell>
               <CookiesTableCell value={ item.value }/>
