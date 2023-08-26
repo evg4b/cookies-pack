@@ -26,7 +26,7 @@ const join = (cookies: Cookie[]): string => {
   return cookies.map((cookie) => cookie.name + '=' + encodeURIComponent(cookie.value)).join(';');
 };
 
-export const CookiesContainer = () => {
+export const Cookies = () => {
   useWindowSize(800, 500);
 
   const tabs = useTabs();

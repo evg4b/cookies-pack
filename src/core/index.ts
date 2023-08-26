@@ -1,1 +1,1 @@
-export { CookiesContainer } from './cookies.container';
+export { Cookies } from './Cookies';
