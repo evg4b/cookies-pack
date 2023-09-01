@@ -3,6 +3,7 @@ import { Button, Checkbox, Divider, Input, Textarea } from '@nextui-org/react';
 import { useCookies, useTabs } from '@shared/hooks';
 import { PageContext, useWindowSize } from '@shared/hooks/page';
 import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type SetDetails = chrome.cookies.SetDetails;
 
@@ -26,9 +27,10 @@ const checked = (event: ChangeEvent<HTMLInputElement>) => event.target.checked;
 const join = (cookies: Cookie[]): string => cookies
   .map((cookie) => cookie.name + '=' + encodeURIComponent(cookie.value)).join(';\n');
 
-export const Cookies = () => {
+const Cookies = () => {
   useWindowSize(800, 500);
 
+  const { t } = useTranslation();
   const tabs = useTabs();
   const cookiesJar = useCookies();
   const { clipboard } = useContext(PageContext);
@@ -135,12 +137,14 @@ export const Cookies = () => {
       <div className="flex flex-row justify-between">
         <Checkbox isSelected={ clear }
                   onChange={ (event) => setClear(checked(event)) }>
-          Clear existing cookies first
+          { t('clear_existing_cookies_first') }
         </Checkbox>
         <Button size="sm" color="primary" variant="solid" onClick={ updateCookies }>
-          Set Cookies
+          { t('set_cookies') }
         </Button>
       </div>
     </div>
   );
 };
+
+export default Cookies;

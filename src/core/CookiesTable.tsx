@@ -1,10 +1,11 @@
-import { CookiesTableCell } from '@core/CookiesTableCell';
-import { CopyButton } from '@core/CopyButton';
-import { DeleteButton } from '@core/DeleteButton';
+import CookiesTableCell from '@core/CookiesTableCell';
+import CopyButton from '@core/CopyButton';
+import DeleteButton from '@core/DeleteButton';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import type { TableProps } from '@nextui-org/table/dist/table';
 import type { FC } from 'react';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface CookiesTableProps {
   cookies: Cookie[];
@@ -20,23 +21,23 @@ const tableProps: TableProps = {
   classNames: {
     base: 'table-height overflow-scroll',
   },
-  'aria-label': "Current site cookies",
 };
 
 export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, deleteCookie }) => {
+  const { t } = useTranslation(['cookies_table']);
   const copyAll = useCallback(() => copyToClipboard(cookies), [cookies, copyToClipboard]);
 
   return (
-    <Table { ...tableProps }>
+    <Table { ...tableProps } aria-label={ t('aria_label') }>
       <TableHeader>
-        <TableColumn key="name" width="25%">Name</TableColumn>
-        <TableColumn key="path" width="13%">Path</TableColumn>
-        <TableColumn key="value" width="55%">Value</TableColumn>
+        <TableColumn key="name" width="25%">{ t('columns.name') }</TableColumn>
+        <TableColumn key="path" width="13%">{ t('columns.path') }</TableColumn>
+        <TableColumn key="value" width="55%">{ t('columns.value') }</TableColumn>
         <TableColumn key="action" width="8%">
-          <CopyButton title="Copy all cookies." onClick={ copyAll }/>
+          <CopyButton title={ t("copy_all_cookies") } onClick={ copyAll }/>
         </TableColumn>
       </TableHeader>
-      <TableBody items={ cookies } emptyContent={ 'No cookies.' }>
+      <TableBody items={ cookies } emptyContent={ t('no_cookies') }>
         { (item) =>
           <TableRow key={ item.name }>
             <TableCell>
@@ -49,7 +50,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
               <CookiesTableCell value={ item.value }/>
             </TableCell>
             <TableCell>
-              <DeleteButton title="Delete cookie" onClick={ () => deleteCookie(item) }/>
+              <DeleteButton title={ t('delete_cookie') } onClick={ () => deleteCookie(item) }/>
             </TableCell>
           </TableRow>
         }

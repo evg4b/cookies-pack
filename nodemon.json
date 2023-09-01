@@ -7,7 +7,7 @@
     "utils",
     "vite.config.ts"
   ],
-  "ext": "tsx,css,html,ts",
+  "ext": "tsx,css,html,ts,json",
   "ignore": [
     "src/**/*.spec.ts"
   ],
