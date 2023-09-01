@@ -1,13 +1,9 @@
 import * as fs from 'fs';
-import * as path from 'path';
+import { resolve } from 'path';
 import type { PluginOption } from 'vite';
 import manifest from '../src/manifest';
 
-const { resolve } = path;
-
-const outDir = resolve(__dirname, '..', 'public');
-
-export function makeManifest(): PluginOption {
+export function makeManifest(outDir: string): PluginOption {
   return {
     name: 'make-manifest',
     buildEnd() {
