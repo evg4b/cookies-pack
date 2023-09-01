@@ -6,19 +6,15 @@ import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from
 
 type SetDetails = chrome.cookies.SetDetails;
 
-export const split = (header: string, url: string, path: string): SetDetails[] => {
-  if (!header) {
-    return [];
-  }
+export const split = (header: string | null | undefined, url: string, path: string): SetDetails[] => {
+  return header
+    ? header.split(/;\n?/)
+      .map<SetDetails>(line => {
+        const [name, value] = line.split('=');
 
-  return header.split(/;\n?/)
-    .map<SetDetails>(line => {
-      const keyVal = line.split('=');
-      const name = keyVal[0];
-      const value = keyVal.length > 1 ? keyVal[1] : '';
-
-      return { url, value, name, path };
-    });
+        return { url, path, name, value: value ?? '' };
+      })
+    : [];
 };
 
 const value = (event: Event | React.FormEvent<HTMLElement>) =>
@@ -27,9 +23,8 @@ const value = (event: Event | React.FormEvent<HTMLElement>) =>
 
 const checked = (event: ChangeEvent<HTMLInputElement>) => event.target.checked;
 
-const join = (cookies: Cookie[]): string => {
-  return cookies.map((cookie) => cookie.name + '=' + encodeURIComponent(cookie.value)).join(';\n');
-};
+const join = (cookies: Cookie[]): string => cookies
+  .map((cookie) => cookie.name + '=' + encodeURIComponent(cookie.value)).join(';\n');
 
 export const Cookies = () => {
   useWindowSize(800, 500);
@@ -98,8 +93,8 @@ export const Cookies = () => {
   }, [customPath, currentPath]);
 
   const updateCookies = useCallback(() => {
-    setCookiesCallback(clear, path, newCookies);
-    setNewCookies('');
+    setCookiesCallback(clear, path, newCookies)
+      .then(() => setNewCookies(''));
   }, [setCookiesCallback, clear, path, newCookies, setNewCookies]);
 
   const copyToClipboard = useCallback(async (value: string | Cookie[]) => {
@@ -120,15 +115,17 @@ export const Cookies = () => {
     <div className="flex flex-col gap-2">
       <CookiesTable cookies={ cookies } copyToClipboard={ copyToClipboard } deleteCookie={ deleteCookie }/>
       <Divider className="my-4"/>
-      <Textarea rows={ 7 } minRows={ 7 } maxRows={ 7 } value={ newCookies } onInput={ (event) => setNewCookies(value(event)) }
+      <Textarea rows={ 7 }
+                minRows={ 7 }
+                maxRows={ 7 }
+                value={ newCookies }
+                onInput={ (event) => setNewCookies(value(event)) }
                 placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>
       <div className="flex flex-row justify-between gap-2">
-        <Input
-          placeholder="Cookies path"
-          disabled={ !customPath }
-          value={ customPath ? path : '' }
-          onChange={ (event) => setPath(value(event)) }
-        />
+        <Input placeholder="Cookies path"
+               disabled={ !customPath }
+               value={ customPath ? path : '' }
+               onChange={ (event) => setPath(value(event)) }/>
         <Checkbox isSelected={ customPath } onChange={ (event) => setCustomPath(checked(event)) }>
           <div className="whitespace-nowrap">
             Custom path
@@ -136,7 +133,8 @@ export const Cookies = () => {
         </Checkbox>
       </div>
       <div className="flex flex-row justify-between">
-        <Checkbox isSelected={ clear } onChange={ (event) => setClear(checked(event)) }>
+        <Checkbox isSelected={ clear }
+                  onChange={ (event) => setClear(checked(event)) }>
           Clear existing cookies first
         </Checkbox>
         <Button size="sm" color="primary" variant="solid" onClick={ updateCookies }>
