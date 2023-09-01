@@ -3,6 +3,7 @@ import { useTimedValue } from '@shared/hooks';
 import { PageContext } from '@shared/hooks/page';
 import type { CSSProperties, FC } from 'react';
 import React, { useCallback, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface CookiesTableCellProps {
   value: string;
@@ -18,13 +19,13 @@ const spanStyles = {
   color: 'rgb(161, 161, 170)',
 };
 
-export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
+const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   const { clipboard } = useContext(PageContext);
+  const { t } = useTranslation(['cookies_table', 'cell']);
   const [copied, setCopied] = useTimedValue(false, 1500);
 
-  const onClickInternal = useCallback(async () => {
-    await clipboard.writeText(value);
-    setCopied(true);
+  const onClickInternal = useCallback(() => {
+    clipboard.writeText(value).finally(() => setCopied(true));
   }, [setCopied, clipboard]);
 
   return (
@@ -39,8 +40,12 @@ export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
         { value }
       </If>
       <If condition={ copied }>
-        <span style={ spanStyles }>Copied</span>
+        <span style={ spanStyles }>
+          { t('copied') }
+        </span>
       </If>
     </div>
   );
 };
+
+export default CookiesTableCell;

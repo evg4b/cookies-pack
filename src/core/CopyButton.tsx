@@ -10,7 +10,7 @@ interface CopyButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-export const CopyButton: FC<CopyButtonProps> = ({ title, onClick }) => {
+const CopyButton: FC<CopyButtonProps> = ({ title, onClick }) => {
   const [copied, setCopied] = useTimedValue(false, 1500);
 
   const onClickInternal: MouseEventHandler<HTMLButtonElement> = useCallback(event => {
@@ -29,3 +29,5 @@ export const CopyButton: FC<CopyButtonProps> = ({ title, onClick }) => {
     </Button>
   );
 };
+
+export default CopyButton;

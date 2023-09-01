@@ -8,10 +8,12 @@ interface CopyButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-export const DeleteButton: FC<CopyButtonProps> = ({ title, onClick }) => {
+const DeleteButton: FC<CopyButtonProps> = ({ title, onClick }) => {
   return (
     <Button title={ title } size="sm" isIconOnly variant="light" onClick={ onClick }>
       <TrashIcon className="w-4 h-4"/>
     </Button>
   );
 };
+
+export default DeleteButton;

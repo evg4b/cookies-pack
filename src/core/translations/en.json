@@ -1,0 +1,21 @@
+{
+  "translation": {
+    "set_cookies": "Set Cookies",
+    "clear_existing_cookies_first": "Clear existing cookies first",
+    "not_supported": "This page is not supported"
+  },
+  "cookies_table": {
+    "no_cookies": "No cookies.",
+    "delete_cookie": "Delete cookie",
+    "copy_all_cookies": "Copy all cookies.",
+    "aria_label": "Current site cookies",
+    "columns": {
+      "name": "Name",
+      "path": "Path",
+      "value": "Value"
+    },
+    "cell": {
+      "copied": "Copied!"
+    }
+  }
+}
