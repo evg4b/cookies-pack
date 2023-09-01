@@ -27,9 +27,6 @@
       "@src/*": [
         "src/*"
       ],
-      "@assets/*": [
-        "src/assets/*"
-      ],
       "@core/*": [
         "src/core/*"
       ],

@@ -30,6 +30,7 @@
   "rules": {
     "semi": "off",
     "comma-dangle": "off",
+    // typescript
     "@typescript-eslint/semi": [
       "error",
       "always"

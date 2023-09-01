@@ -49,7 +49,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
               <CookiesTableCell value={ item.value }/>
             </TableCell>
             <TableCell>
-              <DeleteButton title="Delete cookie" onClick={() => deleteCookie(item) }/>
+              <DeleteButton title="Delete cookie" onClick={ () => deleteCookie(item) }/>
             </TableCell>
           </TableRow>
         }

@@ -3,18 +3,16 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import { makeManifest } from './plugins';
 
-const root = resolve(__dirname, 'src');
-const assetsDir = resolve(root, 'assets');
-const sharedDir = resolve(root, 'shared');
-const coreDir = resolve(root, 'core');
+const sourceRoot = resolve(__dirname, 'src');
+const sharedDir = resolve(sourceRoot, 'shared');
+const coreDir = resolve(sourceRoot, 'core');
 const outDir = resolve(__dirname, 'dist');
 const publicDir = resolve(__dirname, 'public');
 
 export default defineConfig({
   resolve: {
     alias: {
-      '@src': root,
-      '@assets': assetsDir,
+      '@src': sourceRoot,
       '@core': coreDir,
       '@shared': sharedDir,
     },
@@ -23,15 +21,15 @@ export default defineConfig({
     react(),
     makeManifest(),
   ],
-  publicDir,
+  publicDir: publicDir,
   build: {
     outDir,
     sourcemap: process.env.__DEV__ === 'true',
     emptyOutDir: false,
     rollupOptions: {
       input: {
-        popup: resolve(root, 'popup', 'index.html'),
-        options: resolve(root, 'options', 'index.html'),
+        popup: resolve(sourceRoot, 'popup', 'index.html'),
+        options: resolve(sourceRoot, 'options', 'index.html'),
       },
       output: {
         entryFileNames: (chunk) => `src/${ chunk.name }/index.js`,
