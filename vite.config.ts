@@ -3,11 +3,13 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import { makeManifest } from './plugins';
 
+const debug = process.env.__DEV__ === 'true';
+
 const sourceRoot = resolve(__dirname, 'src');
 const sharedDir = resolve(sourceRoot, 'shared');
 const coreDir = resolve(sourceRoot, 'core');
 const outDir = resolve(__dirname, 'dist');
-const publicDir = resolve(__dirname, 'public');
+const publicDir = resolve(__dirname, 'public', debug ? 'dev' : 'prod');
 
 export default defineConfig({
   resolve: {
@@ -19,12 +21,12 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    makeManifest(),
+    makeManifest(publicDir),
   ],
   publicDir: publicDir,
   build: {
     outDir,
-    sourcemap: process.env.__DEV__ === 'true',
+    sourcemap: debug,
     emptyOutDir: false,
     rollupOptions: {
       input: {
