@@ -1,41 +1,27 @@
+import { crx } from '@crxjs/vite-plugin';
 import react from '@vitejs/plugin-react-swc';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import { makeManifest } from './plugins';
+import { manifest } from './manifest';
 
 const debug = process.env.__DEV__ === 'true';
-
 const sourceRoot = resolve(__dirname, 'src');
-const sharedDir = resolve(sourceRoot, 'shared');
-const coreDir = resolve(sourceRoot, 'core');
-const outDir = resolve(__dirname, 'dist');
-const publicDir = resolve(__dirname, 'public', debug ? 'dev' : 'prod');
 
 export default defineConfig({
   resolve: {
     alias: {
       '@src': sourceRoot,
-      '@core': coreDir,
-      '@shared': sharedDir,
+      '@core': resolve(sourceRoot, 'core'),
+      '@shared': resolve(sourceRoot, 'shared'),
     },
   },
   plugins: [
     react(),
-    makeManifest(publicDir),
+    crx({ manifest }),
   ],
-  publicDir: publicDir,
   build: {
-    outDir,
+    outDir: resolve(__dirname, 'dist'),
     sourcemap: debug,
     emptyOutDir: false,
-    rollupOptions: {
-      input: {
-        popup: resolve(sourceRoot, 'popup', 'index.html'),
-        options: resolve(sourceRoot, 'options', 'index.html'),
-      },
-      output: {
-        entryFileNames: (chunk) => `src/${ chunk.name }/index.js`,
-      },
-    },
   },
 });
