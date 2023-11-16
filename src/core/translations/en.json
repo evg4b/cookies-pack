@@ -1,6 +1,7 @@
 {
   "translation": {
-    "set_cookies": "Set Cookies",
+    "add_cookies": "Add Cookies",
+    "replace_cookies": "Replace Cookies",
     "clear_existing_cookies_first": "Clear existing cookies first",
     "not_supported": "This page is not supported"
   },

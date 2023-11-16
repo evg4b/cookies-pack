@@ -140,7 +140,7 @@ const Cookies = () => {
           { t('clear_existing_cookies_first') }
         </Checkbox>
         <Button size="sm" color="primary" variant="solid" onClick={ updateCookies }>
-          { t('set_cookies') }
+          { clear ? t('replace_cookies') : t('add_cookies') }
         </Button>
       </div>
     </div>
