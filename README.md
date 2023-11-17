@@ -12,6 +12,7 @@
 - Delete a cookie
 - Delete all cookies at once
 - Import or update cookies from a standard HTTP header string
+- Export cookies to [JetBrains http client format](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#manage_cookies)
 
 ## Required permissions:
 
