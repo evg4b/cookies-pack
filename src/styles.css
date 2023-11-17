@@ -1,9 +1,16 @@
-html,
-body,
+html, body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    background: black;
+}
+
 body > div,
 body > div > main {
+    flex: 1 1 auto;
     height: 100%;
     width: 100%;
+    background: black;
 }
 
 body > div > main {
