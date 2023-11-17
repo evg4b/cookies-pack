@@ -9,6 +9,7 @@
     "no_cookies": "No cookies.",
     "delete_cookie": "Delete cookie",
     "copy_all_cookies": "Copy all cookies.",
+    "export_all_cookies": "Export all cookies.",
     "aria_label": "Current site cookies",
     "columns": {
       "name": "Name",

@@ -243,7 +243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.2":
+"@babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.2":
   version: 7.23.2
   resolution: "@babel/runtime@npm:7.23.2"
   dependencies:
@@ -3304,6 +3304,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/date-fns@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "@types/date-fns@npm:2.6.0"
+  dependencies:
+    date-fns: "npm:*"
+  checksum: d39ac03630001aa244d57a88ca08e91d3e7ff95c11979f1ccddba39e456735e15644dbbb706e1bc61458d3dbb70e6258f113784f6adc4f23b9fdea6dc830eb62
+  languageName: node
+  linkType: hard
+
 "@types/filesystem@npm:*":
   version: 0.0.35
   resolution: "@types/filesystem@npm:0.0.35"
@@ -3388,6 +3397,13 @@ __metadata:
   version: 7.5.5
   resolution: "@types/semver@npm:7.5.5"
   checksum: bb1b525221d93c9e7b45914af5ed1729a5bfdfa80927d6b02bcb4550ff7015f8c713152c32cb679ffcc79e77c0dda66d1f972ff5ee8d2205336729c51198bb18
+  languageName: node
+  linkType: hard
+
+"@types/wicg-file-system-access@npm:^2023.10.3":
+  version: 2023.10.3
+  resolution: "@types/wicg-file-system-access@npm:2023.10.3"
+  checksum: 4367d61e3aa9db2b731c8624ed095710d9411db80a211d44ca10a979b809566fe07dbab655c58d96604fb97fb3b1777922df2af25aeda3f599afa29f1e1ba613
   languageName: node
   linkType: hard
 
@@ -4175,14 +4191,17 @@ __metadata:
     "@nextui-org/system": "npm:^2.0.15"
     "@nextui-org/theme": "npm:^2.1.17"
     "@types/chrome": "npm:^0.0.251"
+    "@types/date-fns": "npm:^2.6.0"
     "@types/node": "npm:^20.9.1"
     "@types/react": "npm:^18.2.37"
     "@types/react-dom": "npm:^18.2.15"
+    "@types/wicg-file-system-access": "npm:^2023.10.3"
     "@typescript-eslint/eslint-plugin": "npm:^6.11.0"
     "@typescript-eslint/parser": "npm:^6.11.0"
     "@vitejs/plugin-react-swc": "npm:^3.5.0"
     autoprefixer: "npm:^10.4.16"
     classnames: "npm:^2.3.2"
+    date-fns: "npm:^2.30.0"
     eslint: "npm:^8.53.0"
     eslint-plugin-import: "npm:^2.29.0"
     eslint-plugin-jsx-a11y: "npm:^6.8.0"
@@ -4252,6 +4271,15 @@ __metadata:
   version: 1.0.8
   resolution: "damerau-levenshtein@npm:1.0.8"
   checksum: 4c2647e0f42acaee7d068756c1d396e296c3556f9c8314bac1ac63ffb236217ef0e7e58602b18bb2173deec7ec8e0cac8e27cccf8f5526666b4ff11a13ad54a3
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:*, date-fns@npm:^2.30.0":
+  version: 2.30.0
+  resolution: "date-fns@npm:2.30.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.21.0"
+  checksum: e4b521fbf22bc8c3db332bbfb7b094fd3e7627de0259a9d17c7551e2d2702608a7307a449206065916538e384f37b181565447ce2637ae09828427aed9cb5581
   languageName: node
   linkType: hard
 

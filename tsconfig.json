@@ -4,7 +4,8 @@
     "types": [
       "vite/client",
       "node",
-      "chrome"
+      "chrome",
+      "wicg-file-system-access"
     ],
     "lib": [
       "dom",
