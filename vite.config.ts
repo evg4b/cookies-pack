@@ -7,9 +7,6 @@ import { manifest } from './manifest';
 const debug = process.env.__DEV__ === 'true';
 const sourceRoot = resolve(__dirname, 'src');
 
-// Fixed incorrect navigator.userAgent in esbuild
-Object.assign(navigator, { userAgent: 'esbuild' });
-
 export default defineConfig({
   resolve: {
     alias: {
