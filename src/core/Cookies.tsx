@@ -33,7 +33,7 @@ const Cookies = () => {
   const { t } = useTranslation();
   const tabs = useTabs();
   const cookiesJar = useCookies();
-  const { clipboard } = useContext(PageContext);
+  const { clipboard, saveFile } = useContext(PageContext);
 
   const [currentPath, setCurrentPath] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
@@ -85,6 +85,18 @@ const Cookies = () => {
     [cookiesJar, currentUrl],
   );
 
+  const saveToCookieFile = useCallback(async (data: string) => {
+    await saveFile(data, {
+      suggestedName: 'demo.cookies',
+      types: [
+        {
+          description: 'JetBrains IDE cookies',
+          accept: { 'text/plain': ['.cookies'] },
+        },
+      ],
+    });
+  }, [saveFile]);
+
   const [customPath, setCustomPath] = useState(false);
   const [path, setPath] = useState('/');
   const [newCookies, setNewCookies] = useState('');
@@ -115,7 +127,10 @@ const Cookies = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <CookiesTable cookies={ cookies } copyToClipboard={ copyToClipboard } deleteCookie={ deleteCookie }/>
+      <CookiesTable cookies={ cookies }
+                    copyToClipboard={ copyToClipboard }
+                    saveToCookieFile={ saveToCookieFile }
+                    deleteCookie={ deleteCookie }/>
       <Divider className="my-4"/>
       <Textarea rows={ 7 }
                 minRows={ 7 }
