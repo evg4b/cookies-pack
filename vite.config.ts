@@ -22,6 +22,8 @@ export default defineConfig({
   build: {
     outDir: resolve(__dirname, 'dist'),
     sourcemap: debug,
+    minify: !debug,
+    cssMinify: !debug,
     emptyOutDir: false,
   },
 });
