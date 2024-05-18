@@ -18,6 +18,7 @@ export const manifest: ManifestV3Export = {
   name: debug ? `DEV: ${ pkg.displayName }` : pkg.displayName,
   version: pkg.version,
   description: pkg.description,
+  homepage_url: 'https://github.com/evg4b/cookies-pack',
   options_ui: {
     page: 'src/options/index.html',
   },
