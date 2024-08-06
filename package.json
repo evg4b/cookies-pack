@@ -25,7 +25,6 @@
     "@nextui-org/system": "^2.2.5",
     "@nextui-org/theme": "^2.2.9",
     "@types/chrome": "^0.0.269",
-    "@types/date-fns": "^2.6.0",
     "@types/node": "^22.1.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
