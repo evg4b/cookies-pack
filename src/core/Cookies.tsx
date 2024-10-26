@@ -13,6 +13,7 @@ export const split = (header: string | null | undefined, url: string, path: stri
       .map<SetDetails>(line => {
         const [name, value] = line.split('=');
 
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         return { url, path, name, value: value ?? '' };
       })
     : [];
