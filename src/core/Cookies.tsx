@@ -11,7 +11,7 @@ export const split = (header: string | null | undefined, url: string, path: stri
   return header
     ? header.split(/;\n?/)
       .map<SetDetails>(line => {
-        const [name, value] = line.split('=');
+        const [ name, value ] = line.split('=');
 
         return { url, path, name, value: value ?? '' };
       })
@@ -35,13 +35,13 @@ const Cookies = () => {
   const cookiesJar = useCookies();
   const { clipboard, saveFile } = useContext(PageContext);
 
-  const [currentPath, setCurrentPath] = useState<string>('');
-  const [currentUrl, setCurrentUrl] = useState<string>('');
-  const [cookies, setCookies] = useState<Cookie[]>([]);
+  const [ currentPath, setCurrentPath ] = useState<string>('');
+  const [ currentUrl, setCurrentUrl ] = useState<string>('');
+  const [ cookies, setCookies ] = useState<Cookie[]>([]);
 
   useEffect(
     () =>
-      tabs.query({ active: true, currentWindow: true }, async ([tab]) => {
+      tabs.query({ active: true, currentWindow: true }, async ([ tab ]) => {
         if (!tab.url) {
           return;
         }
@@ -51,7 +51,7 @@ const Cookies = () => {
         const siteCookies = await cookiesJar.getAll({ url: tab.url ?? '' });
         setCookies(siteCookies);
       }),
-    [tabs, cookiesJar],
+    [ tabs, cookiesJar ],
   );
 
   const setCookiesCallback = useCallback(
@@ -82,7 +82,7 @@ const Cookies = () => {
         alert(err.message);
       }
     },
-    [cookiesJar, currentUrl],
+    [ cookiesJar, currentUrl ],
   );
 
   const saveToCookieFile = useCallback(async (data: string) => {
@@ -91,25 +91,25 @@ const Cookies = () => {
       types: [
         {
           description: 'JetBrains IDE cookies',
-          accept: { 'text/plain': ['.cookies'] },
+          accept: { 'text/plain': [ '.cookies' ] },
         },
       ],
     });
-  }, [saveFile]);
+  }, [ saveFile ]);
 
-  const [customPath, setCustomPath] = useState(false);
-  const [path, setPath] = useState('/');
-  const [newCookies, setNewCookies] = useState('');
-  const [clear, setClear] = useState(true);
+  const [ customPath, setCustomPath ] = useState(false);
+  const [ path, setPath ] = useState('/');
+  const [ newCookies, setNewCookies ] = useState('');
+  const [ clear, setClear ] = useState(true);
 
   useEffect(() => {
     setPath(customPath ? currentPath : '/');
-  }, [customPath, currentPath]);
+  }, [ customPath, currentPath ]);
 
   const updateCookies = useCallback(() => {
     setCookiesCallback(clear, path, newCookies)
       .then(() => setNewCookies(''));
-  }, [setCookiesCallback, clear, path, newCookies, setNewCookies]);
+  }, [ setCookiesCallback, clear, path, newCookies, setNewCookies ]);
 
   const copyToClipboard = useCallback(async (value: string | Cookie[]) => {
     if (Array.isArray(value)) {
@@ -117,20 +117,21 @@ const Cookies = () => {
     } else {
       await clipboard.writeText(value);
     }
-  }, [clipboard]);
+  }, [ clipboard ]);
 
   const deleteCookie = useCallback(async ({ name, storeId }: Cookie) => {
     await cookiesJar.remove({ name, storeId, url: currentUrl });
     const siteCookies = await cookiesJar.getAll({ url: currentUrl });
     setCookies(siteCookies);
-  }, [cookies, currentUrl]);
+  }, [ cookies, currentUrl ]);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 overflow-hidden">
       <CookiesTable cookies={ cookies }
                     copyToClipboard={ copyToClipboard }
                     saveToCookieFile={ saveToCookieFile }
-                    deleteCookie={ deleteCookie }/>
+                    deleteCookie={ deleteCookie }
+      />
       <Divider className="my-4"/>
       <Textarea rows={ 7 }
                 minRows={ 7 }

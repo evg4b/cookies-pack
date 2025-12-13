@@ -13,10 +13,6 @@ body > div > main {
     background: black;
 }
 
-body > div > main {
-    padding: 2px;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -30,4 +26,36 @@ body > div > main {
     max-height: 200px;
     min-height: 200px;
     width: 100%;
+    padding-right: 10px;
+}
+
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.no-border-radius {
+    border-radius: 0 !important;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;;
+    background: #1d1d1f;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #27272a;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #3f3f47;
 }

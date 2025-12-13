@@ -6,8 +6,8 @@ import React from 'react';
 
 const Popup: FC = () =>
   <SupportingWrapper>
-    <Card>
-      <CardBody className="p-3">
+    <Card radius='none'>
+      <CardBody>
         <Cookies/>
       </CardBody>
     </Card>
