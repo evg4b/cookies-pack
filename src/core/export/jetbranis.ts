@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class JetbrainsCookies {
   private static readonly valueSeparator = '\t';
   private static readonly lineSeparator = '\n';
