@@ -2,7 +2,7 @@ import { If } from '@shared/components';
 import { useTimedValue } from '@shared/hooks';
 import { PageContext } from '@shared/hooks/page';
 import type { CSSProperties, FC } from 'react';
-import React, { useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export interface CookiesTableCellProps {
@@ -25,7 +25,8 @@ const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   const [copied, setCopied] = useTimedValue(false, 1500);
 
   const onClickInternal = useCallback(() => {
-    clipboard.writeText(value).finally(() => setCopied(true));
+    clipboard.writeText(value).finally(() => setCopied(true))
+      .then();
   }, [setCopied, clipboard]);
 
   return (

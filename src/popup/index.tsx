@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { initReactI18next } from "react-i18next";
 import '../styles.css';
 
-i18n.use(initReactI18next)
+await i18n.use(initReactI18next)
   .init({
     resources: translations,
     lng: "en", // if you're using a language detector, do not define the lng option

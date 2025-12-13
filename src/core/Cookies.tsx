@@ -155,7 +155,7 @@ const Cookies = () => {
                   onChange={ (event) => setClear(checked(event)) }>
           { t('clear_existing_cookies_first') }
         </Checkbox>
-        <Button size="sm" color="primary" variant="solid" onClick={ updateCookies }>
+        <Button size="sm" color="primary" variant="solid" onPress={ updateCookies }>
           { clear ? t('replace_cookies') : t('add_cookies') }
         </Button>
       </div>

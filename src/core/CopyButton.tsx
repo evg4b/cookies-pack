@@ -3,7 +3,7 @@ import { Button } from '@nextui-org/react';
 import { If } from '@shared/components';
 import { useTimedValue } from '@shared/hooks';
 import type { FC, MouseEventHandler } from 'react';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 interface CopyButtonProps {
   title?: string;
@@ -19,7 +19,7 @@ const CopyButton: FC<CopyButtonProps> = ({ title, onClick }) => {
   }, [setCopied, onClick]);
 
   return (
-    <Button title={ title } size="sm" isIconOnly variant="light" disabled={ copied } onClick={ onClickInternal }>
+    <Button title={ title } size="sm" isIconOnly variant="light" disabled={ copied } onPress={ onClickInternal }>
       <If condition={ !copied }>
         <ClipboardIcon className="w-4 h-4"/>
       </If>

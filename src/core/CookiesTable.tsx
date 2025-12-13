@@ -4,7 +4,7 @@ import DeleteButton from '@core/DeleteButton';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import type { TableProps } from '@nextui-org/table/dist/table';
 import type { CSSProperties, FC } from 'react';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import ExportButton from "@core/ExportButton";
 import { JetbrainsCookies } from "@core/export/jetbranis";
