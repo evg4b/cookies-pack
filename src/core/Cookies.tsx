@@ -133,23 +133,6 @@ const Cookies = () => {
                     saveToCookieFile={saveToCookieFile}
                     deleteCookie={deleteCookie}
       />
-      <Table>
-        <Table.ScrollContainer>
-          <Table.Content aria-label="Example table">
-            <Table.Header>
-              <Table.Column>Name</Table.Column>
-              <Table.Column>Role</Table.Column>
-            </Table.Header>
-            <Table.Body>
-              <Table.Row>
-                <Table.Cell>Kate Moore</Table.Cell>
-                <Table.Cell>CEO</Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          </Table.Content>
-        </Table.ScrollContainer>
-        <Table.Footer>{/* Optional footer content */}</Table.Footer>
-      </Table>
       <br/>
       <TextArea rows={7}
                 minRows={7}

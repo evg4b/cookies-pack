@@ -1,13 +1,13 @@
 import CookiesTableCell from '@core/CookiesTableCell';
 import CopyButton from '@core/CopyButton';
 import DeleteButton from '@core/DeleteButton';
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import type { TableProps } from '@nextui-org/table/dist/table';
+import { Icon } from '@iconify/react';
 import type { CSSProperties, FC } from 'react';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import ExportButton from '@core/ExportButton';
 import { JetbrainsCookies } from '@core/export/jetbranis';
+import { EmptyState, Table } from '@heroui/react';
 
 export interface CookiesTableProps {
   cookies: Cookie[];
@@ -18,16 +18,6 @@ export interface CookiesTableProps {
 
   deleteCookie(cookie: Cookie): void;
 }
-
-const tableProps: TableProps = {
-  layout: 'fixed',
-  removeWrapper: true,
-  isCompact: true,
-  isHeaderSticky: true,
-  classNames: {
-    base: 'table-height overflow-scroll',
-  },
-};
 
 const styles: CSSProperties = {
   display: 'flex',
@@ -47,36 +37,51 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
   }, [cookies, saveToCookieFile]);
 
   return (
-    <Table {...tableProps} aria-label={t('aria_label')}>
-      <TableHeader>
-        <TableColumn key="name" width="25%">{t('columns.name')}</TableColumn>
-        <TableColumn key="path" width="13%">{t('columns.path')}</TableColumn>
-        <TableColumn key="value" width="55%">{t('columns.value')}</TableColumn>
-        <TableColumn key="action" width="8%">
-          <div style={styles}>
-            <ExportButton title={t('export_all_cookies')} onClick={exportAll}/>
-            <CopyButton title={t('copy_all_cookies')} onClick={copyAll}/>
-          </div>
-        </TableColumn>
-      </TableHeader>
-      <TableBody items={cookies} emptyContent={t('no_cookies')}>
-        {(item) =>
-          <TableRow key={item.name}>
-            <TableCell>
-              <CookiesTableCell value={item.name}/>
-            </TableCell>
-            <TableCell>
-              <CookiesTableCell value={item.path}/>
-            </TableCell>
-            <TableCell>
-              <CookiesTableCell value={item.value}/>
-            </TableCell>
-            <TableCell>
-              <DeleteButton title={t('delete_cookie')} onClick={() => deleteCookie(item)}/>
-            </TableCell>
-          </TableRow>
-        }
-      </TableBody>
+    <Table variant="secondary">
+      <Table.ScrollContainer>
+        <Table.Content aria-label={t('aria_label')}>
+          <Table.Header>
+            <Table.Column isRowHeader key="name" width="25%">
+              {t('columns.name')}
+            </Table.Column>
+            <Table.Column key="path" width="13%">
+              {t('columns.path')}
+            </Table.Column>
+            <Table.Column key="value" width="55%">
+              {t('columns.value')}
+            </Table.Column>
+            <Table.Column key="action" width="8%">
+              <div style={styles}>
+                <ExportButton title={t('export_all_cookies')} onClick={exportAll}/>
+                <CopyButton title={t('copy_all_cookies')} onClick={copyAll}/>
+              </div>
+            </Table.Column>
+          </Table.Header>
+          <Table.Body renderEmptyState={() => (
+            <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center">
+              <Icon className="size-6 text-muted" icon="gravity-ui:tray"/>
+              <span className="text-sm text-muted">No results found</span>
+            </EmptyState>
+          )}>
+            {cookies.map((item) =>
+              <Table.Row key={item.name}>
+                <Table.Cell>
+                  <CookiesTableCell value={item.name}/>
+                </Table.Cell>
+                <Table.Cell>
+                  <CookiesTableCell value={item.path}/>
+                </Table.Cell>
+                <Table.Cell>
+                  <CookiesTableCell value={item.value}/>
+                </Table.Cell>
+                <Table.Cell>
+                  <DeleteButton title={t('delete_cookie')} onClick={() => deleteCookie(item)}/>
+                </Table.Cell>
+              </Table.Row>,
+            )}
+          </Table.Body>
+        </Table.Content>
+      </Table.ScrollContainer>
     </Table>
   );
 };
