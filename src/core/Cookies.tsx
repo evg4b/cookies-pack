@@ -137,6 +137,7 @@ const Cookies = () => {
                 minRows={7}
                 maxRows={7}
                 value={newCookies}
+                res
                 onInput={(event) => setNewCookies(value(event))}
                 placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>
       <div className="flex flex-row gap-2 w-full">

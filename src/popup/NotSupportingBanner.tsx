@@ -9,8 +9,8 @@ export const NotSupportingBanner: FC = () => {
 
   return (
     <main className="bg-background text-foreground flex flex-col items-center justify-center flex-1">
-      <Icon icon="heroicons-solid:emoji-sad" className="w-12 h-12 text-foreground"/>
-      <span>{t('not_supported')}</span>
+      <Icon icon="heroicons-solid:emoji-sad" className="w-12 h-12 text-muted"/>
+      <span className="text-muted">{t('not_supported')}</span>
     </main>
   );
 };

@@ -88,3 +88,10 @@ html, body {
     --warning-foreground: oklch(21.03% 0.0059 54.84);
   }
 }
+
+.table__cell {
+  padding: 2px 10px;
+}
+.table__cell .button--icon-only.button--sm {
+  transform: scale(0.8);
+}
