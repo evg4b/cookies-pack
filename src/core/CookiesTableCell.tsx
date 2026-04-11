@@ -1,3 +1,4 @@
+import { Table } from '@heroui/react';
 import { If } from '@shared/components';
 import { useTimedValue } from '@shared/hooks';
 import { PageContext } from '@shared/hooks/page';
@@ -30,22 +31,18 @@ const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   }, [setCopied, clipboard]);
 
   return (
-    <div role="button"
-         className="cursor-pointer select-none"
-         tabIndex={ 0 }
-         title={ value }
-         style={ styles }
-         onClick={ onClickInternal }
-         onKeyDown={ onClickInternal }>
-      <If condition={ !copied }>
-        { value }
+    <Table.Cell onClick={onClickInternal}
+                onKeyDown={onClickInternal} tabIndex={0}
+                className="cursor-pointer select-none">
+      <If condition={!copied}>
+        {value}
       </If>
-      <If condition={ copied }>
-        <span style={ spanStyles }>
-          { t('copied') }
-        </span>
+      <If condition={copied}>
+          <span style={spanStyles}>
+            {t('cell.copied')}
+          </span>
       </If>
-    </div>
+    </Table.Cell>
   );
 };
 

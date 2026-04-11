@@ -1,40 +1,16 @@
-import CookiesTableCell from '@core/CookiesTableCell';
-import CopyButton from '@core/CopyButton';
-import DeleteButton from '@core/DeleteButton';
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import type { TableProps } from '@nextui-org/table/dist/table';
-import type { CSSProperties, FC } from 'react';
+import { Icon } from '@iconify/react';
+import type { FC } from 'react';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import ExportButton from "@core/ExportButton";
-import { JetbrainsCookies } from "@core/export/jetbranis";
+import { JetbrainsCookies } from '@core/export/jetbranis';
+import { Button, ButtonGroup, EmptyState, Table, TableLayout, Virtualizer } from '@heroui/react';
 
 export interface CookiesTableProps {
   cookies: Cookie[];
-
   copyToClipboard(value: string | Cookie[]): void;
-
   saveToCookieFile(value: string): void;
-
   deleteCookie(cookie: Cookie): void;
 }
-
-const tableProps: TableProps = {
-  layout: 'fixed',
-  removeWrapper: true,
-  isCompact: true,
-  isHeaderSticky: true,
-  classNames: {
-    base: 'table-height overflow-scroll',
-  },
-};
-
-
-const styles: CSSProperties = {
-  display: 'flex',
-  gap: '7px',
-  marginLeft: '-100%',
-};
 
 export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, saveToCookieFile, deleteCookie }) => {
   const { t } = useTranslation(['cookies_table']);
@@ -48,36 +24,68 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
   }, [cookies, saveToCookieFile]);
 
   return (
-    <Table { ...tableProps } aria-label={ t('aria_label') }>
-      <TableHeader>
-        <TableColumn key="name" width="25%">{ t('columns.name') }</TableColumn>
-        <TableColumn key="path" width="13%">{ t('columns.path') }</TableColumn>
-        <TableColumn key="value" width="55%">{ t('columns.value') }</TableColumn>
-        <TableColumn key="action" width="8%">
-          <div style={ styles }>
-            <ExportButton title={ t("export_all_cookies") } onClick={ exportAll }/>
-            <CopyButton title={ t("copy_all_cookies") } onClick={ copyAll }/>
-          </div>
-        </TableColumn>
-      </TableHeader>
-      <TableBody items={ cookies } emptyContent={ t('no_cookies') }>
-        { (item) =>
-          <TableRow key={ item.name }>
-            <TableCell>
-              <CookiesTableCell value={ item.name }/>
-            </TableCell>
-            <TableCell>
-              <CookiesTableCell value={ item.path }/>
-            </TableCell>
-            <TableCell>
-              <CookiesTableCell value={ item.value }/>
-            </TableCell>
-            <TableCell>
-              <DeleteButton title={ t('delete_cookie') } onClick={ () => deleteCookie(item) }/>
-            </TableCell>
-          </TableRow>
-        }
-      </TableBody>
-    </Table>
+    <Virtualizer
+      layout={TableLayout}
+      layoutOptions={{
+        headingHeight: 32,
+        rowHeight: 32,
+      }}
+    >
+      <Table>
+        <Table.ScrollContainer>
+          <Table.Content className="h-75 min-w-175 overflow-auto">
+            <Table.Header className="h-full w-full">
+              <Table.Column isRowHeader id="name" minWidth={160}>
+                {t('columns.name')}
+              </Table.Column>
+              <Table.Column id="path" minWidth={220}>
+                {t('columns.path')}
+              </Table.Column>
+              <Table.Column id="value" minWidth={240}>
+                {t('columns.value')}
+              </Table.Column>
+              <Table.Column id="actions" minWidth={240}>
+                <ButtonGroup variant="tertiary" style={{ margin: '-6px' }}>
+                  <Button isIconOnly aria-label="Copy" size="sm" onPress={exportAll}>
+                    <Icon icon="heroicons-solid:download"/>
+                  </Button>
+                  <Button isIconOnly aria-label="Cut" size="sm" onPress={copyAll}>
+                    <ButtonGroup.Separator/>
+                    <Icon icon="heroicons-solid:clipboard-copy"/>
+                  </Button>
+                </ButtonGroup>
+              </Table.Column>
+            </Table.Header>
+            <Table.Body items={cookies} renderEmptyState={() => (
+              <EmptyState
+                className="flex h-full w-full flex-col items-center justify-center min-h-60 gap-4 text-center">
+                <Icon className="size-10 text-muted" icon="ci:cookie"/>
+                <span className="text-sm text-muted">
+                             No cookies found
+                           </span>
+              </EmptyState>
+            )}>
+              {(item) => (
+                <Table.Row id={`${item.storeId}:${item.domain}:${item.path}:${item.name}`}>
+                  <Table.Cell>
+                    <span style={{ textOverflow: 'clip' }}>
+                      {item.name}
+                    </span>
+                  </Table.Cell>
+                  <Table.Cell>{item.path}</Table.Cell>
+                  <Table.Cell>{item.value}</Table.Cell>
+                  <Table.Cell>
+                    <Button isIconOnly aria-label={t('delete_cookie')} size="sm" variant="danger-soft"
+                            onPress={() => deleteCookie(item)}>
+                      <Icon className="size-4" icon="gravity-ui:trash-bin"/>
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
+              )}
+            </Table.Body>
+          </Table.Content>
+        </Table.ScrollContainer>
+      </Table>
+    </Virtualizer>
   );
 };
