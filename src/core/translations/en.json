@@ -4,11 +4,12 @@
     "replace_cookies": "Replace Cookies",
     "clear_existing_cookies_first": "Clear existing cookies first",
     "use_custom_path": "Use custom path by default",
-    "not_supported": "This page is not supported"
-  },
-  "options": {
-    "title": "Default Settings",
-    "description": "These values are used as defaults when the popup opens."
+    "not_supported": "This page is not supported",
+    "settings": {
+      "title": "Default Settings",
+      "open": "Open settings",
+      "close": "Close settings"
+    }
   },
   "cookies_table": {
     "no_cookies": "No cookies.",
