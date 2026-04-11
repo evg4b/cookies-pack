@@ -4,7 +4,7 @@ import type { CSSProperties, FC } from 'react';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { JetbrainsCookies } from '@core/export/jetbranis';
-import { Button, EmptyState, Table } from '@heroui/react';
+import { Button, ButtonGroup, EmptyState, Table } from '@heroui/react';
 
 export interface CookiesTableProps {
   cookies: Cookie[];
@@ -48,30 +48,30 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
               <Table.Column key="value" defaultWidth="1fr">
                 {t('columns.value')}
               </Table.Column>
-              <Table.Column key="action" defaultWidth="0.1fr" minWidth={70}>
-                {/*<div style={styles}>*/}
-                {/*  <ExportButton title={t('export_all_cookies')} onClick={exportAll}/>*/}
-                {/*  <CopyButton title={t('copy_all_cookies')} onClick={copyAll}/>*/}
-                {/*</div>*/}
+              <Table.Column key="action" defaultWidth="0.1fr" minWidth={90}>
+                <ButtonGroup variant="tertiary" style={{ margin: '-10px' }}>
+                  <Button isIconOnly aria-label="Copy" size="sm" onPress={exportAll}>
+                    <Icon icon="heroicons-solid:download"/>
+                  </Button>
+                  <Button isIconOnly aria-label="Cut" size="sm" onPress={copyAll}>
+                    <ButtonGroup.Separator/>
+                    <Icon icon="heroicons-solid:clipboard-copy"/>
+                  </Button>
+                </ButtonGroup>
               </Table.Column>
             </Table.Header>
             <Table.Body renderEmptyState={() => (
               <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center">
                 <Icon className="size-6 text-muted" icon="gravity-ui:tray"/>
-                <span className="text-sm text-muted">No results found</span>
+                <span className="text-sm text-muted">
+                  No results found</span>
               </EmptyState>
             )}>
               {cookies.map((item) =>
                 <Table.Row key={item.name}>
-                  <Table.Cell>
-                    <CookiesTableCell value={item.name}/>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <CookiesTableCell value={item.path}/>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <CookiesTableCell value={item.value}/>
-                  </Table.Cell>
+                  <CookiesTableCell value={item.name}/>
+                  <CookiesTableCell value={item.path}/>
+                  <CookiesTableCell value={item.value}/>
                   <Table.Cell>
                     <div className="flex items-center gap-1">
                       <Button isIconOnly aria-label={t('delete_cookie')} size="sm" variant="danger-soft"

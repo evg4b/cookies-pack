@@ -1,16 +1,16 @@
-import { FaceFrownIcon } from '@heroicons/react/24/outline';
 import { useWindowSize } from '@shared/hooks/page';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Icon } from '@iconify/react';
 
 export const NotSupportingBanner: FC = () => {
   useWindowSize(400, 200);
   const { t } = useTranslation();
 
   return (
-    <div>
-      <FaceFrownIcon className="w-12 h-12"/>
-      {t('not_supported')}
-    </div>
+    <main className="bg-background text-foreground flex flex-col items-center justify-center flex-1">
+      <Icon icon="heroicons-solid:emoji-sad" className="w-12 h-12 text-foreground"/>
+      <span>{t('not_supported')}</span>
+    </main>
   );
 };
