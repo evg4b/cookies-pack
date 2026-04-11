@@ -4,7 +4,9 @@ import Cookies from '@core/Cookies';
 
 const Popup: FC = () =>
   <SupportingWrapper>
-    <Cookies/>
+    <main>
+      <Cookies/>
+    </main>
   </SupportingWrapper>
 ;
 

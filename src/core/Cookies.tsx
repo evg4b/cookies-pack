@@ -1,10 +1,9 @@
 import { CookiesTable } from '@core/CookiesTable';
-import { Button, Input, TextArea, Checkbox } from '@heroui/react';
+import { Button, Input, TextArea, Checkbox, Separator, Table, Label } from '@heroui/react';
 import { useCookies, useTabs } from '@shared/hooks';
 import { PageContext, useWindowSize } from '@shared/hooks/page';
 import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Table } from '@heroui/react';
 
 type SetDetails = chrome.cookies.SetDetails;
 
@@ -127,13 +126,13 @@ const Cookies = () => {
   }, [cookies, currentUrl]);
 
   return (
-    <div className="flex flex-col gap-2 overflow-hidden">
+    <div className="flex flex-col gap-2">
       <CookiesTable cookies={cookies}
                     copyToClipboard={copyToClipboard}
                     saveToCookieFile={saveToCookieFile}
                     deleteCookie={deleteCookie}
       />
-      <br/>
+      <Separator variant="tertiary"/>
       <TextArea rows={7}
                 minRows={7}
                 maxRows={7}
@@ -145,16 +144,23 @@ const Cookies = () => {
                disabled={!customPath}
                value={customPath ? path : ''}
                onChange={(event) => setPath(value(event))}/>
-        <Checkbox isSelected={customPath} onChange={(event) => setCustomPath(checked(event))}>
-          <div className="whitespace-nowrap">
-            Custom path
-          </div>
+        <Checkbox id="custom-path" isSelected={customPath} onChange={setCustomPath}>
+          <Checkbox.Control>
+            <Checkbox.Indicator/>
+          </Checkbox.Control>
+          <Checkbox.Content>
+            <Label htmlFor="custom-path">Custom path</Label>
+          </Checkbox.Content>
         </Checkbox>
       </div>
       <div className="flex flex-row justify-between">
-        <Checkbox isSelected={clear}
-                  onChange={(event) => setClear(checked(event))}>
-          {t('clear_existing_cookies_first')}
+        <Checkbox id="clear-existing" isSelected={clear} onChange={setClear}>
+          <Checkbox.Control>
+            <Checkbox.Indicator/>
+          </Checkbox.Control>
+          <Checkbox.Content>
+            <Label htmlFor="clear-existing">{t('clear_existing_cookies_first')}</Label>
+          </Checkbox.Content>
         </Checkbox>
         <Button size="sm" color="primary" variant="solid" onPress={updateCookies}>
           {clear ? t('replace_cookies') : t('add_cookies')}

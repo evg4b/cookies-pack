@@ -19,7 +19,7 @@ const CopyButton: FC<CopyButtonProps> = ({ title, onClick }) => {
   }, [setCopied, onClick]);
 
   return (
-    <Button title={title} size="sm" isIconOnly variant="light" disabled={copied} onPress={onClickInternal}>
+    <Button title={title} size="sm" isIconOnly variant="secondary" disabled={copied} onPress={onClickInternal}>
       <If condition={!copied}>
         <ClipboardIcon className="w-4 h-4"/>
       </If>
