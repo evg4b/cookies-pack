@@ -28,6 +28,7 @@ export const manifest: ManifestV3Export = {
   homepage_url: 'https://github.com/evg4b/cookies-pack',
   options_ui: {
     page: 'src/options/index.html',
+    open_in_tab: true,
   },
   action: {
     default_popup: 'src/popup/index.html',
