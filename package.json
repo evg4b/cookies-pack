@@ -57,6 +57,7 @@
   "dependencies": {
     "@heroui/react": "^3.0.2",
     "@heroui/styles": "^3.0.2",
-    "date-fns": "^4.1.0"
+    "date-fns": "^4.1.0",
+    "use-chrome-storage": "^1.3.2"
   }
 }

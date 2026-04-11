@@ -1,5 +1,5 @@
 import { CookiesTable } from '@core/CookiesTable';
-import { Button, Input, TextArea, Checkbox, Separator, Table, Label, Switch } from '@heroui/react';
+import { Button, Input, TextArea, Separator, Label, Switch } from '@heroui/react';
 import { useCookies, useTabs } from '@shared/hooks';
 import { PageContext, useWindowSize } from '@shared/hooks/page';
 import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
@@ -21,8 +21,6 @@ export const split = (header: string | null | undefined, url: string, path: stri
 const value = (event: Event | React.FormEvent<HTMLElement>) =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (event?.target as any).value;
-
-const checked = (event: ChangeEvent<HTMLInputElement>) => event.target.checked;
 
 const join = (cookies: Cookie[]): string => cookies
   .map((cookie) => cookie.name + '=' + encodeURIComponent(cookie.value)).join(';\n');
