@@ -6,8 +6,8 @@ import type { TableProps } from '@nextui-org/table/dist/table';
 import type { CSSProperties, FC } from 'react';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import ExportButton from "@core/ExportButton";
-import { JetbrainsCookies } from "@core/export/jetbranis";
+import ExportButton from '@core/ExportButton';
+import { JetbrainsCookies } from '@core/export/jetbranis';
 
 export interface CookiesTableProps {
   cookies: Cookie[];
@@ -29,7 +29,6 @@ const tableProps: TableProps = {
   },
 };
 
-
 const styles: CSSProperties = {
   display: 'flex',
   gap: '7px',
@@ -48,32 +47,32 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
   }, [cookies, saveToCookieFile]);
 
   return (
-    <Table { ...tableProps } aria-label={ t('aria_label') }>
+    <Table {...tableProps} aria-label={t('aria_label')}>
       <TableHeader>
-        <TableColumn key="name" width="25%">{ t('columns.name') }</TableColumn>
-        <TableColumn key="path" width="13%">{ t('columns.path') }</TableColumn>
-        <TableColumn key="value" width="55%">{ t('columns.value') }</TableColumn>
+        <TableColumn key="name" width="25%">{t('columns.name')}</TableColumn>
+        <TableColumn key="path" width="13%">{t('columns.path')}</TableColumn>
+        <TableColumn key="value" width="55%">{t('columns.value')}</TableColumn>
         <TableColumn key="action" width="8%">
-          <div style={ styles }>
-            <ExportButton title={ t("export_all_cookies") } onClick={ exportAll }/>
-            <CopyButton title={ t("copy_all_cookies") } onClick={ copyAll }/>
+          <div style={styles}>
+            <ExportButton title={t('export_all_cookies')} onClick={exportAll}/>
+            <CopyButton title={t('copy_all_cookies')} onClick={copyAll}/>
           </div>
         </TableColumn>
       </TableHeader>
-      <TableBody items={ cookies } emptyContent={ t('no_cookies') }>
-        { (item) =>
-          <TableRow key={ item.name }>
+      <TableBody items={cookies} emptyContent={t('no_cookies')}>
+        {(item) =>
+          <TableRow key={item.name}>
             <TableCell>
-              <CookiesTableCell value={ item.name }/>
+              <CookiesTableCell value={item.name}/>
             </TableCell>
             <TableCell>
-              <CookiesTableCell value={ item.path }/>
+              <CookiesTableCell value={item.path}/>
             </TableCell>
             <TableCell>
-              <CookiesTableCell value={ item.value }/>
+              <CookiesTableCell value={item.value}/>
             </TableCell>
             <TableCell>
-              <DeleteButton title={ t('delete_cookie') } onClick={ () => deleteCookie(item) }/>
+              <DeleteButton title={t('delete_cookie')} onClick={() => deleteCookie(item)}/>
             </TableCell>
           </TableRow>
         }

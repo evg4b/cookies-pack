@@ -1,4 +1,3 @@
-import { NextUIProvider } from '@nextui-org/system';
 import classNames from 'classnames';
 import type { FC, PropsWithChildren } from 'react';
 import { useEffect, useState } from 'react';
@@ -22,10 +21,8 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <NextUIProvider>
-      <main className={ classNames(themeMapping, 'text-foreground', 'bg-background') }>
-        { children }
-      </main>
-    </NextUIProvider>
+    <main className={classNames(themeMapping, 'text-foreground', 'bg-background')}>
+      {children}
+    </main>
   );
 };

@@ -1,9 +1,10 @@
 import { CookiesTable } from '@core/CookiesTable';
-import { Button, Checkbox, Divider, Input, Textarea } from '@nextui-org/react';
+import { Button, Input, TextArea, Checkbox } from '@heroui/react';
 import { useCookies, useTabs } from '@shared/hooks';
 import { PageContext, useWindowSize } from '@shared/hooks/page';
 import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Table } from '@heroui/react';
 
 type SetDetails = chrome.cookies.SetDetails;
 
@@ -11,7 +12,7 @@ export const split = (header: string | null | undefined, url: string, path: stri
   return header
     ? header.split(/;\n?/)
       .map<SetDetails>(line => {
-        const [ name, value ] = line.split('=');
+        const [name, value] = line.split('=');
 
         return { url, path, name, value: value ?? '' };
       })
@@ -35,13 +36,13 @@ const Cookies = () => {
   const cookiesJar = useCookies();
   const { clipboard, saveFile } = useContext(PageContext);
 
-  const [ currentPath, setCurrentPath ] = useState<string>('');
-  const [ currentUrl, setCurrentUrl ] = useState<string>('');
-  const [ cookies, setCookies ] = useState<Cookie[]>([]);
+  const [currentPath, setCurrentPath] = useState<string>('');
+  const [currentUrl, setCurrentUrl] = useState<string>('');
+  const [cookies, setCookies] = useState<Cookie[]>([]);
 
   useEffect(
     () =>
-      tabs.query({ active: true, currentWindow: true }, async ([ tab ]) => {
+      tabs.query({ active: true, currentWindow: true }, async ([tab]) => {
         if (!tab.url) {
           return;
         }
@@ -51,7 +52,7 @@ const Cookies = () => {
         const siteCookies = await cookiesJar.getAll({ url: tab.url ?? '' });
         setCookies(siteCookies);
       }),
-    [ tabs, cookiesJar ],
+    [tabs, cookiesJar],
   );
 
   const setCookiesCallback = useCallback(
@@ -82,7 +83,7 @@ const Cookies = () => {
         alert(err.message);
       }
     },
-    [ cookiesJar, currentUrl ],
+    [cookiesJar, currentUrl],
   );
 
   const saveToCookieFile = useCallback(async (data: string) => {
@@ -91,25 +92,25 @@ const Cookies = () => {
       types: [
         {
           description: 'JetBrains IDE cookies',
-          accept: { 'text/plain': [ '.cookies' ] },
+          accept: { 'text/plain': ['.cookies'] },
         },
       ],
     });
-  }, [ saveFile ]);
+  }, [saveFile]);
 
-  const [ customPath, setCustomPath ] = useState(false);
-  const [ path, setPath ] = useState('/');
-  const [ newCookies, setNewCookies ] = useState('');
-  const [ clear, setClear ] = useState(true);
+  const [customPath, setCustomPath] = useState(false);
+  const [path, setPath] = useState('/');
+  const [newCookies, setNewCookies] = useState('');
+  const [clear, setClear] = useState(true);
 
   useEffect(() => {
     setPath(customPath ? currentPath : '/');
-  }, [ customPath, currentPath ]);
+  }, [customPath, currentPath]);
 
   const updateCookies = useCallback(() => {
     setCookiesCallback(clear, path, newCookies)
       .then(() => setNewCookies(''));
-  }, [ setCookiesCallback, clear, path, newCookies, setNewCookies ]);
+  }, [setCookiesCallback, clear, path, newCookies, setNewCookies]);
 
   const copyToClipboard = useCallback(async (value: string | Cookie[]) => {
     if (Array.isArray(value)) {
@@ -117,46 +118,63 @@ const Cookies = () => {
     } else {
       await clipboard.writeText(value);
     }
-  }, [ clipboard ]);
+  }, [clipboard]);
 
   const deleteCookie = useCallback(async ({ name, storeId }: Cookie) => {
     await cookiesJar.remove({ name, storeId, url: currentUrl });
     const siteCookies = await cookiesJar.getAll({ url: currentUrl });
     setCookies(siteCookies);
-  }, [ cookies, currentUrl ]);
+  }, [cookies, currentUrl]);
 
   return (
     <div className="flex flex-col gap-2 overflow-hidden">
-      <CookiesTable cookies={ cookies }
-                    copyToClipboard={ copyToClipboard }
-                    saveToCookieFile={ saveToCookieFile }
-                    deleteCookie={ deleteCookie }
+      <CookiesTable cookies={cookies}
+                    copyToClipboard={copyToClipboard}
+                    saveToCookieFile={saveToCookieFile}
+                    deleteCookie={deleteCookie}
       />
-      <Divider className="my-4"/>
-      <Textarea rows={ 7 }
-                minRows={ 7 }
-                maxRows={ 7 }
-                value={ newCookies }
-                onInput={ (event) => setNewCookies(value(event)) }
+      <Table>
+        <Table.ScrollContainer>
+          <Table.Content aria-label="Example table">
+            <Table.Header>
+              <Table.Column>Name</Table.Column>
+              <Table.Column>Role</Table.Column>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>Kate Moore</Table.Cell>
+                <Table.Cell>CEO</Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table.Content>
+        </Table.ScrollContainer>
+        <Table.Footer>{/* Optional footer content */}</Table.Footer>
+      </Table>
+      <br/>
+      <TextArea rows={7}
+                minRows={7}
+                maxRows={7}
+                value={newCookies}
+                onInput={(event) => setNewCookies(value(event))}
                 placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>
       <div className="flex flex-row justify-between gap-2">
         <Input placeholder="Cookies path"
-               disabled={ !customPath }
-               value={ customPath ? path : '' }
-               onChange={ (event) => setPath(value(event)) }/>
-        <Checkbox isSelected={ customPath } onChange={ (event) => setCustomPath(checked(event)) }>
+               disabled={!customPath}
+               value={customPath ? path : ''}
+               onChange={(event) => setPath(value(event))}/>
+        <Checkbox isSelected={customPath} onChange={(event) => setCustomPath(checked(event))}>
           <div className="whitespace-nowrap">
             Custom path
           </div>
         </Checkbox>
       </div>
       <div className="flex flex-row justify-between">
-        <Checkbox isSelected={ clear }
-                  onChange={ (event) => setClear(checked(event)) }>
-          { t('clear_existing_cookies_first') }
+        <Checkbox isSelected={clear}
+                  onChange={(event) => setClear(checked(event))}>
+          {t('clear_existing_cookies_first')}
         </Checkbox>
-        <Button size="sm" color="primary" variant="solid" onPress={ updateCookies }>
-          { clear ? t('replace_cookies') : t('add_cookies') }
+        <Button size="sm" color="primary" variant="solid" onPress={updateCookies}>
+          {clear ? t('replace_cookies') : t('add_cookies')}
         </Button>
       </div>
     </div>
