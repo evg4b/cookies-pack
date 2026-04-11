@@ -46,10 +46,10 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
               </Table.Column>
               <Table.Column id="actions" minWidth={240}>
                 <ButtonGroup variant="tertiary" style={{ margin: '-6px' }}>
-                  <Button isIconOnly aria-label="Copy" size="sm" onPress={exportAll}>
+                  <Button isIconOnly aria-label={t('export_all_cookies')} size="sm" onPress={exportAll}>
                     <Icon icon="heroicons-solid:download"/>
                   </Button>
-                  <Button isIconOnly aria-label="Cut" size="sm" onPress={copyAll}>
+                  <Button isIconOnly aria-label={t('copy_all_cookies')} size="sm" onPress={copyAll}>
                     <ButtonGroup.Separator/>
                     <Icon icon="heroicons-solid:clipboard-copy"/>
                   </Button>
@@ -61,7 +61,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
                 className="flex h-full w-full flex-col items-center justify-center min-h-60 gap-4 text-center">
                 <Icon className="size-10 text-muted" icon="ci:cookie"/>
                 <span className="text-sm text-muted">
-                             No cookies found
+                             {t('no_cookies')}
                            </span>
               </EmptyState>
             )}>
