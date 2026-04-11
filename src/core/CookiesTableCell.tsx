@@ -42,7 +42,7 @@ const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
       </If>
       <If condition={ copied }>
         <span style={ spanStyles }>
-          { t('copied') }
+          { t('cell.copied') }
         </span>
       </If>
     </div>

@@ -4,7 +4,7 @@ import Cookies from '@core/Cookies';
 
 const Popup: FC = () =>
   <SupportingWrapper>
-    <main>
+    <main className="bg-background">
       <Cookies/>
     </main>
   </SupportingWrapper>

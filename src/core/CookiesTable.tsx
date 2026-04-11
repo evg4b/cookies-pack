@@ -34,10 +34,10 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
   }, [cookies, saveToCookieFile]);
 
   return (
-    <Table variant="secondary">
+    <Table>
       <Table.ResizableContainer>
         <Table.ScrollContainer>
-          <Table.Content aria-label={t('aria_label')}>
+          <Table.Content aria-label={t('aria_label')} className="h-full min-h-80 max-h-80">
             <Table.Header>
               <Table.Column isRowHeader key="name" defaultWidth="1fr">
                 {t('columns.name')}
@@ -74,14 +74,12 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
                   </Table.Cell>
                   <Table.Cell>
                     <div className="flex items-center gap-1">
-                      <Button isIconOnly size="sm" variant="danger-soft" onPress={() => deleteCookie(item)}>
+                      <Button isIconOnly aria-label={t('delete_cookie')} size="sm" variant="danger-soft"
+                              onPress={() => deleteCookie(item)}>
                         <Icon className="size-4" icon="gravity-ui:trash-bin"/>
                       </Button>
                     </div>
                   </Table.Cell>
-                  {/*<Table.Cell>*/}
-                  {/*  <DeleteButton title={t('delete_cookie')} onClick={() => deleteCookie(item)}/>*/}
-                  {/*</Table.Cell>*/}
                 </Table.Row>,
               )}
             </Table.Body>

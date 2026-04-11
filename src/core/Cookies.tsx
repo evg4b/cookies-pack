@@ -1,5 +1,5 @@
 import { CookiesTable } from '@core/CookiesTable';
-import { Button, Input, TextArea, Checkbox, Separator, Table, Label } from '@heroui/react';
+import { Button, Input, TextArea, Checkbox, Separator, Table, Label, Switch } from '@heroui/react';
 import { useCookies, useTabs } from '@shared/hooks';
 import { PageContext, useWindowSize } from '@shared/hooks/page';
 import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
@@ -139,30 +139,33 @@ const Cookies = () => {
                 value={newCookies}
                 onInput={(event) => setNewCookies(value(event))}
                 placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>
-      <div className="flex flex-row justify-between gap-2">
+      <div className="flex flex-row gap-2 w-full">
         <Input placeholder="Cookies path"
+               className="flex-1"
                disabled={!customPath}
                value={customPath ? path : ''}
                onChange={(event) => setPath(value(event))}/>
-        <Checkbox id="custom-path" isSelected={customPath} onChange={setCustomPath}>
-          <Checkbox.Control>
-            <Checkbox.Indicator/>
-          </Checkbox.Control>
-          <Checkbox.Content>
-            <Label htmlFor="custom-path">Custom path</Label>
-          </Checkbox.Content>
-        </Checkbox>
+        <Switch isSelected={customPath} onChange={setCustomPath}>
+          <Switch.Control>
+            <Switch.Thumb/>
+          </Switch.Control>
+          <Switch.Content>
+            <Label className="text-sm">Custom path</Label>
+          </Switch.Content>
+        </Switch>
       </div>
       <div className="flex flex-row justify-between">
-        <Checkbox id="clear-existing" isSelected={clear} onChange={setClear}>
-          <Checkbox.Control>
-            <Checkbox.Indicator/>
-          </Checkbox.Control>
-          <Checkbox.Content>
-            <Label htmlFor="clear-existing">{t('clear_existing_cookies_first')}</Label>
-          </Checkbox.Content>
-        </Checkbox>
-        <Button size="sm" color="primary" variant="solid" onPress={updateCookies}>
+        <Switch isSelected={clear} onChange={setClear}>
+          <Switch.Control>
+            <Switch.Thumb/>
+          </Switch.Control>
+          <Switch.Content>
+            <Label className="text-sm">
+              {t('clear_existing_cookies_first')}
+            </Label>
+          </Switch.Content>
+        </Switch>
+        <Button size="sm" color="primary" onPress={updateCookies}>
           {clear ? t('replace_cookies') : t('add_cookies')}
         </Button>
       </div>
