@@ -1,8 +1,8 @@
 import { CookiesTable } from '@core/CookiesTable';
 import { Button, Input, TextArea, Checkbox, Separator, Table, Label, Switch } from '@heroui/react';
-import { useCookies, useTabs } from '@shared/hooks';
+import { useCookies, useSettings, useTabs } from '@shared/hooks';
 import { PageContext, useWindowSize } from '@shared/hooks/page';
-import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type SetDetails = chrome.cookies.SetDetails;
@@ -97,10 +97,21 @@ const Cookies = () => {
     });
   }, [saveFile]);
 
+  const { settings, loading: settingsLoading } = useSettings();
+  const settingsApplied = useRef(false);
+
   const [customPath, setCustomPath] = useState(false);
   const [path, setPath] = useState('/');
   const [newCookies, setNewCookies] = useState('');
   const [clear, setClear] = useState(true);
+
+  useEffect(() => {
+    if (!settingsLoading && !settingsApplied.current) {
+      settingsApplied.current = true;
+      setCustomPath(settings.useCustomPath);
+      setClear(settings.clearExistingCookiesFirst);
+    }
+  }, [settingsLoading, settings]);
 
   useEffect(() => {
     setPath(customPath ? currentPath : '/');
