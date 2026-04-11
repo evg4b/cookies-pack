@@ -22,7 +22,7 @@ const spanStyles = {
 
 const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   const { clipboard } = useContext(PageContext);
-  const { t } = useTranslation(['cookies_table', 'cell']);
+  const { t } = useTranslation(['cookies_table']);
   const [copied, setCopied] = useTimedValue(false, 1500);
 
   const onClickInternal = useCallback(() => {

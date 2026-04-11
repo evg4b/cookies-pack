@@ -15,9 +15,10 @@ const image = (fileName: string) => {
 
 export const manifest: ManifestV3Export = {
   manifest_version: 3,
-  name: debug ? `DEV: ${ pkg.displayName }` : pkg.displayName,
+  name: debug ? `DEV: __MSG_extensionName__` : '__MSG_extensionName__',
+  default_locale: 'en',
   version: pkg.version,
-  description: pkg.description,
+  description: '__MSG_extensionDescription__',
   key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuoZ6iyeKFISXJhEau79T' +
     'Qd/aBiTsPO6RTt6ZAy2lm1px8pDK7PZKBNA5B8CrSa67OJyZvm8HDTVGc4xxXQ41' +
     'chG0e8ONxYi3k3QRio4u1m3H3S/5xJZtvgEgSbqOLQutdOrYLW9R3ile+AhIQZhR' +
@@ -32,7 +33,7 @@ export const manifest: ManifestV3Export = {
   action: {
     default_popup: 'src/popup/index.html',
     default_icon: image('icon-34.png'),
-    default_title: pkg.displayName,
+    default_title: '__MSG_extensionTitle__',
   },
   icons: {
     128: image('icon-128.png'),

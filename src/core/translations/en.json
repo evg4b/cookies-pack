@@ -1,21 +1,36 @@
 {
   "translation": {
+    "not_supported": "This page is not supported",
     "add_cookies": "Add Cookies",
     "replace_cookies": "Replace Cookies",
-    "clear_existing_cookies_first": "Clear existing cookies first",
-    "use_custom_path": "Use custom path by default",
-    "not_supported": "This page is not supported",
     "settings": {
       "title": "Default Settings",
       "open": "Open settings",
       "close": "Close settings"
+    },
+    "clear_first": {
+      "label": "Clear existing cookies first",
+      "description": "When enabled, all cookies for the current site are removed before the new ones are applied."
+    },
+    "custom_path": {
+      "label": "Use custom path by default",
+      "description": "When enabled, the path from the current page URL is pre-filled instead of using /."
+    },
+    "input": {
+      "placeholder": "Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab",
+      "path_placeholder": "Cookies path",
+      "path_label": "Custom path"
+    },
+    "export": {
+      "filename": "demo.cookies",
+      "description": "JetBrains IDE cookies"
     }
   },
   "cookies_table": {
-    "no_cookies": "No cookies.",
+    "no_cookies": "No cookies found",
     "delete_cookie": "Delete cookie",
-    "copy_all_cookies": "Copy all cookies.",
-    "export_all_cookies": "Export all cookies.",
+    "copy_all_cookies": "Copy all cookies",
+    "export_all_cookies": "Export all cookies",
     "aria_label": "Current site cookies",
     "columns": {
       "name": "Name",

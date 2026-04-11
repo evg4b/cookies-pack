@@ -1,8 +1,10 @@
 import { useClearExistingCookiesFirst, useCustomPath } from '@shared/hooks';
 import { Description, Label, Switch } from '@heroui/react';
 import type { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Options: FC = () => {
+  const { t } = useTranslation();
   const [clearFirst, setClearFirst] = useClearExistingCookiesFirst();
   const [customPath, setCustomPath] = useCustomPath();
 
@@ -15,9 +17,9 @@ const Options: FC = () => {
               <Switch.Thumb/>
             </Switch.Control>
             <Switch.Content>
-              <Label className="text-sm">Clear existing cookies first</Label>
+              <Label className="text-sm">{t('clear_first.label')}</Label>
               <Description className="text-xs">
-                When enabled, all cookies for the current site are removed before the new ones are applied.
+                {t('clear_first.description')}
               </Description>
             </Switch.Content>
           </Switch>
@@ -26,10 +28,9 @@ const Options: FC = () => {
               <Switch.Thumb/>
             </Switch.Control>
             <Switch.Content>
-              <Label className="text-sm">Use custom path by default</Label>
+              <Label className="text-sm">{t('custom_path.label')}</Label>
               <Description className="text-xs">
-                When enabled, the path from the current page URL is pre-filled instead of using&nbsp;
-                <code>/</code>.
+                {t('custom_path.description')}
               </Description>
             </Switch.Content>
           </Switch>

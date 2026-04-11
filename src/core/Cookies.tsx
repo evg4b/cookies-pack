@@ -85,15 +85,15 @@ const Cookies = () => {
 
   const saveToCookieFile = useCallback(async (data: string) => {
     await saveFile(data, {
-      suggestedName: 'demo.cookies',
+      suggestedName: t('export.filename'),
       types: [
         {
-          description: 'JetBrains IDE cookies',
+          description: t('export.description'),
           accept: { 'text/plain': ['.cookies'] },
         },
       ],
     });
-  }, [saveFile]);
+  }, [saveFile, t]);
 
   const [customPath, setCustomPath] = useState(false);
   const [path, setPath] = useState('/');
@@ -137,9 +137,9 @@ const Cookies = () => {
                 value={newCookies}
                 res
                 onInput={(event) => setNewCookies(value(event))}
-                placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>
+                placeholder={t('input.placeholder')}/>
       <div className="flex flex-row gap-2 w-full">
-        <Input placeholder="Cookies path"
+        <Input placeholder={t('input.path_placeholder')}
                className="flex-1"
                disabled={!customPath}
                value={customPath ? path : ''}
@@ -149,7 +149,7 @@ const Cookies = () => {
             <Switch.Thumb/>
           </Switch.Control>
           <Switch.Content>
-            <Label className="text-sm">Custom path</Label>
+            <Label className="text-sm">{t('input.path_label')}</Label>
           </Switch.Content>
         </Switch>
       </div>
@@ -160,7 +160,7 @@ const Cookies = () => {
           </Switch.Control>
           <Switch.Content>
             <Label className="text-sm">
-              {t('clear_existing_cookies_first')}
+              {t('clear_first.label')}
             </Label>
           </Switch.Content>
         </Switch>
