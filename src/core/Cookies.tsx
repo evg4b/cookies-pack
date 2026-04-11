@@ -1,9 +1,8 @@
 import { CookiesTable } from '@core/CookiesTable';
-import { Icon } from '@iconify/react';
-import { Button, Input, Label, Modal, Separator, Switch, TextArea } from '@heroui/react';
-import { useCookies, useSettings, useTabs } from '@shared/hooks';
+import { Button, Input, TextArea, Separator, Label, Switch } from '@heroui/react';
+import { useCookies, useTabs } from '@shared/hooks';
 import { PageContext, useWindowSize } from '@shared/hooks/page';
-import React, { ChangeEvent, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type SetDetails = chrome.cookies.SetDetails;
@@ -96,21 +95,10 @@ const Cookies = () => {
     });
   }, [saveFile]);
 
-  const { settings, loading: settingsLoading, updateSetting } = useSettings();
-  const settingsApplied = useRef(false);
-
   const [customPath, setCustomPath] = useState(false);
   const [path, setPath] = useState('/');
   const [newCookies, setNewCookies] = useState('');
   const [clear, setClear] = useState(true);
-
-  useEffect(() => {
-    if (!settingsLoading && !settingsApplied.current) {
-      settingsApplied.current = true;
-      setCustomPath(settings.useCustomPath);
-      setClear(settings.clearExistingCookiesFirst);
-    }
-  }, [settingsLoading, settings]);
 
   useEffect(() => {
     setPath(customPath ? currentPath : '/');
@@ -136,98 +124,51 @@ const Cookies = () => {
   }, [cookies, currentUrl]);
 
   return (
-    <Modal.Root>
-      <div className="flex flex-col gap-2">
-        <CookiesTable cookies={cookies}
-                      copyToClipboard={copyToClipboard}
-                      saveToCookieFile={saveToCookieFile}
-                      deleteCookie={deleteCookie}
-        />
-        <Separator variant="tertiary"/>
-        <TextArea rows={7}
-                  minRows={7}
-                  maxRows={7}
-                  value={newCookies}
-                  res
-                  onInput={(event) => setNewCookies(value(event))}
-                  placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>
-        <div className="flex flex-row gap-2 w-full">
-          <Input placeholder="Cookies path"
-                 className="flex-1"
-                 disabled={!customPath}
-                 value={customPath ? path : ''}
-                 onChange={(event) => setPath(value(event))}/>
-          <Switch isSelected={customPath} onChange={setCustomPath}>
-            <Switch.Control>
-              <Switch.Thumb/>
-            </Switch.Control>
-            <Switch.Content>
-              <Label className="text-sm">Custom path</Label>
-            </Switch.Content>
-          </Switch>
-        </div>
-        <div className="flex flex-row justify-between items-center">
-          <Switch isSelected={clear} onChange={setClear}>
-            <Switch.Control>
-              <Switch.Thumb/>
-            </Switch.Control>
-            <Switch.Content>
-              <Label className="text-sm">
-                {t('clear_existing_cookies_first')}
-              </Label>
-            </Switch.Content>
-          </Switch>
-          <div className="flex flex-row gap-1 items-center">
-            <Modal.Trigger>
-              <Button isIconOnly size="sm" variant="tertiary" aria-label={t('settings.open')}>
-                <Icon icon="heroicons-solid:cog"/>
-              </Button>
-            </Modal.Trigger>
-            <Button size="sm" color="primary" onPress={updateCookies}>
-              {clear ? t('replace_cookies') : t('add_cookies')}
-            </Button>
-          </div>
-        </div>
+    <div className="flex flex-col gap-2">
+      <CookiesTable cookies={cookies}
+                    copyToClipboard={copyToClipboard}
+                    saveToCookieFile={saveToCookieFile}
+                    deleteCookie={deleteCookie}
+      />
+      <Separator variant="tertiary"/>
+      <TextArea rows={7}
+                minRows={7}
+                maxRows={7}
+                value={newCookies}
+                res
+                onInput={(event) => setNewCookies(value(event))}
+                placeholder="Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab"/>
+      <div className="flex flex-row gap-2 w-full">
+        <Input placeholder="Cookies path"
+               className="flex-1"
+               disabled={!customPath}
+               value={customPath ? path : ''}
+               onChange={(event) => setPath(value(event))}/>
+        <Switch isSelected={customPath} onChange={setCustomPath}>
+          <Switch.Control>
+            <Switch.Thumb/>
+          </Switch.Control>
+          <Switch.Content>
+            <Label className="text-sm">Custom path</Label>
+          </Switch.Content>
+        </Switch>
       </div>
-
-      <Modal.Backdrop/>
-      <Modal.Container>
-        <Modal.Dialog>
-          <Modal.Header>
-            <Modal.Heading>{t('settings.title')}</Modal.Heading>
-            <Modal.CloseTrigger>
-              <Button isIconOnly size="sm" variant="ghost" aria-label={t('settings.close')}>
-                <Icon icon="heroicons-solid:x"/>
-              </Button>
-            </Modal.CloseTrigger>
-          </Modal.Header>
-          <Modal.Body className="flex flex-col gap-4 pb-6">
-            <Switch
-              isSelected={settings.clearExistingCookiesFirst}
-              onChange={(val) => updateSetting('clearExistingCookiesFirst', val)}
-            >
-              <Switch.Control>
-                <Switch.Thumb/>
-              </Switch.Control>
-              <Switch.Content>
-                <Label className="text-sm">{t('clear_existing_cookies_first')}</Label>
-              </Switch.Content>
-            </Switch>
-            <Switch
-              isSelected={settings.useCustomPath}
-              onChange={(val) => updateSetting('useCustomPath', val)}
-            >
-              <Switch.Control>
-                <Switch.Thumb/>
-              </Switch.Control>
-              <Switch.Content>
-                <Label className="text-sm">{t('use_custom_path')}</Label>
-              </Switch.Content>
-            </Switch>
-          </Modal.Body>
-        </Modal.Dialog>
-      </Modal.Container>
-    </Modal.Root>
+      <div className="flex flex-row justify-between">
+        <Switch isSelected={clear} onChange={setClear}>
+          <Switch.Control>
+            <Switch.Thumb/>
+          </Switch.Control>
+          <Switch.Content>
+            <Label className="text-sm">
+              {t('clear_existing_cookies_first')}
+            </Label>
+          </Switch.Content>
+        </Switch>
+        <Button size="sm" color="primary" onPress={updateCookies}>
+          {clear ? t('replace_cookies') : t('add_cookies')}
+        </Button>
+      </div>
+    </div>
   );
 };
 
