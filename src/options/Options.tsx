@@ -1,5 +1,5 @@
 import { useSettings } from '@shared/hooks';
-import { Label, Switch } from '@heroui/react';
+import { Description, Label, Switch } from '@heroui/react';
 import type { FC } from 'react';
 
 const Options: FC = () => {
@@ -19,6 +19,9 @@ const Options: FC = () => {
             </Switch.Control>
             <Switch.Content>
               <Label className="text-sm">Clear existing cookies first</Label>
+              <Description className="text-xs">
+                When enabled, all cookies for the current site are removed before the new ones are applied.
+              </Description>
             </Switch.Content>
           </Switch>
           <Switch
@@ -30,6 +33,10 @@ const Options: FC = () => {
             </Switch.Control>
             <Switch.Content>
               <Label className="text-sm">Use custom path by default</Label>
+              <Description className="text-xs">
+                When enabled, the path from the current page URL is pre-filled instead of using&nbsp;
+                <code>/</code>.
+              </Description>
             </Switch.Content>
           </Switch>
         </div>
