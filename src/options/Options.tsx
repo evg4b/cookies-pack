@@ -1,18 +1,16 @@
-import { useSettings } from '@shared/hooks';
+import { useClearExistingCookiesFirst, useCustomPath } from '@shared/hooks';
 import { Description, Label, Switch } from '@heroui/react';
 import type { FC } from 'react';
 
 const Options: FC = () => {
-  const { settings, updateSetting } = useSettings();
+  const [clearFirst, setClearFirst] = useClearExistingCookiesFirst();
+  const [customPath, setCustomPath] = useCustomPath();
 
   return (
     <div className="bg-background text-foreground p-6">
       <div className="flex flex-col gap-6 max-w-sm">
         <div className="flex flex-col gap-4">
-          <Switch
-            isSelected={settings.clearExistingCookiesFirst}
-            onChange={(val) => updateSetting('clearExistingCookiesFirst', val)}
-          >
+          <Switch isSelected={clearFirst} onChange={setClearFirst}>
             <Switch.Control>
               <Switch.Thumb/>
             </Switch.Control>
@@ -23,10 +21,7 @@ const Options: FC = () => {
               </Description>
             </Switch.Content>
           </Switch>
-          <Switch
-            isSelected={settings.useCustomPath}
-            onChange={(val) => updateSetting('useCustomPath', val)}
-          >
+          <Switch isSelected={customPath} onChange={setCustomPath}>
             <Switch.Control>
               <Switch.Thumb/>
             </Switch.Control>
