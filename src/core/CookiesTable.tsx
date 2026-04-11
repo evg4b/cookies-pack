@@ -7,20 +7,20 @@ import { Button, ButtonGroup, EmptyState, Table, TableLayout, Virtualizer } from
 
 export interface CookiesTableProps {
   cookies: Cookie[];
-  copyToClipboard(value: string | Cookie[]): void;
-  saveToCookieFile(value: string): void;
-  deleteCookie(cookie: Cookie): void;
+  copyToClipboard: (value: string | Cookie[]) => void | Promise<void>;
+  saveToCookieFile: (value: string) => void | Promise<void>;
+  deleteCookie: (cookie: Cookie) => void | Promise<void>;
 }
 
 export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, saveToCookieFile, deleteCookie }) => {
   const { t } = useTranslation(['cookies_table']);
 
   const copyAll = useCallback(() => {
-    copyToClipboard(cookies);
+    void copyToClipboard(cookies);
   }, [cookies, copyToClipboard]);
 
   const exportAll = useCallback(() => {
-    saveToCookieFile(JetbrainsCookies.encode(cookies));
+    void saveToCookieFile(JetbrainsCookies.encode(cookies));
   }, [cookies, saveToCookieFile]);
 
   return (
@@ -76,7 +76,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ cookies, copyToClipboard, 
                   <Table.Cell>{item.value}</Table.Cell>
                   <Table.Cell>
                     <Button isIconOnly aria-label={t('delete_cookie')} size="sm" variant="danger-soft"
-                            onPress={() => deleteCookie(item)}>
+                            onPress={() => void deleteCookie(item)}>
                       <Icon className="size-4" icon="gravity-ui:trash-bin"/>
                     </Button>
                   </Table.Cell>

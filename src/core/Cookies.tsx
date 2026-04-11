@@ -22,8 +22,8 @@ const split = (header: string | null | undefined, url: string, path: string): Se
     : [];
 };
 
-const value = (event: Event | React.FormEvent<HTMLInputElement | HTMLTextAreaElement>): string =>
-  (event.target as HTMLInputElement | HTMLTextAreaElement).value;
+const value = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): string =>
+  event.target.value;
 
 const join = (cookies: Cookie[]): string => cookies
   .map((cookie) => cookie.name + '=' + encodeURIComponent(cookie.value)).join(';\n');
@@ -41,7 +41,7 @@ const Cookies = () => {
 
   useEffect(
     () =>
-      tabs.query({ active: true, currentWindow: true }, async ([tab]) => {
+      tabs.query({ active: true, currentWindow: true }, ([tab]) => {
         if (!tab.url) {
           return;
         }
@@ -54,7 +54,7 @@ const Cookies = () => {
 
   useEffect(() => {
     if (currentUrl) {
-      refresh();
+      void refresh();
     }
   }, [currentUrl, refresh]);
 
@@ -104,7 +104,7 @@ const Cookies = () => {
   }, [customPath, currentPath]);
 
   const updateCookies = useCallback(() => {
-    setCookiesCallback(clear, path, newCookies)
+    void setCookiesCallback(clear, path, newCookies)
       .then(() => setNewCookies(''));
   }, [setCookiesCallback, clear, path, newCookies, setNewCookies]);
 
