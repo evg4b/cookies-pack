@@ -7,7 +7,7 @@ const saveFile = async (data: string, options: SaveFilePickerOptions) => {
     const writable = await handler.createWritable();
     await writable.write(data);
     await writable.close();
-  } catch (err) {
+  } catch (err: unknown) {
     console.error(err);
   }
 };

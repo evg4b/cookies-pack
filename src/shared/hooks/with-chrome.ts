@@ -5,7 +5,7 @@ export const ChromeContext = createContext(chrome);
 
 export const useTabs = () => {
   const chrome = useContext(ChromeContext);
-  assertIsDefined(chrome.cookies, 'There not access to tabs');
+  assertIsDefined(chrome.tabs, 'No access to tabs');
 
   return chrome.tabs;
 };

@@ -10,7 +10,7 @@ export const useTimedValue = (defaultValue: boolean, timing: number): [boolean, 
       id = setTimeout(() => setTimedValue(defaultValue), timing);
     }
 
-    return () => clearInterval(id);
+    return () => clearTimeout(id);
   }, [timedValue, setTimedValue]);
 
   return [timedValue, setTimedValue];

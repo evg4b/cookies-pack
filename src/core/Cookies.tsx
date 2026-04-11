@@ -1,26 +1,29 @@
 import { CookiesTable } from '@core/CookiesTable';
 import { Button, Input, TextArea, Separator, Label, Switch } from '@heroui/react';
-import { useCookies, useTabs } from '@shared/hooks';
+import { useSiteCookies, useTabs } from '@shared/hooks';
 import { PageContext, useWindowSize } from '@shared/hooks/page';
-import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type SetDetails = chrome.cookies.SetDetails;
 
-export const split = (header: string | null | undefined, url: string, path: string): SetDetails[] => {
+const split = (header: string | null | undefined, url: string, path: string): SetDetails[] => {
   return header
     ? header.split(/;\n?/)
       .map<SetDetails>(line => {
-        const [name, value] = line.split('=');
+        const trimmed = line.trim();
+        const eqIdx = trimmed.indexOf('=');
+        const name = eqIdx === -1 ? trimmed : trimmed.slice(0, eqIdx);
+        const value = eqIdx === -1 ? '' : trimmed.slice(eqIdx + 1);
 
-        return { url, path, name, value: value ?? '' };
+        return { url, path, name, value };
       })
+      .filter(({ name }) => name.length > 0)
     : [];
 };
 
-const value = (event: Event | React.FormEvent<HTMLElement>) =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (event?.target as any).value;
+const value = (event: Event | React.FormEvent<HTMLInputElement | HTMLTextAreaElement>): string =>
+  (event.target as HTMLInputElement | HTMLTextAreaElement).value;
 
 const join = (cookies: Cookie[]): string => cookies
   .map((cookie) => cookie.name + '=' + encodeURIComponent(cookie.value)).join(';\n');
@@ -30,12 +33,11 @@ const Cookies = () => {
 
   const { t } = useTranslation();
   const tabs = useTabs();
-  const cookiesJar = useCookies();
   const { clipboard, saveFile } = useContext(PageContext);
 
   const [currentPath, setCurrentPath] = useState<string>('');
   const [currentUrl, setCurrentUrl] = useState<string>('');
-  const [cookies, setCookies] = useState<Cookie[]>([]);
+  const { cookies, refresh, set, remove, removeAll } = useSiteCookies(currentUrl);
 
   useEffect(
     () =>
@@ -46,41 +48,38 @@ const Cookies = () => {
 
         setCurrentUrl(tab.url);
         setCurrentPath(new URL(tab.url).pathname);
-        const siteCookies = await cookiesJar.getAll({ url: tab.url ?? '' });
-        setCookies(siteCookies);
       }),
-    [tabs, cookiesJar],
+    [tabs],
   );
+
+  useEffect(() => {
+    if (currentUrl) {
+      refresh();
+    }
+  }, [currentUrl, refresh]);
 
   const setCookiesCallback = useCallback(
     async (clear: boolean, path: string, newCookies: string) => {
       if (clear) {
-        const cookiesList = await cookiesJar.getAll({ url: currentUrl });
-        const promises = cookiesList.map(({ name }) =>
-          cookiesJar.remove({ url: currentUrl, name }),
-        );
-        await Promise.all(promises);
+        await removeAll();
       }
 
       try {
-        const promises = split(newCookies, currentUrl, path).map((cookie) =>
-          cookiesJar.set({
-            ...cookie,
-            value: decodeURIComponent(cookie.value ?? ''),
-          }),
+        await Promise.all(
+          split(newCookies, currentUrl, path).map((cookie) =>
+            set({
+              ...cookie,
+              value: decodeURIComponent(cookie.value ?? ''),
+            }),
+          ),
         );
 
-        await Promise.all(promises);
-
-        const siteCookies = await cookiesJar.getAll({ url: currentUrl });
-        setCookies(siteCookies);
+        await refresh();
       } catch (err: unknown) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        alert(err.message);
+        alert(err instanceof Error ? err.message : String(err));
       }
     },
-    [cookiesJar, currentUrl],
+    [currentUrl, removeAll, set, refresh],
   );
 
   const saveToCookieFile = useCallback(async (data: string) => {
@@ -118,10 +117,8 @@ const Cookies = () => {
   }, [clipboard]);
 
   const deleteCookie = useCallback(async ({ name, storeId }: Cookie) => {
-    await cookiesJar.remove({ name, storeId, url: currentUrl });
-    const siteCookies = await cookiesJar.getAll({ url: currentUrl });
-    setCookies(siteCookies);
-  }, [cookies, currentUrl]);
+    await remove({ name, storeId, url: currentUrl });
+  }, [remove, currentUrl]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -135,7 +132,6 @@ const Cookies = () => {
                 minRows={7}
                 maxRows={7}
                 value={newCookies}
-                res
                 onInput={(event) => setNewCookies(value(event))}
                 placeholder={t('input.placeholder')}/>
       <div className="flex flex-row gap-2 w-full">

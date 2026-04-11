@@ -25,10 +25,14 @@ const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   const { t } = useTranslation(['cookies_table']);
   const [copied, setCopied] = useTimedValue(false, 1500);
 
-  const onClickInternal = useCallback(() => {
-    clipboard.writeText(value).finally(() => setCopied(true))
-      .then();
-  }, [setCopied, clipboard]);
+  const onClickInternal = useCallback(async () => {
+    try {
+      await clipboard.writeText(value);
+      setCopied(true);
+    } catch {
+      // clipboard unavailable — no-op
+    }
+  }, [clipboard, setCopied, value]);
 
   return (
     <Table.Cell onClick={onClickInternal}
