@@ -38,6 +38,6 @@ export const manifest: ManifestV3Export = {
     128: image('icon-128.png'),
     512: image('icon-512.png'),
   },
-  permissions: ['cookies'],
+  permissions: ['cookies', 'storage'],
   host_permissions: ['<all_urls>'],
 };
