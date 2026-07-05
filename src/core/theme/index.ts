@@ -1,1 +1,1 @@
-export { CookiesPackThemeProvider } from './provider'
+export { CookiesPackThemeProvider } from './provider';

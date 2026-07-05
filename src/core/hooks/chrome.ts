@@ -1,57 +1,90 @@
 import { createContext, useContext, useSyncExternalStore } from 'react';
 
+type Cookie = chrome.cookies.Cookie;
+type Listener = () => void;
+
 export const ChromeContext = createContext(chrome);
 
 export const useTabs = () => {
   const chrome = useContext(ChromeContext);
-//  assertIsDefined(chrome.tabs, 'No access to tabs');
-
   return chrome.tabs;
 };
 
-type Cookie = chrome.cookies.Cookie;
-
-function createCookiesStore() {
+const createCookiesStore = () => {
   let cookies: Cookie[] = [];
-  const listeners = new Set<() => void>();
+  const listeners = new Set<Listener>();
 
-  const emit = () => {
-    listeners.forEach(l => l());
+  const notifyListeners = () => {
+    listeners.forEach((listener) => { listener(); });
   };
 
-  const load = async () => {
-    cookies = await chrome.cookies.getAll({});
-    emit();
+  const getActiveTabUrl = async (): Promise<string | null> => {
+    try {
+      const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+      return tabs[0]?.url ?? null;
+    } catch (error) {
+      console.error('Failed to get active tab URL:', error);
+      return null;
+    }
   };
 
-  const handleChange = async () => {
-    // проще и надёжнее: пересчитать snapshot
-    cookies = await chrome.cookies.getAll({});
-    emit();
+  const loadCookies = async (): Promise<void> => {
+    try {
+      const url = await getActiveTabUrl();
+      cookies = url ? await chrome.cookies.getAll({ url }) : [];
+      notifyListeners();
+    } catch (error) {
+      console.error('Failed to load cookies:', error);
+      cookies = [];
+      notifyListeners();
+    }
   };
 
-  // подписка на изменения Chrome
-  chrome.cookies.onChanged.addListener(handleChange);
+  const handleCookiesChanged = async (): Promise<void> => {
+    try {
+      const url = await getActiveTabUrl();
+      cookies = url ? await chrome.cookies.getAll({ url }) : [];
+      notifyListeners();
+    } catch (error) {
+      console.error('Failed to handle cookie change:', error);
+    }
+  };
 
-  // initial load
-  load();
+  const handleTabActivated = async (): Promise<void> => {
+    await loadCookies();
+  };
+
+  const handleTabUpdated = async (_: number, changeInfo: chrome.tabs.OnUpdatedInfo): Promise<void> => {
+    if (changeInfo.url) {
+      await loadCookies();
+    }
+  };
+
+  chrome.cookies.onChanged.addListener(handleCookiesChanged);
+  chrome.tabs.onActivated.addListener(handleTabActivated);
+  chrome.tabs.onUpdated.addListener(handleTabUpdated);
+
+  loadCookies().catch((error) => {
+    console.error('Initial cookie load failed:', error);
+  });
 
   return {
-    getSnapshot: () => cookies,
-    subscribe: (cb: () => void) => {
-      listeners.add(cb);
-      return () => listeners.delete(cb);
+    getSnapshot: (): Cookie[] => cookies,
+    subscribe: (listener: Listener): (() => void) => {
+      listeners.add(listener);
+      return () => {
+        listeners.delete(listener);
+      };
     },
-    refresh: load,
   };
-}
+};
 
 const store = createCookiesStore();
 
-export function useCookies() {
+export function useCookies(): Cookie[] {
   return useSyncExternalStore(
     store.subscribe,
     store.getSnapshot,
-    store.getSnapshot
+    store.getSnapshot,
   );
 }
