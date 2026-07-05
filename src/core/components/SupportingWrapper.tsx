@@ -4,7 +4,7 @@ import { useTranslation } from '@core/hooks';
 import { IconMoodSad } from '@tabler/icons-react';
 
 export const SupportingWrapper: FC<PropsWithChildren> = ({ children }) => {
-  const t = useTranslation();
+  const t = useTranslation('supporting_wrapper');
 
   const supported = true;
   if (!supported) {
@@ -13,8 +13,8 @@ export const SupportingWrapper: FC<PropsWithChildren> = ({ children }) => {
         <EmptyState
           withIndicatorBackground
           variant="light"
-          title={t('not_supported_title')}
-          description={t('not_supported_description')}
+          title={t('title')}
+          description={t('description')}
           icon={<IconMoodSad/>}
         />
       </Flex>

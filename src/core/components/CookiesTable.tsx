@@ -9,14 +9,14 @@ export interface CookiesTableProps {
 
 export const CookiesTable: FC<CookiesTableProps> = ({}) => {
   const { cookies } = useCookies();
-  const t = useTranslation();
+  const t = useTranslation('cookies_table');
 
   if (!cookies.length) {
     return (
       <EmptyState
         icon={<IconComponentsOff/>}
-        title={t('cookies_table_empty_title')}
-        description={t('cookies_table_empty_description')}
+        title={t('empty_title')}
+        description={t('empty_description')}
       />
     );
   }
