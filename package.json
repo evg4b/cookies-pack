@@ -17,7 +17,8 @@
   "scripts": {
     "dev": "__DEV__=true vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ./src"
   },
   "dependencies": {
     "@mantine/core": "^9.4.1",
@@ -27,15 +28,22 @@
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.4.0",
+    "@eslint/js": "^10.0.1",
     "@types/chrome": "^0.1.37",
+    "@types/eslint-plugin-jsx-a11y": "^6",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.6.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.7.0",
     "postcss": "^8.5.16",
     "postcss-preset-mantine": "^1.18.0",
     "postcss-simple-vars": "^7.0.1",
-    "typescript": "~5.9.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.1",
     "vite": "^8.0.0",
     "vite-plugin-zip-pack": "^1.2.4"
   }
