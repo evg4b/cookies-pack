@@ -1,42 +1,56 @@
-import { defineManifest } from '@crxjs/vite-plugin'
-import pkg from './package.json'
+import { defineManifest } from '@crxjs/vite-plugin';
+import pkg from './package.json';
+
+const debug = process.env.__DEV__ === 'true';
+
+const image = (fileName: string) => {
+  if (!debug) {
+    return fileName;
+  }
+
+  const [name, ext] = fileName.split('.');
+
+  return `${ name }.dev.${ ext }`;
+};
 
 export default defineManifest({
   manifest_version: 3,
-  name: pkg.name,
+  name: debug ? `DEV: __MSG_extensionName__` : '__MSG_extensionName__',
+  default_locale: 'en',
+  description: '__MSG_extensionDescription__',
+  homepage_url: 'https://github.com/evg4b/cookies-pack',
   version: pkg.version,
   icons: {
-    16: 'public/icon-16.png',
-    24: 'public/icon-24.png',
-    32: 'public/icon-32.png',
-    48: 'public/icon-48.png',
-    64: 'public/icon-64.png',
-    128: 'public/icon-128.png',
-    256: 'public/icon-256.png',
-    512: 'public/icon-512.png',
+    16: image('public/icon-16.png'),
+    24: image('public/icon-24.png'),
+    32: image('public/icon-32.png'),
+    48: image('public/icon-48.png'),
+    64: image('public/icon-64.png'),
+    128: image('public/icon-128.png'),
+    256: image('public/icon-256.png'),
+    512: image('public/icon-512.png'),
   },
   action: {
     default_icon: {
-      16: 'public/icon-16.png',
-      24: 'public/icon-24.png',
-      32: 'public/icon-32.png',
-      48: 'public/icon-48.png',
-      64: 'public/icon-64.png',
-      128: 'public/icon-128.png',
-      256: 'public/icon-256.png',
-      512: 'public/icon-512.png',
+      16: image('public/icon-16.png'),
+      24: image('public/icon-24.png'),
+      32: image('public/icon-32.png'),
+      48: image('public/icon-48.png'),
+      64: image('public/icon-64.png'),
+      128: image('public/icon-128.png'),
+      256: image('public/icon-256.png'),
+      512: image('public/icon-512.png'),
     },
     default_popup: 'src/popup/index.html',
+    default_title: '__MSG_extensionTitle__',
   },
   permissions: [
+    'cookies',
+    'storage',
     'sidePanel',
-    'contentSettings',
   ],
-  content_scripts: [{
-    js: ['src/content/main.tsx'],
-    matches: ['https://*/*'],
-  }],
+  host_permissions: ['<all_urls>'],
   side_panel: {
     default_path: 'src/sidepanel/index.html',
   },
-})
+});

@@ -15,7 +15,7 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "__DEV__=true vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview"
   },
