@@ -8,7 +8,7 @@ export interface CookiesTableProps {
 }
 
 export const CookiesTable: FC<CookiesTableProps> = ({}) => {
-  const cookies = useCookies();
+  const { cookies } = useCookies();
   const t = useTranslation();
 
   if (!cookies.length) {
