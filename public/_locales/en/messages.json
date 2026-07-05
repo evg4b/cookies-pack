@@ -19,5 +19,13 @@
   "not_supported_description": {
     "message": "Cookies Pack does not support this page. Please try another page.",
     "description": "The description shown when the page is not supported"
+  },
+  "cookies_table_empty_title": {
+    "message": "No cookies found",
+    "description": "The message shown when no cookies are found"
+  },
+  "cookies_table_empty_description": {
+    "message": "There are no cookies available for the current site.",
+    "description": "The description shown when no cookies are found"
   }
 }
