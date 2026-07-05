@@ -20,6 +20,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/core": "^9.4.1",
+    "@mantine/hooks": "^9.4.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
@@ -30,6 +32,9 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "postcss": "^8.5.16",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
     "typescript": "~5.9.3",
     "vite": "^8.0.0",
     "vite-plugin-zip-pack": "^1.2.4"
