@@ -1,15 +1,34 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { EmptyState, Flex, Table, UnstyledButton } from '@mantine/core';
-import { IconComponentsOff, IconCopy, IconDownload, IconPencil } from '@tabler/icons-react';
-import { useCookies, useTranslation } from '@core/hooks';
+import { IconComponentsOff, IconCopy, IconDownload, IconTrash } from '@tabler/icons-react';
+import { useCookies, useCopyToClipboard, useSaveFile, useTranslation } from '@core/hooks';
+import { encodeJetbrainsCookies, joinCookiesHeader } from '@core/utils';
 
 export interface CookiesTableProps {
   // cookies: chrome.cookies.Cookie[];
 }
 
 export const CookiesTable: FC<CookiesTableProps> = ({}) => {
-  const { cookies } = useCookies();
+  const { cookies, removeCookie } = useCookies();
   const t = useTranslation('cookies_table');
+  const { copy } = useCopyToClipboard();
+  const { saveFile } = useSaveFile();
+
+  const copyAll = useCallback(() => {
+    void copy(joinCookiesHeader(cookies));
+  }, [copy, cookies]);
+
+  const exportAll = useCallback(() => {
+    void saveFile(encodeJetbrainsCookies(cookies), {
+      suggestedName: t('export_filename'),
+      types: [
+        {
+          description: t('export_description'),
+          accept: { 'text/plain': ['.cookies'] },
+        },
+      ],
+    });
+  }, [saveFile, cookies, t]);
 
   if (!cookies.length) {
     return (
@@ -31,7 +50,13 @@ export const CookiesTable: FC<CookiesTableProps> = ({}) => {
         </Flex>
       </Table.Td>
       <Table.Td width="10%">
-        <IconPencil style={{ cursor: 'pointer' }} size={16}/>
+        <UnstyledButton
+          aria-label={t('delete_cookie')}
+          style={{ cursor: 'pointer' }}
+          onClick={() => void removeCookie(element.name)}
+        >
+          <IconTrash size={16}/>
+        </UnstyledButton>
       </Table.Td>
     </Table.Tr>
   ));
@@ -41,16 +66,15 @@ export const CookiesTable: FC<CookiesTableProps> = ({}) => {
       <Table striped stickyHeader width="100%">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Name</Table.Th>
-            <Table.Th>Path</Table.Th>
-            <Table.Th>Value</Table.Th>
+            <Table.Th>{t('columns_name')}</Table.Th>
+            <Table.Th>{t('columns_path')}</Table.Th>
+            <Table.Th>{t('columns_value')}</Table.Th>
             <Table.Th>
-              <Flex style={{ width: '10px', background: 'red' }} gap="xs" direction="row" justify="flex-end"
-                    align="anchor-center">
-                <UnstyledButton style={{ background: 'yellow' }}>
+              <Flex gap="xs" direction="row" justify="flex-end" align="center">
+                <UnstyledButton aria-label={t('copy_all_cookies')} onClick={copyAll}>
                   <IconCopy size={16}/>
                 </UnstyledButton>
-                <UnstyledButton style={{ background: 'blue' }}>
+                <UnstyledButton aria-label={t('export_all_cookies')} onClick={exportAll}>
                   <IconDownload size={16}/>
                 </UnstyledButton>
               </Flex>
