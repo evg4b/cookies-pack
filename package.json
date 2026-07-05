@@ -1,8 +1,19 @@
 {
   "name": "cookies-pack",
+  "displayName": "Cookies Pack",
+  "version": "0.0.8",
+  "description": "Flexible extensions to control your cookies",
+  "license": "MIT",
+  "author": {
+    "name": "Evgeny Abramovich",
+    "email": "evg.abramovitch@gamil.com",
+    "url": "https://github.com/evg4b"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evg4b/cookies-pack.git"
+  },
   "type": "module",
-  "version": "1.0.0",
-  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
