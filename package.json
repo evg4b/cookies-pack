@@ -53,7 +53,7 @@
     "typescript-eslint": "^8.58.1",
     "vite": "^8.0.8"
   },
-  "packageManager": "yarn@4.13.0",
+  "packageManager": "yarn@4.17.0",
   "dependencies": {
     "@heroui/react": "^3.0.2",
     "@heroui/styles": "^3.0.2",
