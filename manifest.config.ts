@@ -15,9 +15,9 @@ const image = (fileName: string) => {
 
 export default defineManifest({
   manifest_version: 3,
-  name: debug ? `DEV: __MSG_extensionName__` : '__MSG_extensionName__',
+  name: debug ? `DEV: __MSG_extension_name__` : '__MSG_extension_name__',
   default_locale: 'en',
-  description: '__MSG_extensionDescription__',
+  description: '__MSG_extension_description__',
   homepage_url: 'https://github.com/evg4b/cookies-pack',
   version: pkg.version,
   icons: {
@@ -42,7 +42,7 @@ export default defineManifest({
       512: image('public/icon-512.png'),
     },
     default_popup: 'src/popup/index.html',
-    default_title: '__MSG_extensionTitle__',
+    default_title: '__MSG_extension_title__',
   },
   permissions: [
     'cookies',

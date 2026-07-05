@@ -1,14 +1,23 @@
 {
-  "extensionName": {
+  "extension_name": {
     "message": "Cookies Pack",
     "description": "The name of the extension"
   },
-  "extensionDescription": {
+  "extension_description": {
     "message": "Flexible extensions to control your cookies",
     "description": "The description of the extension shown in the browser store"
   },
-  "extensionTitle": {
+  "extension_title": {
     "message": "Cookies Pack",
     "description": "The default title shown in the browser toolbar"
+  },
+
+  "not_supported_title": {
+    "message": "This page is not supported",
+    "description": "The message shown when the page is not supported"
+  },
+  "not_supported_description": {
+    "message": "Cookies Pack does not support this page. Please try another page.",
+    "description": "The description shown when the page is not supported"
   }
 }

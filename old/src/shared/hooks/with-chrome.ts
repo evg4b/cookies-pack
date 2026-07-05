@@ -14,5 +14,5 @@ export const useCookies = () => {
   const chrome = useContext(ChromeContext);
   assertIsDefined(chrome.cookies, 'There not access to cookies');
 
-  return chrome.cookies;
+  return chrome.cookies.getAll({});
 };

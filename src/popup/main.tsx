@@ -1,10 +1,15 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { CookiesPackThemeProvider } from '@core/theme';
+import { CookiesPack } from '@core/components/CookiesPack.tsx';
+
+import '@mantine/core/styles.css';
+import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <CookiesPackThemeProvider>
+      <CookiesPack/>
+    </CookiesPackThemeProvider>
   </StrictMode>,
-)
+);
