@@ -143,7 +143,7 @@ describe('useCookies', () => {
 
       await waitFor(() => expect(result.current.loading).toBe(false));
 
-      let created: Cookie | null = null;
+      let created: Cookie | null | undefined;
       await act(async () => {
         created = await result.current.setCookie('session', 'abc123');
       });
