@@ -15,7 +15,7 @@
       "@core/*": ["src/core/*"],
       "@shared/*": ["src/shared/*"]
     },
-    "types": ["vite/client", "@crxjs/vite-plugin/client", "chrome"],
+    "types": ["vite/client", "@crxjs/vite-plugin/client", "chrome", "wicg-file-system-access"],
     "allowImportingTsExtensions": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,

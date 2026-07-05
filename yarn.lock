@@ -783,6 +783,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/wicg-file-system-access@npm:^2023.10.7":
+  version: 2023.10.7
+  resolution: "@types/wicg-file-system-access@npm:2023.10.7"
+  checksum: 10c0/0890a4aa2c4f07b29fd545299fdaa2a63e2211294722c88375c1682826f8f45d77b9354348b2d800336c8e15d009005905a689588b507d02c7c8c5bd58f3906c
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:8.62.1":
   version: 8.62.1
   resolution: "@typescript-eslint/eslint-plugin@npm:8.62.1"
@@ -1399,6 +1406,7 @@ __metadata:
     "@types/node": "npm:^26.1.0"
     "@types/react": "npm:^19.2.17"
     "@types/react-dom": "npm:^19.2.3"
+    "@types/wicg-file-system-access": "npm:^2023.10.7"
     "@vitejs/plugin-react": "npm:^6.0.3"
     "@vitest/coverage-v8": "npm:^4.1.9"
     "@vitest/ui": "npm:^4.1.9"

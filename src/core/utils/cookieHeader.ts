@@ -16,7 +16,7 @@ export const parseCookieHeader = (header: string | null | undefined, url: string
 
       return { url, path, name, value };
     })
-    .filter(({ name }) => name.length > 0);
+    .filter(({ name }) => !!name && name.length > 0);
 };
 
 export const joinCookiesHeader = (cookies: Cookie[]): string =>
