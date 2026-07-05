@@ -16,7 +16,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "nodemon",
-    "lint": "eslint ./src"
+    "lint": "eslint src"
   },
   "type": "module",
   "devDependencies": {

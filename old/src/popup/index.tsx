@@ -1,5 +1,5 @@
-import { translations } from '@core/translations';
-import Popup from '@src/popup/Popup';
+import { translations } from '../core/translations';
+import Popup from './Popup';
 import i18n from 'i18next';
 import React from 'react';
 import { createRoot } from 'react-dom/client';

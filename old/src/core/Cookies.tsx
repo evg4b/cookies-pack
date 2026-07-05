@@ -1,7 +1,7 @@
-import { CookiesTable } from '@core/CookiesTable';
+import { CookiesTable } from './CookiesTable';
 import { Button, Input, TextArea, Separator, Label, Switch } from '@heroui/react';
-import { useSiteCookies, useTabs } from '@shared/hooks';
-import { PageContext, useWindowSize } from '@shared/hooks/page';
+import { useSiteCookies, useTabs } from '../shared/hooks';
+import { PageContext, useWindowSize } from '../shared/hooks/page';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

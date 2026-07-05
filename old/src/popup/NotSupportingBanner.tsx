@@ -1,4 +1,4 @@
-import { useWindowSize } from '@shared/hooks/page';
+import { useWindowSize } from '../shared/hooks/page';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@iconify/react';

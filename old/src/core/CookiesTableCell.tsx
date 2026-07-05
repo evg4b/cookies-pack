@@ -1,7 +1,7 @@
 import { Table } from '@heroui/react';
-import { If } from '@shared/components';
-import { useTimedValue } from '@shared/hooks';
-import { PageContext } from '@shared/hooks/page';
+import { If } from '../shared/components';
+import { useTimedValue } from '../shared/hooks';
+import { PageContext } from '../shared/hooks/page';
 import type { FC } from 'react';
 import { useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,4 +1,4 @@
-import { useClearExistingCookiesFirst, useCustomPath } from '@shared/hooks';
+import { useClearExistingCookiesFirst, useCustomPath } from '../shared/hooks';
 import { Description, Label, Switch } from '@heroui/react';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';

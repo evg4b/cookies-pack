@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 import type { FC } from 'react';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { JetbrainsCookies } from '@core/export/jetbranis';
+import { JetbrainsCookies } from './export/jetbranis';
 import { Button, ButtonGroup, EmptyState, Table, TableLayout, Virtualizer } from '@heroui/react';
 
 export interface CookiesTableProps {

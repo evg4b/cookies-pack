@@ -1,6 +1,6 @@
-import { SupportingWrapper } from '@src/popup/SupportingWrapper';
+import { SupportingWrapper } from './SupportingWrapper';
 import type { FC } from 'react';
-import Cookies from '@core/Cookies';
+import Cookies from '../core/Cookies';
 
 const Popup: FC = () =>
   <SupportingWrapper>

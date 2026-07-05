@@ -1,5 +1,5 @@
-import { translations } from '@core/translations';
-import Options from '@src/options/Options';
+import { translations } from '../core/translations';
+import Options from './Options';
 import i18n from 'i18next';
 import React from 'react';
 import { createRoot } from 'react-dom/client';

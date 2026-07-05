@@ -23,7 +23,7 @@
     "resolveJsonModule": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
+    "baseUrl": "..",
     "paths": {
       "@src/*": [
         "src/*"
@@ -39,6 +39,6 @@
   "include": [
     "src",
     "utils",
-    "vite.config.ts"
+    "old/vite.config.ts"
   ]
 }
