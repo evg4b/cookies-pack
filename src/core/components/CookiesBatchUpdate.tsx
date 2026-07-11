@@ -2,6 +2,7 @@ import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import { Button, Flex, Input, PolymorphicComponentProps, Switch, Textarea } from '@mantine/core';
 import { useClearExistingCookiesFirst, useCookies, useCustomPath, useTabs, useTranslation } from '@core/hooks';
 import { parseCookieHeader } from '@core/utils';
+import { useModeValue } from '@core/theme/provider.tsx';
 
 export type CookiesBatchUpdateProps = PolymorphicComponentProps<'div'>;
 
@@ -56,12 +57,18 @@ export const CookiesBatchUpdate: FC<CookiesBatchUpdateProps> = (props) => {
     })();
   }, [clearFirst, removeAllCookies, newCookies, currentUrl, path, setCookie]);
 
+  const rows = useModeValue<number>({
+    'popup': () => 3,
+    'sidebar': () => 5,
+  });
+
   return (
     <Flex {...props} flex={1} gap="xs" direction="column">
       <Textarea
         flex="1 0 auto"
         placeholder={t('placeholder')}
         value={newCookies}
+        rows={rows}
         onChange={(event) => setNewCookies(textValue(event))}
       />
       <Flex direction="row" align="center" gap="xs">
@@ -72,7 +79,8 @@ export const CookiesBatchUpdate: FC<CookiesBatchUpdateProps> = (props) => {
           value={customPath ? path : ''}
           onChange={(event) => setPath(textValue(event))}
         />
-        <Switch checked={customPath} onChange={(event) => void setCustomPath(event.currentTarget.checked)} label={t('path_label')}/>
+        <Switch checked={customPath} onChange={(event) => void setCustomPath(event.currentTarget.checked)}
+                label={t('path_label')}/>
       </Flex>
       <Flex direction="row" align="center" justify="space-between" gap="xs">
         <Switch

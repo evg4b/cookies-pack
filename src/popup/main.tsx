@@ -8,7 +8,7 @@ import './index.css';
 
 createRoot(document.body).render(
   <StrictMode>
-    <CookiesPackThemeProvider>
+    <CookiesPackThemeProvider mode="popup">
       <CookiesPack/>
     </CookiesPackThemeProvider>
   </StrictMode>,

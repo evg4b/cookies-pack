@@ -44,7 +44,7 @@ export const CookiesTable: FC = () => {
   ));
 
   return (
-    <Table.ScrollContainer minWidth={10}>
+    <Table.ScrollContainer minWidth={10} flex={1}>
       <Table striped stickyHeader width="100%">
         <Table.Thead>
           <Table.Tr>
