@@ -45,6 +45,10 @@
     "message": "Delete cookie",
     "description": "The accessible label for the delete-cookie row action"
   },
+  "cookies_table_cell_copied": {
+    "message": "Copied!",
+    "description": "The message briefly shown in a cookie table cell after its value is copied to the clipboard"
+  },
   "cookies_table_copy_all_cookies": {
     "message": "Copy all cookies",
     "description": "The accessible label for the copy-all-cookies header action"

@@ -62,6 +62,15 @@ describe('CookiesTable', () => {
     expect(screen.getByText('b')).toBeInTheDocument();
   });
 
+  it('copies the cookie value to the clipboard when the value cell is clicked', () => {
+    cookies = [mockCookie({ name: 'session', value: 'abc123' })];
+    render(<CookiesTable/>, { wrapper: MantineProvider });
+
+    fireEvent.click(screen.getByText('abc123'));
+
+    expect(copy).toHaveBeenCalledWith('abc123');
+  });
+
   it('calls removeCookie with the row cookie name when the delete action is clicked', () => {
     cookies = [mockCookie({ name: 'session' })];
     render(<CookiesTable/>, { wrapper: MantineProvider });
