@@ -25,10 +25,10 @@ export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie }
       <Table.Td>
         <CookiesTableCell value={cookie.path ?? 'N/A'}/>
       </Table.Td>
-      <Table.Td style={{ maxWidth: '390px' }}>
+      <Table.Td>
         <CookiesTableCell value={cookie.value ?? 'N/A'}/>
       </Table.Td>
-      <Table.Td width="10%">
+      <Table.Td>
         <Tooltip label={t('delete_cookie')} openDelay={300}>
           <UnstyledButton
             aria-label={t('delete_cookie')}

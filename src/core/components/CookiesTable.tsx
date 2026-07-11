@@ -45,13 +45,13 @@ export const CookiesTable: FC = () => {
 
   return (
     <Table.ScrollContainer minWidth={10} flex={1}>
-      <Table striped stickyHeader width="100%">
+      <Table striped stickyHeader layout="fixed" width="100%">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>{t('columns_name')}</Table.Th>
-            <Table.Th>{t('columns_path')}</Table.Th>
-            <Table.Th>{t('columns_value')}</Table.Th>
-            <Table.Th>
+            <Table.Th w="20%">{t('columns_name')}</Table.Th>
+            <Table.Th w="20%">{t('columns_path')}</Table.Th>
+            <Table.Th w="50%">{t('columns_value')}</Table.Th>
+            <Table.Th w="10%">
               <Flex gap="xs" direction="row" justify="flex-end" align="center">
                 <Tooltip label={t('copy_all_cookies')} openDelay={300}>
                   <UnstyledButton aria-label={t('copy_all_cookies')} onClick={copyAll}>

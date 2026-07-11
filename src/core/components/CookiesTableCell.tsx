@@ -1,4 +1,4 @@
-import { Flex, Tooltip } from '@mantine/core';
+import { Box, Tooltip } from '@mantine/core';
 import { type FC, type KeyboardEvent, useCallback } from 'react';
 import { useCopyToClipboard, useTranslation } from '@core/hooks';
 
@@ -23,12 +23,13 @@ export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
 
   return (
     <Tooltip label={value} openDelay={300}>
-      <Flex
+      <Box
         role="button"
         tabIndex={0}
         onClick={onClick}
         onKeyDown={onKeyDown}
         style={{
+          display: 'block',
           width: '100%',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
@@ -38,7 +39,7 @@ export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
         }}
       >
         {copied ? t('cell_copied') : value}
-      </Flex>
+      </Box>
     </Tooltip>
   );
 };
