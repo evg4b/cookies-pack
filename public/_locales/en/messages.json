@@ -1,14 +1,93 @@
 {
-  "extensionName": {
+  "extension_name": {
     "message": "Cookies Pack",
     "description": "The name of the extension"
   },
-  "extensionDescription": {
+  "extension_description": {
     "message": "Flexible extensions to control your cookies",
     "description": "The description of the extension shown in the browser store"
   },
-  "extensionTitle": {
+  "extension_title": {
     "message": "Cookies Pack",
     "description": "The default title shown in the browser toolbar"
+  },
+
+  "supporting_wrapper_title": {
+    "message": "This page is not supported",
+    "description": "The message shown when the page is not supported"
+  },
+  "supporting_wrapper_description": {
+    "message": "Cookies Pack does not support this page. Please try another page.",
+    "description": "The description shown when the page is not supported"
+  },
+
+  "cookies_table_empty_title": {
+    "message": "No cookies found",
+    "description": "The message shown when no cookies are found"
+  },
+  "cookies_table_empty_description": {
+    "message": "There are no cookies available for the current site.",
+    "description": "The description shown when no cookies are found"
+  },
+  "cookies_table_columns_name": {
+    "message": "Name",
+    "description": "The cookies table column header for the cookie name"
+  },
+  "cookies_table_columns_path": {
+    "message": "Path",
+    "description": "The cookies table column header for the cookie path"
+  },
+  "cookies_table_columns_value": {
+    "message": "Value",
+    "description": "The cookies table column header for the cookie value"
+  },
+  "cookies_table_delete_cookie": {
+    "message": "Delete cookie",
+    "description": "The accessible label for the delete-cookie row action"
+  },
+  "cookies_table_cell_copied": {
+    "message": "Copied!",
+    "description": "The message briefly shown in a cookie table cell after its value is copied to the clipboard"
+  },
+  "cookies_table_copy_all_cookies": {
+    "message": "Copy all cookies",
+    "description": "The accessible label for the copy-all-cookies header action"
+  },
+  "cookies_table_export_all_cookies": {
+    "message": "Export all cookies",
+    "description": "The accessible label for the export-all-cookies header action"
+  },
+  "cookies_table_export_filename": {
+    "message": "demo.cookies",
+    "description": "The suggested filename when exporting cookies"
+  },
+  "cookies_table_export_description": {
+    "message": "JetBrains IDE cookies",
+    "description": "The file type description shown in the save-file picker"
+  },
+
+  "cookies_batch_update_placeholder": {
+    "message": "Update cookies with a cookie header, e.g. foo=bar; bat=baz; oof=rab",
+    "description": "The placeholder for the cookie header textarea"
+  },
+  "cookies_batch_update_path_placeholder": {
+    "message": "Cookies path",
+    "description": "The placeholder for the custom cookie path input"
+  },
+  "cookies_batch_update_path_label": {
+    "message": "Custom path",
+    "description": "The label for the use-custom-path switch"
+  },
+  "cookies_batch_update_clear_first_label": {
+    "message": "Clear existing cookies first",
+    "description": "The label for the clear-existing-cookies-first switch"
+  },
+  "cookies_batch_update_replace_cookies": {
+    "message": "Replace Cookies",
+    "description": "The submit button label when clear-existing-cookies-first is enabled"
+  },
+  "cookies_batch_update_add_cookies": {
+    "message": "Add Cookies",
+    "description": "The submit button label when clear-existing-cookies-first is disabled"
   }
 }
