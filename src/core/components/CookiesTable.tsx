@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { EmptyState, Flex, Table, Tooltip, UnstyledButton } from '@mantine/core';
-import { IconComponentsOff, IconCopy, IconDownload } from '@tabler/icons-react';
+import { IconCookieOff, IconCopy, IconDownload } from '@tabler/icons-react';
 import { useCookies, useCopyToClipboard, useSaveFile, useTranslation } from '@core/hooks';
 import { encodeJetbrainsCookies, joinCookiesHeader } from '@core/utils';
 import { CookieTableRow } from '@core/components/CookieTableRow.tsx';
@@ -29,11 +29,13 @@ export const CookiesTable: FC = () => {
 
   if (!cookies.length) {
     return (
-      <EmptyState
-        icon={<IconComponentsOff/>}
-        title={t('empty_title')}
-        description={t('empty_description')}
-      />
+      <Flex direction="column" flex={1} align="center" justify="center">
+        <EmptyState
+          icon={<IconCookieOff/>}
+          title={t('empty_title')}
+          description={t('empty_description')}
+        />
+      </Flex>
     );
   }
 

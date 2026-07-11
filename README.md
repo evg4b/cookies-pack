@@ -6,51 +6,35 @@
    </div>
 </div>
 
-## Features
+## Key features:
 
-- React with TypeScript
-- TypeScript support
-- Vite build tool
-- CRXJS Vite plugin integration
-- Chrome extension manifest configuration
+- Add a new cookie
+- Delete a cookie
+- Delete all cookies at once
+- Import or update cookies from a standard HTTP header string
+- Export cookies
+  to [JetBrains http client format](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#manage_cookies)
 
-## Quick Start
+## Required permissions:
 
-1. Install dependencies:
+- **cookies** and **<all_urls>** - to query and modify cookies for any hosts.
+- **storage** - to store UI settings in browser storage.
+- **sidePanel** - to open the extension in a side panel.
 
-```bash
-npm install
-```
+## Source code:
 
-2. Start development server:
+https://github.com/evg4b/cookies-pack
 
-```bash
-npm run dev
-```
+## Feedback & support:
 
-3. Open Chrome and navigate to `chrome://extensions/`, enable "Developer mode", and load the unpacked extension from the `dist` directory.
+https://github.com/evg4b/cookies-pack/issues
 
-4. Build for production:
+## License:
 
-```bash
-npm run build
-```
+https://github.com/evg4b/cookies-pack/blob/main/LICENSE
 
-## Project Structure
+# Privacy policy:
 
-- `src/popup/` - Extension popup UI
-- `src/content/` - Content scripts
-- `manifest.config.ts` - Chrome extension manifest configuration
-
-## Documentation
-
-- [React Documentation](https://reactjs.org/)
-- [Vite Documentation](https://vitejs.dev/)
-- [CRXJS Documentation](https://crxjs.dev/vite-plugin)
-
-## Chrome Extension Development Notes
-
-- Use `manifest.config.ts` to configure your extension
-- The CRXJS plugin automatically handles manifest generation
-- Content scripts should be placed in `src/content/`
-- Popup UI should be placed in `src/popup/`
+- We do not collect or store your personal or sensitive data.
+- We do not transmit personal or sensitive data.
+- We do not collect or transmit non-personally identifiable information.
