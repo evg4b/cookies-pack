@@ -1,9 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import type { MockInstance } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import type { useCookies as UseCookiesFn } from '../chrome';
 
 type Cookie = chrome.cookies.Cookie;
-type TabUpdatedListener = (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo) => void | Promise<void>;
+type Listener = () => void;
+type TabUpdatedListener = (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo) => void;
 
 const mockCookie = (overrides?: Partial<Cookie>): Cookie => ({
   name: 'test_cookie',
@@ -21,15 +23,15 @@ const mockCookie = (overrides?: Partial<Cookie>): Cookie => ({
 });
 
 const createMockChrome = () => {
-  const cookiesChangedListeners: Array<() => void | Promise<void>> = [];
-  const tabActivatedListeners: Array<() => void | Promise<void>> = [];
+  const cookiesChangedListeners: Listener[] = [];
+  const tabActivatedListeners: Listener[] = [];
   const tabUpdatedListeners: TabUpdatedListener[] = [];
 
   const api = {
     tabs: {
       query: vi.fn(),
       onActivated: {
-        addListener: (cb: () => void | Promise<void>) => tabActivatedListeners.push(cb),
+        addListener: (cb: Listener) => tabActivatedListeners.push(cb),
       },
       onUpdated: {
         addListener: (cb: TabUpdatedListener) => tabUpdatedListeners.push(cb),
@@ -40,21 +42,21 @@ const createMockChrome = () => {
       set: vi.fn(),
       remove: vi.fn(),
       onChanged: {
-        addListener: (cb: () => void | Promise<void>) => cookiesChangedListeners.push(cb),
+        addListener: (cb: Listener) => cookiesChangedListeners.push(cb),
       },
     },
   };
 
   return {
     api,
-    emitCookiesChanged: async () => {
-      await Promise.all(cookiesChangedListeners.map((l) => l()));
+    emitCookiesChanged: () => {
+      cookiesChangedListeners.forEach((l) => { l(); });
     },
-    emitTabActivated: async () => {
-      await Promise.all(tabActivatedListeners.map((l) => l()));
+    emitTabActivated: () => {
+      tabActivatedListeners.forEach((l) => { l(); });
     },
-    emitTabUpdated: async (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo) => {
-      await Promise.all(tabUpdatedListeners.map((l) => l(tabId, changeInfo)));
+    emitTabUpdated: (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo) => {
+      tabUpdatedListeners.forEach((l) => { l(tabId, changeInfo); });
     },
   };
 };
@@ -72,12 +74,12 @@ const loadHookModule = async (): Promise<{ useCookies: typeof UseCookiesFn }> =>
 
 describe('useCookies', () => {
   let mockChrome: ReturnType<typeof createMockChrome>;
-  let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
+  let consoleErrorSpy: MockInstance<typeof console.error>;
 
   beforeEach(() => {
     mockChrome = createMockChrome();
     vi.stubGlobal('chrome', mockChrome.api);
-    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
   });
 
   afterEach(() => {
@@ -94,7 +96,7 @@ describe('useCookies', () => {
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
 
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       expect(result.current.cookies).toHaveLength(2);
       expect(result.current.error).toBeNull();
@@ -108,7 +110,7 @@ describe('useCookies', () => {
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
 
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       expect(result.current.cookies).toEqual([]);
       expect(result.current.error).toBeNull();
@@ -122,7 +124,7 @@ describe('useCookies', () => {
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
 
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       expect(result.current.cookies).toEqual([]);
       expect(result.current.error).toBeInstanceOf(Error);
@@ -141,7 +143,7 @@ describe('useCookies', () => {
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
 
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       let created: Cookie | null | undefined;
       await act(async () => {
@@ -165,7 +167,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       await act(async () => {
         await result.current.setCookie('theme', 'dark', { secure: true, path: '/app' });
@@ -186,7 +188,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       let created: Cookie | null | undefined;
       await act(async () => {
@@ -195,7 +197,7 @@ describe('useCookies', () => {
 
       expect(created).toBeNull();
       expect(mockChrome.api.cookies.set).not.toHaveBeenCalled();
-      await waitFor(() => expect(result.current.error).not.toBeNull());
+      await waitFor(() => { expect(result.current.error).not.toBeNull(); });
       expect(result.current.error?.message).toBe('Cannot set cookie without a valid URL');
     });
 
@@ -206,7 +208,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       let created: Cookie | null | undefined;
       await act(async () => {
@@ -228,7 +230,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.cookies).toHaveLength(1));
+      await waitFor(() => { expect(result.current.cookies).toHaveLength(1); });
 
       await act(async () => {
         await result.current.removeCookie('session');
@@ -245,7 +247,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       await act(async () => {
         await result.current.removeCookie('session', 'https://other.com');
@@ -259,7 +261,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       await act(async () => {
         await result.current.removeCookie('session');
@@ -279,7 +281,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.cookies).toHaveLength(3));
+      await waitFor(() => { expect(result.current.cookies).toHaveLength(3); });
 
       await act(async () => {
         await result.current.removeAllCookies();
@@ -299,7 +301,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       await act(async () => {
         await result.current.removeAllCookies();
@@ -313,7 +315,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       await act(async () => {
         await result.current.removeAllCookies();
@@ -330,7 +332,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.cookies).toHaveLength(1));
+      await waitFor(() => { expect(result.current.cookies).toHaveLength(1); });
 
       expect(result.current.getCookie('session')?.name).toBe('session');
       expect(result.current.getCookie('missing')).toBeUndefined();
@@ -346,7 +348,7 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
       expect(result.current.cookies).toEqual([]);
 
       await act(async () => {
@@ -367,13 +369,13 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
-      await act(async () => {
-        await mockChrome.emitCookiesChanged();
+      act(() => {
+        mockChrome.emitCookiesChanged();
       });
 
-      expect(result.current.cookies).toHaveLength(1);
+      await waitFor(() => { expect(result.current.cookies).toHaveLength(1); });
       expect(result.current.cookies[0].name).toBe('updated');
     });
 
@@ -385,13 +387,13 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
-      await act(async () => {
-        await mockChrome.emitTabActivated();
+      act(() => {
+        mockChrome.emitTabActivated();
       });
 
-      expect(result.current.cookies).toHaveLength(1);
+      await waitFor(() => { expect(result.current.cookies).toHaveLength(1); });
     });
 
     it('reloads cookies only when a tab update includes a URL change', async () => {
@@ -400,19 +402,21 @@ describe('useCookies', () => {
 
       const { useCookies } = await loadHookModule();
       const { result } = renderHook(() => useCookies());
-      await waitFor(() => expect(result.current.loading).toBe(false));
+      await waitFor(() => { expect(result.current.loading).toBe(false); });
 
       const callsBeforeUpdate = mockChrome.api.cookies.getAll.mock.calls.length;
 
-      await act(async () => {
-        await mockChrome.emitTabUpdated(1, {});
+      act(() => {
+        mockChrome.emitTabUpdated(1, {});
       });
       expect(mockChrome.api.cookies.getAll).toHaveBeenCalledTimes(callsBeforeUpdate);
 
-      await act(async () => {
-        await mockChrome.emitTabUpdated(1, { url: 'https://new-url.com' });
+      act(() => {
+        mockChrome.emitTabUpdated(1, { url: 'https://new-url.com' });
       });
-      expect(mockChrome.api.cookies.getAll).toHaveBeenCalledTimes(callsBeforeUpdate + 1);
+      await waitFor(() => {
+        expect(mockChrome.api.cookies.getAll).toHaveBeenCalledTimes(callsBeforeUpdate + 1);
+      });
     });
   });
 });

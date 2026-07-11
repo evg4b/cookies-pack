@@ -31,7 +31,7 @@ const createCookiesStore = () => {
   const listeners = new Set<Listener>();
 
   const notifyListeners = () => {
-    listeners.forEach((listener) => listener());
+    listeners.forEach((listener) => { listener(); });
   };
 
   const setState = (patch: Partial<CookiesState>) => {
@@ -132,15 +132,19 @@ const createCookiesStore = () => {
     await loadCookies();
   };
 
-  chrome.cookies.onChanged.addListener(handleCookiesChanged);
-  chrome.tabs.onActivated.addListener(refresh);
-  chrome.tabs.onUpdated.addListener(async (_: number, changeInfo: chrome.tabs.OnUpdatedInfo): Promise<void> => {
+  chrome.cookies.onChanged.addListener(() => {
+    void handleCookiesChanged();
+  });
+  chrome.tabs.onActivated.addListener(() => {
+    void refresh();
+  });
+  chrome.tabs.onUpdated.addListener((_: number, changeInfo: chrome.tabs.OnUpdatedInfo): void => {
     if (changeInfo.url) {
-      await refresh();
+      void refresh();
     }
   });
 
-  loadCookies().catch((error) => {
+  loadCookies().catch((error: unknown) => {
     console.error('Initial cookie load failed:', error);
   });
 
