@@ -5,6 +5,7 @@ type Listener = () => void;
 
 interface CookiesState {
   cookies: Cookie[];
+  url: string | null;
   loading: boolean;
   error: Error | null;
 }
@@ -23,6 +24,7 @@ export const useTabs = () => {
 const createCookiesStore = () => {
   let state: CookiesState = {
     cookies: [],
+    url: null,
     loading: true,
     error: null,
   };
@@ -52,11 +54,12 @@ const createCookiesStore = () => {
     try {
       const url = await getActiveTabUrl();
       const cookies = url ? await chrome.cookies.getAll({ url }) : [];
-      setState({ cookies, error: null, loading: false });
+      setState({ cookies, url, error: null, loading: false });
     } catch (error) {
       console.error('Failed to load cookies:', error);
       setState({
         cookies: [],
+        url: null,
         error: error instanceof Error ? error : new Error(String(error)),
         loading: false,
       });
@@ -67,7 +70,7 @@ const createCookiesStore = () => {
     try {
       const url = await getActiveTabUrl();
       const cookies = url ? await chrome.cookies.getAll({ url }) : [];
-      setState({ cookies, error: null });
+      setState({ cookies, url, error: null });
     } catch (error) {
       console.error('Failed to handle cookie change:', error);
       setState({ error: error instanceof Error ? error : new Error(String(error)) });
