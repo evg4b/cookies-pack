@@ -1,0 +1,93 @@
+{
+  "extension_name": {
+    "message": "Cookies Pack",
+    "description": "The name of the extension"
+  },
+  "extension_description": {
+    "message": "Гибкое расширение для управления файлами cookie",
+    "description": "The description of the extension shown in the browser store"
+  },
+  "extension_title": {
+    "message": "Cookies Pack",
+    "description": "The default title shown in the browser toolbar"
+  },
+
+  "supporting_wrapper_title": {
+    "message": "Эта страница не поддерживается",
+    "description": "The message shown when the page is not supported"
+  },
+  "supporting_wrapper_description": {
+    "message": "Cookies Pack не поддерживает эту страницу. Попробуйте открыть другую страницу.",
+    "description": "The description shown when the page is not supported"
+  },
+
+  "cookies_table_empty_title": {
+    "message": "Файлы cookie не найдены",
+    "description": "The message shown when no cookies are found"
+  },
+  "cookies_table_empty_description": {
+    "message": "Для текущего сайта нет доступных файлов cookie.",
+    "description": "The description shown when no cookies are found"
+  },
+  "cookies_table_columns_name": {
+    "message": "Имя",
+    "description": "The cookies table column header for the cookie name"
+  },
+  "cookies_table_columns_path": {
+    "message": "Путь",
+    "description": "The cookies table column header for the cookie path"
+  },
+  "cookies_table_columns_value": {
+    "message": "Значение",
+    "description": "The cookies table column header for the cookie value"
+  },
+  "cookies_table_delete_cookie": {
+    "message": "Удалить cookie",
+    "description": "The accessible label for the delete-cookie row action"
+  },
+  "cookies_table_cell_copied": {
+    "message": "Скопировано!",
+    "description": "The message briefly shown in a cookie table cell after its value is copied to the clipboard"
+  },
+  "cookies_table_copy_all_cookies": {
+    "message": "Скопировать все cookie",
+    "description": "The accessible label for the copy-all-cookies header action"
+  },
+  "cookies_table_export_all_cookies": {
+    "message": "Экспортировать все cookie",
+    "description": "The accessible label for the export-all-cookies header action"
+  },
+  "cookies_table_export_filename": {
+    "message": "demo.cookies",
+    "description": "The suggested filename when exporting cookies"
+  },
+  "cookies_table_export_description": {
+    "message": "Cookies для JetBrains IDE",
+    "description": "The file type description shown in the save-file picker"
+  },
+
+  "cookies_batch_update_placeholder": {
+    "message": "Обновите cookie, указав заголовок cookie, например foo=bar; bat=baz; oof=rab",
+    "description": "The placeholder for the cookie header textarea"
+  },
+  "cookies_batch_update_path_placeholder": {
+    "message": "Путь для cookie",
+    "description": "The placeholder for the custom cookie path input"
+  },
+  "cookies_batch_update_path_label": {
+    "message": "Свой путь",
+    "description": "The label for the use-custom-path switch"
+  },
+  "cookies_batch_update_clear_first_label": {
+    "message": "Сначала удалить существующие cookie",
+    "description": "The label for the clear-existing-cookies-first switch"
+  },
+  "cookies_batch_update_replace_cookies": {
+    "message": "Заменить cookie",
+    "description": "The submit button label when clear-existing-cookies-first is enabled"
+  },
+  "cookies_batch_update_add_cookies": {
+    "message": "Добавить cookie",
+    "description": "The submit button label when clear-existing-cookies-first is disabled"
+  }
+}
