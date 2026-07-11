@@ -26,9 +26,13 @@ let cookies: Cookie[] = [];
 
 vi.mock('@core/hooks', () => ({
   useCookies: () => ({ cookies, removeCookie }),
-  useCopyToClipboard: () => ({ copied: false, copy }),
   useSaveFile: () => ({ saveFile }),
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
+}));
+
+vi.mock('@mantine/hooks', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@mantine/hooks')>()),
+  useClipboard: () => ({ copied: false, copy, reset: vi.fn(), error: null }),
 }));
 
 describe('CookiesTable', () => {

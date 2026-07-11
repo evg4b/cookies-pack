@@ -1,12 +1,14 @@
-import { Chip, createTheme, Tooltip } from '@mantine/core';
+import { ActionIcon, Chip, createTheme, Tooltip } from '@mantine/core';
 
 export const cookiesPackTheme = createTheme({
   primaryColor: 'yellow',
   fontSmoothing: true,
-  breakpoints: {
-    // xs: '30em',
-  },
   components: {
+    ActionIcon: ActionIcon.extend({
+      defaultProps: {
+        variant: 'subtle',
+      },
+    }),
     Chip: Chip.extend({
       defaultProps: {
         variant: 'light',

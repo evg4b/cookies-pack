@@ -1,6 +1,7 @@
 import { Box, Tooltip } from '@mantine/core';
+import { useClipboard } from '@mantine/hooks';
 import { type FC, type KeyboardEvent, useCallback } from 'react';
-import { useCopyToClipboard, useTranslation } from '@core/hooks';
+import { useTranslation } from '@core/hooks';
 
 export interface CookiesTableCellProps {
   value: string;
@@ -8,10 +9,10 @@ export interface CookiesTableCellProps {
 
 export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   const t = useTranslation('cookies_table');
-  const { copied, copy } = useCopyToClipboard();
+  const { copied, copy } = useClipboard({ timeout: 1500 });
 
   const onClick = useCallback(
-    () => void copy(value),
+    () => copy(value),
     [copy, value],
   );
 
