@@ -107,8 +107,16 @@
     "message": "Открывать всплывающее окно",
     "description": "The option to open the popup on icon click"
   },
+  "options_icon_click_action_popup_description": {
+    "message": "Показывает компактное всплывающее окно рядом со значком на панели инструментов.",
+    "description": "The description of the open-popup option"
+  },
   "options_icon_click_action_sidepanel": {
     "message": "Открывать боковую панель",
     "description": "The option to open the side panel on icon click"
+  },
+  "options_icon_click_action_sidepanel_description": {
+    "message": "Открывает Cookies Pack в боковой панели браузера.",
+    "description": "The description of the open-side-panel option"
   }
 }

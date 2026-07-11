@@ -19,16 +19,22 @@ export const OptionsPage: FC = () => {
               onChange={(value) => void setIconClickAction(value as IconClickAction)}
             >
               <Stack gap="xs" mt="xs">
-                <Radio.Card value="popup" p="sm" radius="md">
-                  <Group wrap="nowrap" gap="sm">
+                <Radio.Card value="popup" p="sm" radius="md" aria-label={t('icon_click_action_popup')}>
+                  <Group wrap="nowrap" align="flex-start" gap="sm">
                     <Radio.Indicator/>
-                    <Text>{t('icon_click_action_popup')}</Text>
+                    <Stack gap={2}>
+                      <Text>{t('icon_click_action_popup')}</Text>
+                      <Text size="xs" c="dimmed">{t('icon_click_action_popup_description')}</Text>
+                    </Stack>
                   </Group>
                 </Radio.Card>
-                <Radio.Card value="sidepanel" p="sm" radius="md">
-                  <Group wrap="nowrap" gap="sm">
+                <Radio.Card value="sidepanel" p="sm" radius="md" aria-label={t('icon_click_action_sidepanel')}>
+                  <Group wrap="nowrap" align="flex-start" gap="sm">
                     <Radio.Indicator/>
-                    <Text>{t('icon_click_action_sidepanel')}</Text>
+                    <Stack gap={2}>
+                      <Text>{t('icon_click_action_sidepanel')}</Text>
+                      <Text size="xs" c="dimmed">{t('icon_click_action_sidepanel_description')}</Text>
+                    </Stack>
                   </Group>
                 </Radio.Card>
               </Stack>
