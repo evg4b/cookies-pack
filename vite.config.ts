@@ -25,7 +25,8 @@ export default defineConfig({
     alias: {
       '@src': sourceRoot,
       '@core': resolve(sourceRoot, 'core'),
-      '@shared': resolve(sourceRoot, 'shared'),
+      '@popup': resolve(sourceRoot, 'popup'),
+      '@sidepanel': resolve(sourceRoot, 'sidepanel'),
     },
   },
   plugins: [
