@@ -79,3 +79,8 @@ export const useClearExistingCookiesFirst = (): [boolean, (value: boolean) => Pr
 
 export const useCustomPath = (): [boolean, (value: boolean) => Promise<void>] =>
   useChromeStorageState('useCustomPath', false);
+
+export type IconClickAction = 'popup' | 'sidepanel';
+
+export const useIconClickAction = (): [IconClickAction, (value: IconClickAction) => Promise<void>] =>
+  useChromeStorageState<IconClickAction>('iconClickAction', 'popup');

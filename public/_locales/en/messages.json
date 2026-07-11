@@ -89,5 +89,26 @@
   "cookies_batch_update_add_cookies": {
     "message": "Add Cookies",
     "description": "The submit button label when clear-existing-cookies-first is disabled"
+  },
+
+  "options_title": {
+    "message": "Cookies Pack settings",
+    "description": "The title of the options page"
+  },
+  "options_icon_click_action_label": {
+    "message": "Toolbar icon click action",
+    "description": "The label for the icon-click-action setting"
+  },
+  "options_icon_click_action_description": {
+    "message": "Choose what happens when you click the Cookies Pack icon in the toolbar.",
+    "description": "The description for the icon-click-action setting"
+  },
+  "options_icon_click_action_popup": {
+    "message": "Open popup",
+    "description": "The option to open the popup on icon click"
+  },
+  "options_icon_click_action_sidepanel": {
+    "message": "Open side panel",
+    "description": "The option to open the side panel on icon click"
   }
 }

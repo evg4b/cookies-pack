@@ -44,6 +44,11 @@ export default defineManifest({
     default_popup: 'src/popup/index.html',
     default_title: '__MSG_extension_title__',
   },
+  background: {
+    service_worker: 'src/background/index.ts',
+    type: 'module',
+  },
+  options_page: 'src/options/index.html',
   permissions: [
     'cookies',
     'storage',

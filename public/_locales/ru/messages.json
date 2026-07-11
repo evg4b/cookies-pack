@@ -89,5 +89,26 @@
   "cookies_batch_update_add_cookies": {
     "message": "Добавить cookie",
     "description": "The submit button label when clear-existing-cookies-first is disabled"
+  },
+
+  "options_title": {
+    "message": "Настройки Cookies Pack",
+    "description": "The title of the options page"
+  },
+  "options_icon_click_action_label": {
+    "message": "Действие при клике по значку на панели инструментов",
+    "description": "The label for the icon-click-action setting"
+  },
+  "options_icon_click_action_description": {
+    "message": "Выберите, что происходит при клике по значку Cookies Pack на панели инструментов.",
+    "description": "The description for the icon-click-action setting"
+  },
+  "options_icon_click_action_popup": {
+    "message": "Открывать всплывающее окно",
+    "description": "The option to open the popup on icon click"
+  },
+  "options_icon_click_action_sidepanel": {
+    "message": "Открывать боковую панель",
+    "description": "The option to open the side panel on icon click"
   }
 }
