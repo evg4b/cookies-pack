@@ -48,7 +48,10 @@ export default defineManifest({
     service_worker: 'src/background/index.ts',
     type: 'module',
   },
-  options_page: 'src/options/index.html',
+  options_ui: {
+    page: 'src/options/index.html',
+    open_in_tab: false,
+  },
   permissions: [
     'cookies',
     'storage',
