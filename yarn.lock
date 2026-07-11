@@ -1443,12 +1443,14 @@ __metadata:
     eslint-plugin-react: "npm:^7.37.5"
     globals: "npm:^17.7.0"
     jsdom: "npm:^29.1.1"
+    mock-match-media: "npm:^1.0.3"
     postcss: "npm:^8.5.16"
     postcss-preset-mantine: "npm:^1.18.0"
     postcss-simple-vars: "npm:^7.0.1"
     react: "npm:^19.2.7"
     react-dom: "npm:^19.2.7"
     react-promise-tracker: "npm:^2.1.1"
+    resize-observer-polyfill: "npm:^1.5.1"
     typescript: "npm:^6.0.3"
     typescript-eslint: "npm:^8.62.1"
     vite: "npm:^8.1.3"
@@ -3144,6 +3146,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mock-match-media@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "mock-match-media@npm:1.0.3"
+  checksum: 10c0/b7c4bb69b95703b599acfd202590ff1210f82b907e3fa54e23f4d391b3a0208cfc632bc8351c6d90a632e089ac50bad08b341c18b26f4deae0e6ed1a99d6404e
+  languageName: node
+  linkType: hard
+
 "mrmime@npm:^2.0.0":
   version: 2.0.1
   resolution: "mrmime@npm:2.0.1"
@@ -3711,6 +3720,13 @@ __metadata:
   version: 2.0.2
   resolution: "require-from-string@npm:2.0.2"
   checksum: 10c0/aaa267e0c5b022fc5fd4eef49d8285086b15f2a1c54b28240fdf03599cbd9c26049fee3eab894f2e1f6ca65e513b030a7c264201e3f005601e80c49fb2937ce2
+  languageName: node
+  linkType: hard
+
+"resize-observer-polyfill@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "resize-observer-polyfill@npm:1.5.1"
+  checksum: 10c0/5e882475067f0b97dc07e0f37c3e335ac5bc3520d463f777cec7e894bb273eddbfecb857ae668e6fb6881fd6f6bb7148246967172139302da50fa12ea3a15d95
   languageName: node
   linkType: hard
 
