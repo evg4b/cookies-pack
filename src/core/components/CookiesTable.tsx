@@ -48,17 +48,17 @@ export const CookiesTable: FC = () => {
       <Table striped stickyHeader layout="fixed" width="100%">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th w="20%">{t('columns_name')}</Table.Th>
-            <Table.Th w="20%">{t('columns_path')}</Table.Th>
-            <Table.Th w="50%">{t('columns_value')}</Table.Th>
-            <Table.Th w="10%">
-              <Flex gap="xs" direction="row" justify="flex-end" align="center">
-                <Tooltip label={t('copy_all_cookies')} openDelay={300}>
+            <Table.Th w="25%">{t('columns_name')}</Table.Th>
+            <Table.Th w="15%" visibleFrom="xs">{t('columns_path')}</Table.Th>
+            <Table.Th>{t('columns_value')}</Table.Th>
+            <Table.Th w={72}>
+              <Flex gap="xs" direction="row" justify="flex-end" pr='l' align="center" wrap="nowrap">
+                <Tooltip label={t('copy_all_cookies')}>
                   <UnstyledButton aria-label={t('copy_all_cookies')} onClick={copyAll}>
                     <IconCopy size={16}/>
                   </UnstyledButton>
                 </Tooltip>
-                <Tooltip label={t('export_all_cookies')} openDelay={300}>
+                <Tooltip label={t('export_all_cookies')}>
                   <UnstyledButton aria-label={t('export_all_cookies')} onClick={exportAll}>
                     <IconDownload size={16}/>
                   </UnstyledButton>

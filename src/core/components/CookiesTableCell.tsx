@@ -10,9 +10,10 @@ export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   const t = useTranslation('cookies_table');
   const { copied, copy } = useCopyToClipboard();
 
-  const onClick = useCallback(() => {
-    void copy(value);
-  }, [copy, value]);
+  const onClick = useCallback(
+    () => void copy(value),
+    [copy, value],
+  );
 
   const onKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -22,7 +23,7 @@ export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value }) => {
   }, [onClick]);
 
   return (
-    <Tooltip label={value} openDelay={300}>
+    <Tooltip label={value}>
       <Box
         role="button"
         tabIndex={0}

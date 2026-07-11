@@ -1,4 +1,4 @@
-import { Table, Tooltip, UnstyledButton } from '@mantine/core';
+import { Flex, Table, Tooltip, UnstyledButton } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { type FC, useCallback } from 'react';
 import { useTranslation } from '@core/hooks';
@@ -22,22 +22,24 @@ export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie }
       <Table.Td>
         <CookiesTableCell value={cookie.name ?? 'N/A'}/>
       </Table.Td>
-      <Table.Td>
+      <Table.Td visibleFrom="xs">
         <CookiesTableCell value={cookie.path ?? 'N/A'}/>
       </Table.Td>
       <Table.Td>
         <CookiesTableCell value={cookie.value ?? 'N/A'}/>
       </Table.Td>
       <Table.Td>
-        <Tooltip label={t('delete_cookie')} openDelay={300}>
-          <UnstyledButton
-            aria-label={t('delete_cookie')}
-            style={{ cursor: 'pointer' }}
-            onClick={removeCookieCallback}
-          >
-            <IconTrash size={16}/>
-          </UnstyledButton>
-        </Tooltip>
+        <Flex justify="flex-end" pr='l'>
+          <Tooltip label={t('delete_cookie')}>
+            <UnstyledButton
+              aria-label={t('delete_cookie')}
+              style={{ cursor: 'pointer' }}
+              onClick={removeCookieCallback}
+            >
+              <IconTrash size={16}/>
+            </UnstyledButton>
+          </Tooltip>
+        </Flex>
       </Table.Td>
     </Table.Tr>
   );

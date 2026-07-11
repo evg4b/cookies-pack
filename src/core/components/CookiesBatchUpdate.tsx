@@ -1,8 +1,9 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
-import { Button, Flex, Input, PolymorphicComponentProps, Switch, Textarea } from '@mantine/core';
+import { Button, Chip, Flex, Input, PolymorphicComponentProps, Textarea } from '@mantine/core';
 import { useClearExistingCookiesFirst, useCookies, useCustomPath, useTabs, useTranslation } from '@core/hooks';
 import { parseCookieHeader } from '@core/utils';
 import { useModeValue } from '@core/theme/provider.tsx';
+import { IconTrash } from '@tabler/icons-react';
 
 export type CookiesBatchUpdateProps = PolymorphicComponentProps<'div'>;
 
@@ -79,15 +80,14 @@ export const CookiesBatchUpdate: FC<CookiesBatchUpdateProps> = (props) => {
           value={customPath ? path : ''}
           onChange={(event) => setPath(textValue(event))}
         />
-        <Switch checked={customPath} onChange={(event) => void setCustomPath(event.currentTarget.checked)}
-                label={t('path_label')}/>
+        <Chip checked={customPath} variant="light" onChange={setCustomPath}>
+          {t('path_label')}
+        </Chip>
       </Flex>
       <Flex direction="row" align="center" justify="space-between" gap="xs">
-        <Switch
-          checked={clearFirst}
-          onChange={(event) => void setClearFirst(event.currentTarget.checked)}
-          label={t('clear_first_label')}
-        />
+        <Chip icon={<IconTrash size={14}/>} checked={clearFirst} color="red" onChange={setClearFirst}>
+          {t('clear_first_label')}
+        </Chip>
         <Button onClick={submit}>
           {clearFirst ? t('replace_cookies') : t('add_cookies')}
         </Button>
