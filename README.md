@@ -1,6 +1,10 @@
-# React + Vite + CRXJS
-
-This template helps you quickly start developing Chrome extensions with React, TypeScript and Vite. It includes the CRXJS Vite plugin for seamless Chrome extension development.
+<div align="center">
+   <img src="public/icon-512.png" alt="logo" height="200"/>
+   <h1> Cookies pack </h1>
+   <div>
+        This is an open-source cookie management extension that is powerful and easy to use. It allows you to manage, import, and export cookies for sites with just a few clicks.
+   </div>
+</div>
 
 ## Features
 
