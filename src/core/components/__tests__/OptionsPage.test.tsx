@@ -26,14 +26,14 @@ describe('OptionsPage', () => {
     render(<OptionsPage/>, { wrapper: MantineProvider });
 
     expect(screen.getByText('options_title')).toBeInTheDocument();
-    expect(screen.getByLabelText('options_icon_click_action_popup')).toBeChecked();
-    expect(screen.getByLabelText('options_icon_click_action_sidepanel')).not.toBeChecked();
+    expect(screen.getByRole('radio', { name: 'options_icon_click_action_popup' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: 'options_icon_click_action_sidepanel' })).not.toBeChecked();
   });
 
   it('persists the side panel option when selected', () => {
     render(<OptionsPage/>, { wrapper: MantineProvider });
 
-    fireEvent.click(screen.getByLabelText('options_icon_click_action_sidepanel'));
+    fireEvent.click(screen.getByRole('radio', { name: 'options_icon_click_action_sidepanel' }));
 
     expect(setIconClickAction).toHaveBeenCalledWith('sidepanel');
   });

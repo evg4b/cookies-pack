@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Container, Paper, Radio, Stack, Text, Title } from '@mantine/core';
+import { Container, Group, Paper, Radio, Stack, Text, Title } from '@mantine/core';
 import { IconClickAction, useIconClickAction, useTranslation } from '@core/hooks';
 
 export const OptionsPage: FC = () => {
@@ -19,8 +19,18 @@ export const OptionsPage: FC = () => {
               onChange={(value) => void setIconClickAction(value as IconClickAction)}
             >
               <Stack gap="xs" mt="xs">
-                <Radio value="popup" label={t('icon_click_action_popup')}/>
-                <Radio value="sidepanel" label={t('icon_click_action_sidepanel')}/>
+                <Radio.Card value="popup" p="sm" radius="md">
+                  <Group wrap="nowrap" gap="sm">
+                    <Radio.Indicator/>
+                    <Text>{t('icon_click_action_popup')}</Text>
+                  </Group>
+                </Radio.Card>
+                <Radio.Card value="sidepanel" p="sm" radius="md">
+                  <Group wrap="nowrap" gap="sm">
+                    <Radio.Indicator/>
+                    <Text>{t('icon_click_action_sidepanel')}</Text>
+                  </Group>
+                </Radio.Card>
               </Stack>
             </Radio.Group>
           </Stack>
