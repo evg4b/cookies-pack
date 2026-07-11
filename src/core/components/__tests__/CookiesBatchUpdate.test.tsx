@@ -20,8 +20,6 @@ vi.mock('@core/hooks', () => ({
   useCustomPath: () => [customPath, setCustomPath],
 }));
 
-const renderBatchUpdate = () => render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
-
 describe('CookiesBatchUpdate', () => {
   beforeEach(() => {
     clearFirst = true;
@@ -33,49 +31,49 @@ describe('CookiesBatchUpdate', () => {
     vi.clearAllMocks();
   });
 
-  it('shows the "replace" label when clear-first is enabled and "add" otherwise', () => {
+  it('shows the "replace" label when clear-first is enabled and "add" otherwise', async () => {
     clearFirst = true;
-    const { rerender } = renderBatchUpdate();
-    expect(screen.getByText('cookies_batch_update_replace_cookies')).toBeInTheDocument();
+    const { rerender } = render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
+    expect(await screen.findByText('cookies_batch_update_replace_cookies')).toBeInTheDocument();
 
     clearFirst = false;
     rerender(<CookiesBatchUpdate/>);
-    expect(screen.getByText('cookies_batch_update_add_cookies')).toBeInTheDocument();
+    expect(await screen.findByText('cookies_batch_update_add_cookies')).toBeInTheDocument();
   });
 
-  it('disables the path input until custom path is enabled', () => {
+  it('disables the path input until custom path is enabled', async () => {
     customPath = false;
-    renderBatchUpdate();
+    render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
 
-    expect(screen.getByPlaceholderText('cookies_batch_update_path_placeholder')).toBeDisabled();
+    expect(await screen.findByPlaceholderText('cookies_batch_update_path_placeholder')).toBeDisabled();
   });
 
-  it('enables the path input when custom path is on', () => {
+  it('enables the path input when custom path is on', async () => {
     customPath = true;
-    renderBatchUpdate();
+    render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
 
-    expect(screen.getByPlaceholderText('cookies_batch_update_path_placeholder')).toBeEnabled();
+    expect(await screen.findByPlaceholderText('cookies_batch_update_path_placeholder')).toBeEnabled();
   });
 
-  it('toggles the custom-path setting when its switch is clicked', () => {
-    renderBatchUpdate();
+  it('toggles the custom-path setting when its switch is clicked', async () => {
+    render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
 
-    fireEvent.click(screen.getByText('cookies_batch_update_path_label'));
+    fireEvent.click(await screen.findByText('cookies_batch_update_path_label'));
 
     expect(setCustomPath).toHaveBeenCalledWith(true);
   });
 
-  it('toggles the clear-first setting when its switch is clicked', () => {
-    renderBatchUpdate();
+  it('toggles the clear-first setting when its switch is clicked', async () => {
+    render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
 
-    fireEvent.click(screen.getByText('cookies_batch_update_clear_first_label'));
+    fireEvent.click(await screen.findByText('cookies_batch_update_clear_first_label'));
 
     expect(setClearFirst).toHaveBeenCalledWith(false);
   });
 
   it('removes existing cookies then sets each parsed cookie and clears the textarea on submit', async () => {
     clearFirst = true;
-    renderBatchUpdate();
+    render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
 
     await waitFor(() => expect(query).toHaveBeenCalled());
 
@@ -93,7 +91,7 @@ describe('CookiesBatchUpdate', () => {
 
   it('does not remove existing cookies when clear-first is disabled', async () => {
     clearFirst = false;
-    renderBatchUpdate();
+    render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
 
     await waitFor(() => expect(query).toHaveBeenCalled());
 

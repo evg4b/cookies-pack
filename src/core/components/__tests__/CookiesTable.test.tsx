@@ -31,8 +31,6 @@ vi.mock('@core/hooks', () => ({
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
 }));
 
-const renderTable = () => render(<CookiesTable/>, { wrapper: MantineProvider });
-
 describe('CookiesTable', () => {
   beforeEach(() => {
     cookies = [];
@@ -44,7 +42,7 @@ describe('CookiesTable', () => {
   });
 
   it('renders the empty state when there are no cookies', () => {
-    renderTable();
+    render(<CookiesTable/>, { wrapper: MantineProvider });
 
     expect(screen.getByText('cookies_table_empty_title')).toBeInTheDocument();
     expect(screen.getByText('cookies_table_empty_description')).toBeInTheDocument();
@@ -56,7 +54,7 @@ describe('CookiesTable', () => {
       mockCookie({ name: 'b', path: '/b', value: '2' }),
     ];
 
-    renderTable();
+    render(<CookiesTable/>, { wrapper: MantineProvider });
 
     expect(screen.getByText('a')).toBeInTheDocument();
     expect(screen.getByText('/a')).toBeInTheDocument();
@@ -66,7 +64,7 @@ describe('CookiesTable', () => {
 
   it('calls removeCookie with the row cookie name when the delete action is clicked', () => {
     cookies = [mockCookie({ name: 'session' })];
-    renderTable();
+    render(<CookiesTable/>, { wrapper: MantineProvider });
 
     fireEvent.click(screen.getByLabelText('cookies_table_delete_cookie'));
 
@@ -75,7 +73,7 @@ describe('CookiesTable', () => {
 
   it('copies all cookies as a header string when the copy-all action is clicked', () => {
     cookies = [mockCookie({ name: 'a', value: '1' }), mockCookie({ name: 'b', value: '2' })];
-    renderTable();
+    render(<CookiesTable/>, { wrapper: MantineProvider });
 
     fireEvent.click(screen.getByLabelText('cookies_table_copy_all_cookies'));
 
@@ -84,7 +82,7 @@ describe('CookiesTable', () => {
 
   it('exports all cookies as a Jetbrains-formatted file when the export action is clicked', () => {
     cookies = [mockCookie({ name: 'a', value: '1', domain: 'x.com', path: '/', expirationDate: undefined })];
-    renderTable();
+    render(<CookiesTable/>, { wrapper: MantineProvider });
 
     fireEvent.click(screen.getByLabelText('cookies_table_export_all_cookies'));
 
