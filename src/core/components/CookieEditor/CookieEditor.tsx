@@ -33,13 +33,15 @@ const defaultExpiration = (): Date => new Date(Date.now() + 24 * 60 * 60 * 1000)
 const buildUrl = (domain: string, path: string, secure: boolean): string =>
   `${secure ? 'https' : 'http'}://${domain.replace(/^\./, '')}${path || '/'}`;
 
+const stripWww = (hostname: string): string => hostname.replace(/^www\./, '');
+
 const isDomainAllowed = (tabHostname: string, domain: string): boolean => {
-  const normalized = domain.trim().replace(/^\./, '').toLowerCase();
+  const normalized = stripWww(domain.trim().replace(/^\./, '').toLowerCase());
   if (!normalized) {
     return false;
   }
 
-  const host = tabHostname.toLowerCase();
+  const host = stripWww(tabHostname.toLowerCase());
   return host === normalized || host.endsWith(`.${normalized}`);
 };
 

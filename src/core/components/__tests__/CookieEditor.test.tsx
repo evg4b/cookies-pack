@@ -168,6 +168,33 @@ describe('CookieEditor', () => {
     });
   });
 
+  it('accepts a domain with a www prefix when the tab domain has none', async () => {
+    render(<CookieEditor onClose={onClose}/>, { wrapper: MantineProvider });
+    await screen.findByDisplayValue('example.com');
+
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_name_label/), { target: { value: 'my_cookie' } });
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_domain_label/), { target: { value: 'www.example.com' } });
+    fireEvent.click(screen.getByRole('button', { name: 'cookie_editor_save' }));
+
+    await waitFor(() => {
+      expect(setCookie).toHaveBeenCalledWith('my_cookie', '', expect.objectContaining({ domain: 'www.example.com' }));
+    });
+  });
+
+  it('accepts a domain without a www prefix when the tab domain has one', async () => {
+    query.mockResolvedValueOnce([{ url: 'https://www.example.com/current/path' }]);
+    render(<CookieEditor onClose={onClose}/>, { wrapper: MantineProvider });
+    await screen.findByDisplayValue('www.example.com');
+
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_name_label/), { target: { value: 'my_cookie' } });
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_domain_label/), { target: { value: 'example.com' } });
+    fireEvent.click(screen.getByRole('button', { name: 'cookie_editor_save' }));
+
+    await waitFor(() => {
+      expect(setCookie).toHaveBeenCalledWith('my_cookie', '', expect.objectContaining({ domain: 'example.com' }));
+    });
+  });
+
   it('rejects an edited domain that does not match the current tab domain', async () => {
     render(<CookieEditor cookie={editedCookie} onClose={onClose}/>, { wrapper: MantineProvider });
     await screen.findByDisplayValue('example.com');
