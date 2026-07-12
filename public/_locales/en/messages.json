@@ -123,6 +123,14 @@
     "message": "Opens Cookies Pack in the browser's side panel.",
     "description": "The description of the open-side-panel option"
   },
+  "options_cookie_editor_enabled_label": {
+    "message": "Enable cookie editor",
+    "description": "The label for the cookie-editor-enabled setting"
+  },
+  "options_cookie_editor_enabled_description": {
+    "message": "Show the add and edit cookie actions in the popup and side panel. Enabled by default.",
+    "description": "The description for the cookie-editor-enabled setting"
+  },
 
   "cookie_editor_title_add": {
     "message": "Add cookie",

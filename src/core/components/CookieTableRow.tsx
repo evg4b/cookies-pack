@@ -7,7 +7,7 @@ import { CookiesTableCell } from '@core/components/CookiesTableCell.tsx';
 export type CookieTableRowProps = {
   cookie: chrome.cookies.Cookie
   removeCookie: (cookieName: string) => void
-  onEdit: (cookie: chrome.cookies.Cookie) => void
+  onEdit?: (cookie: chrome.cookies.Cookie) => void
 }
 
 export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, onEdit }) => {
@@ -20,7 +20,7 @@ export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, 
   );
 
   const editCookieCallback = useCallback(
-    () => onEdit(cookie),
+    () => onEdit?.(cookie),
     [onEdit, cookie],
   );
 
@@ -37,11 +37,13 @@ export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, 
       </Table.Td>
       <Table.Td>
         <Flex justify="flex-end" pr="xs" gap="xs">
-          <Tooltip label={t('edit_cookie')}>
-            <ActionIcon aria-label={t('edit_cookie')} onClick={editCookieCallback}>
-              <IconPencil size={16}/>
-            </ActionIcon>
-          </Tooltip>
+          {onEdit && (
+            <Tooltip label={t('edit_cookie')}>
+              <ActionIcon aria-label={t('edit_cookie')} onClick={editCookieCallback}>
+                <IconPencil size={16}/>
+              </ActionIcon>
+            </Tooltip>
+          )}
           <Tooltip label={t('delete_cookie')}>
             <ActionIcon aria-label={t('delete_cookie')} color="red" onClick={removeCookieCallback}>
               <IconTrash size={16}/>

@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react';
 import { ActionIcon, EmptyState, Flex, Table, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCheck, IconCookieOff, IconCopy, IconDownload, IconPlus } from '@tabler/icons-react';
-import { useCookies, useSaveFile, useTranslation } from '@core/hooks';
+import { useCookieEditorEnabled, useCookies, useSaveFile, useTranslation } from '@core/hooks';
 import { encodeJetbrainsCookies, joinCookiesHeader } from '@core/utils';
 import { CookieTableRow } from '@core/components/CookieTableRow.tsx';
 
@@ -16,6 +16,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
   const t = useTranslation('cookies_table');
   const { copy, copied } = useClipboard({ timeout: 1500 });
   const { saveFile } = useSaveFile();
+  const [cookieEditorEnabled] = useCookieEditorEnabled();
 
   const copyAll = useCallback(() => {
     copy(joinCookiesHeader(cookies));
@@ -33,7 +34,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
     });
   }, [saveFile, cookies, t]);
 
-  const addCookieAction = (
+  const addCookieAction = cookieEditorEnabled && (
     <Tooltip label={t('add_cookie')}>
       <ActionIcon aria-label={t('add_cookie')} onClick={onAddCookie}>
         <IconPlus size={16}/>
@@ -62,7 +63,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
     <CookieTableRow
       cookie={element}
       removeCookie={removeCookie}
-      onEdit={onEditCookie}
+      onEdit={cookieEditorEnabled ? onEditCookie : undefined}
       key={element.name + element.domain + element.path}
     />
   ));

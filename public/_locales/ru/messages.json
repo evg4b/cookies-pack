@@ -123,6 +123,14 @@
     "message": "Открывает Cookies Pack в боковой панели браузера.",
     "description": "The description of the open-side-panel option"
   },
+  "options_cookie_editor_enabled_label": {
+    "message": "Включить редактор cookie",
+    "description": "The label for the cookie-editor-enabled setting"
+  },
+  "options_cookie_editor_enabled_description": {
+    "message": "Показывать действия добавления и редактирования cookie во всплывающем окне и боковой панели. По умолчанию включено.",
+    "description": "The description for the cookie-editor-enabled setting"
+  },
 
   "cookie_editor_title_add": {
     "message": "Добавить cookie",

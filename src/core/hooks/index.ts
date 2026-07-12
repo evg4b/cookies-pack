@@ -4,6 +4,7 @@ export { useSaveFile, type UseSaveFileReturn } from './saveFile';
 export {
   useChromeStorageState,
   useClearExistingCookiesFirst,
+  useCookieEditorEnabled,
   useCustomPath,
   useIconClickAction,
   type IconClickAction,

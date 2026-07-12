@@ -1,10 +1,11 @@
 import { FC } from 'react';
-import { Container, Group, Radio, Stack, Text } from '@mantine/core';
-import { useIconClickAction, useTranslation } from '@core/hooks';
+import { Container, Divider, Group, Radio, Stack, Switch, Text } from '@mantine/core';
+import { useCookieEditorEnabled, useIconClickAction, useTranslation } from '@core/hooks';
 
 export const OptionsPage: FC = () => {
   const t = useTranslation('options');
   const [iconClickAction, setIconClickAction] = useIconClickAction();
+  const [cookieEditorEnabled, setCookieEditorEnabled] = useCookieEditorEnabled();
 
   return (
     <Container size="sm" py="xl">
@@ -38,6 +39,20 @@ export const OptionsPage: FC = () => {
           </Stack>
         </Radio.Group>
       </Stack>
+
+      <Divider my="xl"/>
+
+      <Group justify="space-between" wrap="nowrap" align="flex-start" gap="sm">
+        <Stack gap={2}>
+          <Text fw={500}>{t('cookie_editor_enabled_label')}</Text>
+          <Text size="sm" c="dimmed">{t('cookie_editor_enabled_description')}</Text>
+        </Stack>
+        <Switch
+          aria-label={t('cookie_editor_enabled_label')}
+          checked={cookieEditorEnabled}
+          onChange={(event) => void setCookieEditorEnabled(event.currentTarget.checked)}
+        />
+      </Group>
     </Container>
   );
 };

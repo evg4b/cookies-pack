@@ -77,6 +77,9 @@ export const useChromeStorageState = <T,>(key: string, defaultValue: T): [T, (va
 export const useClearExistingCookiesFirst = (): [boolean, (value: boolean) => Promise<void>] =>
   useChromeStorageState('clearExistingCookiesFirst', true);
 
+export const useCookieEditorEnabled = (): [boolean, (value: boolean) => Promise<void>] =>
+  useChromeStorageState('cookieEditorEnabled', true);
+
 export const useCustomPath = (): [boolean, (value: boolean) => Promise<void>] =>
   useChromeStorageState('useCustomPath', false);
 

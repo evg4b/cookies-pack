@@ -24,11 +24,14 @@ const copy = vi.fn();
 const saveFile = vi.fn();
 const onAddCookie = vi.fn();
 const onEditCookie = vi.fn();
+const setCookieEditorEnabled = vi.fn();
 let cookies: Cookie[] = [];
+let cookieEditorEnabled = true;
 
 vi.mock('@core/hooks', () => ({
   useCookies: () => ({ cookies, removeCookie }),
   useSaveFile: () => ({ saveFile }),
+  useCookieEditorEnabled: () => [cookieEditorEnabled, setCookieEditorEnabled],
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
 }));
 
@@ -40,6 +43,7 @@ vi.mock('@mantine/hooks', async (importOriginal) => ({
 describe('CookiesTable', () => {
   beforeEach(() => {
     cookies = [];
+    cookieEditorEnabled = true;
   });
 
   afterEach(() => {
@@ -123,5 +127,22 @@ describe('CookiesTable', () => {
       expect.stringContaining('x.com\t/\ta\t1\t-1'),
       expect.objectContaining({ suggestedName: 'cookies_table_export_filename' }),
     );
+  });
+
+  it('hides the add-cookie action from the empty state when the cookie editor is disabled', () => {
+    cookieEditorEnabled = false;
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
+
+    expect(screen.queryByLabelText('cookies_table_add_cookie')).not.toBeInTheDocument();
+  });
+
+  it('hides the add-cookie and edit-cookie actions when the cookie editor is disabled', () => {
+    cookieEditorEnabled = false;
+    cookies = [mockCookie({ name: 'session' })];
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
+
+    expect(screen.queryByLabelText('cookies_table_add_cookie')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('cookies_table_edit_cookie')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('cookies_table_delete_cookie')).toBeInTheDocument();
   });
 });
