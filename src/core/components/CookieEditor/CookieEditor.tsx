@@ -105,30 +105,28 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
   }, [cookie, tabs]);
 
   const submit = useCallback(
-    (values: CookieFormValues) => {
-      void (async () => {
-        const url = buildUrl(values.domain, values.path, values.secure);
+    (values: CookieFormValues) => void (async () => {
+      const url = buildUrl(values.domain, values.path, values.secure);
 
-        if (cookie && (cookie.name !== values.name || cookie.domain !== values.domain || cookie.path !== values.path)) {
-          await removeCookie(cookie.name, buildUrl(cookie.domain, cookie.path, cookie.secure));
-        }
+      if (cookie && (cookie.name !== values.name || cookie.domain !== values.domain || cookie.path !== values.path)) {
+        await removeCookie(cookie.name, buildUrl(cookie.domain, cookie.path, cookie.secure));
+      }
 
-        await setCookie(values.name, values.value, {
-          url,
-          domain: values.domain,
-          path: values.path,
-          secure: values.secure,
-          httpOnly: values.httpOnly,
-          sameSite: values.sameSite,
-          expirationDate: values.session || !values.expirationDate
-            ? undefined
-            : Math.floor(new Date(values.expirationDate).getTime() / 1000),
-          storeId: cookie?.storeId,
-        });
+      await setCookie(values.name, values.value, {
+        url,
+        domain: values.domain,
+        path: values.path,
+        secure: values.secure,
+        httpOnly: values.httpOnly,
+        sameSite: values.sameSite,
+        expirationDate: values.session || !values.expirationDate
+          ? undefined
+          : Math.floor(new Date(values.expirationDate).getTime() / 1000),
+        storeId: cookie?.storeId,
+      });
 
-        onClose();
-      })();
-    },
+      onClose();
+    })(),
     [cookie, removeCookie, setCookie, onClose],
   );
 
