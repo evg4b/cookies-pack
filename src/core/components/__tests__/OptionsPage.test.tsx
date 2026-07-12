@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
-import { OptionsPage } from '../../../options/OptionsPage.tsx';
+import { OptionsPage } from '../../../options/OptionsPage';
 
 let iconClickAction: 'popup' | 'sidepanel' = 'popup';
 const setIconClickAction = vi.fn().mockImplementation((value: 'popup' | 'sidepanel') => {

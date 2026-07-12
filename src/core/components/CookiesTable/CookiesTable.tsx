@@ -4,7 +4,7 @@ import { useClipboard } from '@mantine/hooks';
 import { IconCheck, IconCookieOff, IconCopy, IconDownload, IconPlus } from '@tabler/icons-react';
 import { useCookieEditorEnabled, useCookies, useSaveFile, useTranslation } from '@core/hooks';
 import { encodeJetbrainsCookies, joinCookiesHeader } from '@core/utils';
-import { CookieTableRow } from '@core/components/CookieTableRow.tsx';
+import { CookieTableRow } from './CookieTableRow';
 
 export type CookiesTableProps = {
   onAddCookie: () => void;
