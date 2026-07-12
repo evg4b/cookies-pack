@@ -1,4 +1,5 @@
 import { ActionIcon, Chip, createTheme, Tooltip } from '@mantine/core';
+import { DateTimePicker } from '@mantine/dates';
 
 export const cookiesPackTheme = createTheme({
   primaryColor: 'yellow',
@@ -24,6 +25,15 @@ export const cookiesPackTheme = createTheme({
       styles: {
         tooltip: {
           wordBreak: 'break-word',
+        },
+      },
+    }),
+    DateTimePicker: DateTimePicker.extend({
+      defaultProps: {
+        clearable: true,
+        timePickerProps: {
+          withDropdown: true,
+          popoverProps: { withinPortal: false },
         },
       },
     }),

@@ -193,11 +193,6 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
               label={t('expiration_label')}
               disabled={form.values.session}
               withAsterisk={!form.values.session}
-              clearable
-              timePickerProps={{
-                withDropdown: true,
-                popoverProps: { withinPortal: false },
-              }}
               {...form.getInputProps('expirationDate')}
             />
           </Stack>

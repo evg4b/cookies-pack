@@ -1,3 +1,4 @@
-.mantine-EmptyState-root {
+.mantine-EmptyState-root,
+.mantine-Table-table .mantine-Table-tr .mantine-Table-th {
   user-select: none;
 }
