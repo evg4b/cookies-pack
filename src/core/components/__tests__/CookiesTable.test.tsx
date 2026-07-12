@@ -22,6 +22,8 @@ const mockCookie = (overrides?: Partial<Cookie>): Cookie => ({
 const removeCookie = vi.fn();
 const copy = vi.fn();
 const saveFile = vi.fn();
+const onAddCookie = vi.fn();
+const onEditCookie = vi.fn();
 let cookies: Cookie[] = [];
 
 vi.mock('@core/hooks', () => ({
@@ -46,10 +48,18 @@ describe('CookiesTable', () => {
   });
 
   it('renders the empty state when there are no cookies', () => {
-    render(<CookiesTable/>, { wrapper: MantineProvider });
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
 
     expect(screen.getByText('cookies_table_empty_title')).toBeInTheDocument();
     expect(screen.getByText('cookies_table_empty_description')).toBeInTheDocument();
+  });
+
+  it('calls onAddCookie from the empty state when the add-cookie action is clicked', () => {
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
+
+    fireEvent.click(screen.getByLabelText('cookies_table_add_cookie'));
+
+    expect(onAddCookie).toHaveBeenCalled();
   });
 
   it('renders a row for each cookie', () => {
@@ -58,7 +68,7 @@ describe('CookiesTable', () => {
       mockCookie({ name: 'b', path: '/b', value: '2' }),
     ];
 
-    render(<CookiesTable/>, { wrapper: MantineProvider });
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
 
     expect(screen.getByText('a')).toBeInTheDocument();
     expect(screen.getByText('/a')).toBeInTheDocument();
@@ -68,7 +78,7 @@ describe('CookiesTable', () => {
 
   it('copies the cookie value to the clipboard when the value cell is clicked', () => {
     cookies = [mockCookie({ name: 'session', value: 'abc123' })];
-    render(<CookiesTable/>, { wrapper: MantineProvider });
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
 
     fireEvent.click(screen.getByText('abc123'));
 
@@ -77,16 +87,26 @@ describe('CookiesTable', () => {
 
   it('calls removeCookie with the row cookie name when the delete action is clicked', () => {
     cookies = [mockCookie({ name: 'session' })];
-    render(<CookiesTable/>, { wrapper: MantineProvider });
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
 
     fireEvent.click(screen.getByLabelText('cookies_table_delete_cookie'));
 
     expect(removeCookie).toHaveBeenCalledWith('session');
   });
 
+  it('calls onEditCookie with the row cookie when the edit action is clicked', () => {
+    const cookie = mockCookie({ name: 'session' });
+    cookies = [cookie];
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
+
+    fireEvent.click(screen.getByLabelText('cookies_table_edit_cookie'));
+
+    expect(onEditCookie).toHaveBeenCalledWith(cookie);
+  });
+
   it('copies all cookies as a header string when the copy-all action is clicked', () => {
     cookies = [mockCookie({ name: 'a', value: '1' }), mockCookie({ name: 'b', value: '2' })];
-    render(<CookiesTable/>, { wrapper: MantineProvider });
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
 
     fireEvent.click(screen.getByLabelText('cookies_table_copy_all_cookies'));
 
@@ -95,7 +115,7 @@ describe('CookiesTable', () => {
 
   it('exports all cookies as a Jetbrains-formatted file when the export action is clicked', () => {
     cookies = [mockCookie({ name: 'a', value: '1', domain: 'x.com', path: '/', expirationDate: undefined })];
-    render(<CookiesTable/>, { wrapper: MantineProvider });
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
 
     fireEvent.click(screen.getByLabelText('cookies_table_export_all_cookies'));
 

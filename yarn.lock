@@ -464,6 +464,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/form@npm:^9.4.1":
+  version: 9.4.1
+  resolution: "@mantine/form@npm:9.4.1"
+  dependencies:
+    "@standard-schema/spec": "npm:^1.1.0"
+    fast-deep-equal: "npm:^3.1.3"
+    klona: "npm:^2.0.6"
+  peerDependencies:
+    react: ^19.2.0
+  checksum: 10c0/e6be1d97734fb77ac15811518ac26915995b3c5af792682a6999510711e5b2e84416b2bcaf3496307f152567d09afb7678fbea728917d48fcd156b1b027d248e
+  languageName: node
+  linkType: hard
+
 "@mantine/hooks@npm:^9.4.1":
   version: 9.4.1
   resolution: "@mantine/hooks@npm:9.4.1"
@@ -1542,6 +1555,7 @@ __metadata:
     "@crxjs/vite-plugin": "npm:^2.7.1"
     "@eslint/js": "npm:^10.0.1"
     "@mantine/core": "npm:^9.4.1"
+    "@mantine/form": "npm:^9.4.1"
     "@mantine/hooks": "npm:^9.4.1"
     "@tabler/icons-react": "npm:^3.44.0"
     "@testing-library/dom": "npm:^10.4.1"
@@ -3000,6 +3014,13 @@ __metadata:
   dependencies:
     json-buffer: "npm:3.0.1"
   checksum: 10c0/aa52f3c5e18e16bb6324876bb8b59dd02acf782a4b789c7b2ae21107fab95fab3890ed448d4f8dba80ce05391eeac4bfabb4f02a20221342982f806fa2cf271e
+  languageName: node
+  linkType: hard
+
+"klona@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "klona@npm:2.0.6"
+  checksum: 10c0/94eed2c6c2ce99f409df9186a96340558897b3e62a85afdc1ee39103954d2ebe1c1c4e9fe2b0952771771fa96d70055ede8b27962a7021406374fdb695fd4d01
   languageName: node
   linkType: hard
 

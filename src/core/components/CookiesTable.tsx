@@ -1,12 +1,17 @@
 import { FC, useCallback } from 'react';
 import { ActionIcon, EmptyState, Flex, Table, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
-import { IconCheck, IconCookieOff, IconCopy, IconDownload } from '@tabler/icons-react';
+import { IconCheck, IconCookieOff, IconCopy, IconDownload, IconPlus } from '@tabler/icons-react';
 import { useCookies, useSaveFile, useTranslation } from '@core/hooks';
 import { encodeJetbrainsCookies, joinCookiesHeader } from '@core/utils';
 import { CookieTableRow } from '@core/components/CookieTableRow.tsx';
 
-export const CookiesTable: FC = () => {
+export type CookiesTableProps = {
+  onAddCookie: () => void;
+  onEditCookie: (cookie: chrome.cookies.Cookie) => void;
+};
+
+export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie }) => {
   const { cookies, removeCookie } = useCookies();
   const t = useTranslation('cookies_table');
   const { copy, copied } = useClipboard({ timeout: 1500 });
@@ -28,20 +33,38 @@ export const CookiesTable: FC = () => {
     });
   }, [saveFile, cookies, t]);
 
+  const addCookieAction = (
+    <Tooltip label={t('add_cookie')}>
+      <ActionIcon aria-label={t('add_cookie')} onClick={onAddCookie}>
+        <IconPlus size={16}/>
+      </ActionIcon>
+    </Tooltip>
+  );
+
   if (!cookies.length) {
     return (
-      <Flex direction="column" flex={1} align="center" justify="center">
-        <EmptyState
-          icon={<IconCookieOff/>}
-          title={t('empty_title')}
-          description={t('empty_description')}
-        />
+      <Flex direction="column" flex={1}>
+        <Flex justify="flex-end" p="xs">
+          {addCookieAction}
+        </Flex>
+        <Flex direction="column" flex={1} align="center" justify="center">
+          <EmptyState
+            icon={<IconCookieOff/>}
+            title={t('empty_title')}
+            description={t('empty_description')}
+          />
+        </Flex>
       </Flex>
     );
   }
 
   const rows = cookies.map((element) => (
-    <CookieTableRow cookie={element} removeCookie={removeCookie} key={element.name + element.domain + element.path}/>
+    <CookieTableRow
+      cookie={element}
+      removeCookie={removeCookie}
+      onEdit={onEditCookie}
+      key={element.name + element.domain + element.path}
+    />
   ));
 
   return (
@@ -52,8 +75,9 @@ export const CookiesTable: FC = () => {
             <Table.Th w="25%">{t('columns_name')}</Table.Th>
             <Table.Th w="15%" visibleFrom="xs">{t('columns_path')}</Table.Th>
             <Table.Th>{t('columns_value')}</Table.Th>
-            <Table.Th w={72}>
+            <Table.Th w={104}>
               <Flex gap="xs" direction="row" justify="flex-end" pr="xs" align="center" wrap="nowrap">
+                {addCookieAction}
                 <Tooltip label={t('copy_all_cookies')}>
                   <ActionIcon
                     aria-label={t('copy_all_cookies')}

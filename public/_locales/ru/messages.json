@@ -45,6 +45,14 @@
     "message": "Удалить cookie",
     "description": "The accessible label for the delete-cookie row action"
   },
+  "cookies_table_add_cookie": {
+    "message": "Добавить cookie",
+    "description": "The accessible label for the add-cookie header action"
+  },
+  "cookies_table_edit_cookie": {
+    "message": "Изменить cookie",
+    "description": "The accessible label for the edit-cookie row action"
+  },
   "cookies_table_cell_copied": {
     "message": "Скопировано!",
     "description": "The message briefly shown in a cookie table cell after its value is copied to the clipboard"
@@ -114,5 +122,102 @@
   "options_icon_click_action_sidepanel_description": {
     "message": "Открывает Cookies Pack в боковой панели браузера.",
     "description": "The description of the open-side-panel option"
+  },
+
+  "cookie_editor_title_add": {
+    "message": "Добавить cookie",
+    "description": "The title of the cookie editor page when adding a new cookie"
+  },
+  "cookie_editor_title_edit": {
+    "message": "Изменить cookie",
+    "description": "The title of the cookie editor page when editing an existing cookie"
+  },
+  "cookie_editor_back": {
+    "message": "Назад",
+    "description": "The accessible label for the back action leaving the cookie editor"
+  },
+  "cookie_editor_name_label": {
+    "message": "Имя",
+    "description": "The label for the cookie name field"
+  },
+  "cookie_editor_name_placeholder": {
+    "message": "Имя cookie",
+    "description": "The placeholder for the cookie name field"
+  },
+  "cookie_editor_value_label": {
+    "message": "Значение",
+    "description": "The label for the cookie value field"
+  },
+  "cookie_editor_value_placeholder": {
+    "message": "Значение cookie",
+    "description": "The placeholder for the cookie value field"
+  },
+  "cookie_editor_domain_label": {
+    "message": "Домен",
+    "description": "The label for the cookie domain field"
+  },
+  "cookie_editor_domain_placeholder": {
+    "message": "example.com",
+    "description": "The placeholder for the cookie domain field"
+  },
+  "cookie_editor_path_label": {
+    "message": "Путь",
+    "description": "The label for the cookie path field"
+  },
+  "cookie_editor_path_placeholder": {
+    "message": "/",
+    "description": "The placeholder for the cookie path field"
+  },
+  "cookie_editor_same_site_label": {
+    "message": "SameSite",
+    "description": "The label for the cookie SameSite select"
+  },
+  "cookie_editor_same_site_no_restriction": {
+    "message": "Без ограничений",
+    "description": "The SameSite=None option"
+  },
+  "cookie_editor_same_site_lax": {
+    "message": "Lax",
+    "description": "The SameSite=Lax option"
+  },
+  "cookie_editor_same_site_strict": {
+    "message": "Strict",
+    "description": "The SameSite=Strict option"
+  },
+  "cookie_editor_same_site_unspecified": {
+    "message": "Не указано",
+    "description": "The SameSite=Unspecified option"
+  },
+  "cookie_editor_secure_label": {
+    "message": "Secure",
+    "description": "The label for the cookie secure switch"
+  },
+  "cookie_editor_http_only_label": {
+    "message": "HTTP only",
+    "description": "The label for the cookie HTTP-only switch"
+  },
+  "cookie_editor_session_label": {
+    "message": "Сессионный cookie",
+    "description": "The label for the session-cookie switch"
+  },
+  "cookie_editor_expiration_label": {
+    "message": "Истекает",
+    "description": "The label for the cookie expiration date field"
+  },
+  "cookie_editor_error_required": {
+    "message": "Это поле обязательно",
+    "description": "The validation error shown when a required cookie editor field is empty"
+  },
+  "cookie_editor_error_path": {
+    "message": "Путь должен начинаться с /",
+    "description": "The validation error shown when the cookie path does not start with a slash"
+  },
+  "cookie_editor_cancel": {
+    "message": "Отмена",
+    "description": "The label for the cancel button in the cookie editor"
+  },
+  "cookie_editor_save": {
+    "message": "Сохранить",
+    "description": "The label for the save button in the cookie editor"
   }
 }
