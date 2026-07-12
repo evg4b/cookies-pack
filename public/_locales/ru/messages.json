@@ -91,10 +91,6 @@
     "description": "The submit button label when clear-existing-cookies-first is disabled"
   },
 
-  "options_title": {
-    "message": "Настройки Cookies Pack",
-    "description": "The title of the options page"
-  },
   "options_icon_click_action_label": {
     "message": "Действие при клике по значку на панели инструментов",
     "description": "The label for the icon-click-action setting"
