@@ -122,7 +122,7 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
           sameSite: values.sameSite,
           expirationDate: values.session || !values.expirationDate
             ? undefined
-            : Math.floor(values.expirationDate.getTime() / 1000),
+            : Math.floor(new Date(values.expirationDate).getTime() / 1000),
           storeId: cookie?.storeId,
         });
 
