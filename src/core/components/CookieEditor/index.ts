@@ -1,0 +1,1 @@
+export { CookieEditor, type CookieEditorProps } from './CookieEditor';

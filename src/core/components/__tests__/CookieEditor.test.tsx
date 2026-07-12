@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
-import { CookieEditor } from '../CookieEditor';
+import { CookieEditor } from '../CookieEditor/CookieEditor.tsx';
 
 type Cookie = chrome.cookies.Cookie;
 
