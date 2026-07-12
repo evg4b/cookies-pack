@@ -1,58 +1,83 @@
-import { FC } from 'react';
-import { Container, Divider, Group, Radio, Stack, Switch, Text } from '@mantine/core';
-import { useCookieEditorEnabled, useIconClickAction, useTranslation } from '@core/hooks';
+import { type FC } from 'react';
+import { Container, Group, Radio, Stack, Text } from '@mantine/core';
+import { useCookieEditorMode, useIconClickAction, useTranslation } from '@core/hooks';
+
+type CardOption<T> = { value: T, label: string, description: string };
+
+const iconActions: CardOption<string>[] = [
+  {
+    value: 'popup',
+    label: 'icon_click_action_popup',
+    description: 'icon_click_action_popup_description',
+  },
+  {
+    value: 'sidepanel',
+    label: 'icon_click_action_sidepanel',
+    description: 'icon_click_action_sidepanel_description',
+  },
+];
+
+const editorModes: CardOption<string>[] = [
+  {
+    value: 'bulk-editor-only',
+    label: 'editor_mode_bulk_editor_only',
+    description: 'editor_mode_bulk_editor_only_description',
+  },
+  {
+    value: 'editor-only',
+    label: 'editor_mode_editor_only',
+    description: 'editor_mode_editor_only_description',
+  },
+  {
+    value: 'both-editors',
+    label: 'editor_mode_both_editors',
+    description: 'editor_mode_both_editors_description',
+  },
+];
 
 export const OptionsPage: FC = () => {
   const t = useTranslation('options');
   const [iconClickAction, setIconClickAction] = useIconClickAction();
-  const [cookieEditorEnabled, setCookieEditorEnabled] = useCookieEditorEnabled();
+  const [cookieEditorMode, setCookieEditorMode] = useCookieEditorMode();
 
   return (
-    <Container size="sm" py="xl">
+    <Container size="sm" py="sm">
       <Stack gap="xs">
-        <Text fw={500}>
-          {t('icon_click_action_label')}
-        </Text>
-        <Text size="sm" c="dimmed">
-          {t('icon_click_action_description')}
-        </Text>
-        <Radio.Group value={iconClickAction} onChange={setIconClickAction}>
+        <Radio.Group label={t('icon_click_action_label')} value={iconClickAction} onChange={setIconClickAction}>
           <Stack gap="xs" mt="xs">
-            <Radio.Card value="popup" p="sm" radius="md" aria-label={t('icon_click_action_popup')}>
-              <Group wrap="nowrap" align="flex-start" gap="sm">
-                <Radio.Indicator/>
-                <Stack gap={2}>
-                  <Text>{t('icon_click_action_popup')}</Text>
-                  <Text size="xs" c="dimmed">{t('icon_click_action_popup_description')}</Text>
-                </Stack>
-              </Group>
-            </Radio.Card>
-            <Radio.Card value="sidepanel" p="sm" radius="md" aria-label={t('icon_click_action_sidepanel')}>
-              <Group wrap="nowrap" align="flex-start" gap="sm">
-                <Radio.Indicator/>
-                <Stack gap={2}>
-                  <Text>{t('icon_click_action_sidepanel')}</Text>
-                  <Text size="xs" c="dimmed">{t('icon_click_action_sidepanel_description')}</Text>
-                </Stack>
-              </Group>
-            </Radio.Card>
+            {iconActions.map(mode => (
+              <Radio.Card value={mode.value} p="sm" radius="md" aria-label={t(mode.label)}>
+                <Group wrap="nowrap" align="flex-start" gap="sm">
+                  <Radio.Indicator/>
+                  <Stack gap={2}>
+                    <Text>{t(mode.label)}</Text>
+                    <Text size="xs" c="dimmed">
+                      {t(mode.description)}
+                    </Text>
+                  </Stack>
+                </Group>
+              </Radio.Card>
+            ))}
+          </Stack>
+        </Radio.Group>
+        <Radio.Group label="Editor mode" value={cookieEditorMode} onChange={setCookieEditorMode}>
+          <Stack gap="xs" mt="xs">
+            {editorModes.map(mode => (
+              <Radio.Card value={mode.value} p="sm" radius="md" aria-label={t(mode.label)}>
+                <Group wrap="nowrap" align="flex-start" gap="sm">
+                  <Radio.Indicator/>
+                  <Stack gap={2}>
+                    <Text>{t(mode.label)}</Text>
+                    <Text size="xs" c="dimmed">
+                      {t(mode.description)}
+                    </Text>
+                  </Stack>
+                </Group>
+              </Radio.Card>
+            ))}
           </Stack>
         </Radio.Group>
       </Stack>
-
-      <Divider my="xl"/>
-
-      <Group justify="space-between" wrap="nowrap" align="flex-start" gap="sm">
-        <Stack gap={2}>
-          <Text fw={500}>{t('cookie_editor_enabled_label')}</Text>
-          <Text size="sm" c="dimmed">{t('cookie_editor_enabled_description')}</Text>
-        </Stack>
-        <Switch
-          aria-label={t('cookie_editor_enabled_label')}
-          checked={cookieEditorEnabled}
-          onChange={(event) => void setCookieEditorEnabled(event.currentTarget.checked)}
-        />
-      </Group>
     </Container>
   );
 };

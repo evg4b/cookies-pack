@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react';
 import { EmptyState, Flex, Table } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCheck, IconCookieOff, IconCopy, IconDownload, IconPlus } from '@tabler/icons-react';
-import { useCookieEditorEnabled, useCookies, useSaveFile, useTranslation } from '@core/hooks';
+import { useCookieEditors, useCookies, useSaveFile, useTranslation } from '@core/hooks';
 import { encodeJetbrainsCookies, joinCookiesHeader } from '@core/utils';
 import { CookieTableRow } from './CookieTableRow';
 import { ActionsCell } from './ActionsCell';
@@ -18,7 +18,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
   const t = useTranslation('cookies_table');
   const { copy, copied } = useClipboard({ timeout: 500 });
   const { saveFile } = useSaveFile();
-  const [cookieEditorEnabled] = useCookieEditorEnabled();
+  const { editorEnabled, bulkEditorEnabled } = useCookieEditors();
 
   const copyAll = useCallback(() => {
     copy(joinCookiesHeader(cookies));
@@ -36,7 +36,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
     });
   }, [saveFile, cookies, t]);
 
-  const addCookieAction = cookieEditorEnabled && (
+  const addCookieAction = editorEnabled && (
     <IconButton
       label={t('add_cookie')}
       onClick={onAddCookie}
@@ -65,7 +65,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
     <CookieTableRow
       cookie={element}
       removeCookie={removeCookie}
-      onEdit={cookieEditorEnabled ? onEditCookie : undefined}
+      onEdit={onEditCookie}
       key={element.name + element.domain + element.path}
     />
   ));
@@ -80,13 +80,15 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
             <Table.Th>{t('columns_value')}</Table.Th>
             <ActionsCell Component={Table.Th}>
               {addCookieAction}
-              <IconButton
-                label={t('copy_all_cookies')}
-                onClick={copyAll}
-                icon={copied ? IconCheck : IconCopy}
-                color={copied ? 'green' : undefined}
-                variant={(copied ? 'filled' : 'subtle')}
-              />
+              {bulkEditorEnabled && (
+                <IconButton
+                  label={t('copy_all_cookies')}
+                  onClick={copyAll}
+                  icon={copied ? IconCheck : IconCopy}
+                  color={copied ? 'green' : undefined}
+                  variant={(copied ? 'filled' : 'subtle')}
+                />
+              )}
               <IconButton
                 label={t('export_all_cookies')}
                 onClick={exportAll}

@@ -24,14 +24,14 @@ const copy = vi.fn();
 const saveFile = vi.fn();
 const onAddCookie = vi.fn();
 const onEditCookie = vi.fn();
-const setCookieEditorEnabled = vi.fn();
 let cookies: Cookie[] = [];
-let cookieEditorEnabled = true;
+let editorEnabled = true;
+let bulkEditorEnabled = true;
 
 vi.mock('@core/hooks', () => ({
   useCookies: () => ({ cookies, removeCookie }),
   useSaveFile: () => ({ saveFile }),
-  useCookieEditorEnabled: () => [cookieEditorEnabled, setCookieEditorEnabled],
+  useCookieEditors: () => ({ editorEnabled, bulkEditorEnabled }),
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
 }));
 
@@ -43,7 +43,8 @@ vi.mock('@mantine/hooks', async (importOriginal) => ({
 describe('CookiesTable', () => {
   beforeEach(() => {
     cookies = [];
-    cookieEditorEnabled = true;
+    editorEnabled = true;
+    bulkEditorEnabled = true;
   });
 
   afterEach(() => {
@@ -129,20 +130,36 @@ describe('CookiesTable', () => {
     );
   });
 
-  it('hides the add-cookie action from the empty state when the cookie editor is disabled', () => {
-    cookieEditorEnabled = false;
+  it('hides the add-cookie action from the empty state when the single-cookie editor is disabled', () => {
+    editorEnabled = false;
     render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
 
     expect(screen.queryByLabelText('cookies_table_add_cookie')).not.toBeInTheDocument();
   });
 
-  it('hides the add-cookie and edit-cookie actions when the cookie editor is disabled', () => {
-    cookieEditorEnabled = false;
+  it('hides the add-cookie and edit-cookie actions when the single-cookie editor is disabled', () => {
+    editorEnabled = false;
     cookies = [mockCookie({ name: 'session' })];
     render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
 
     expect(screen.queryByLabelText('cookies_table_add_cookie')).not.toBeInTheDocument();
     expect(screen.queryByLabelText('cookies_table_edit_cookie')).not.toBeInTheDocument();
     expect(screen.getByLabelText('cookies_table_delete_cookie')).toBeInTheDocument();
+  });
+
+  it('hides the copy-all action but keeps export when the bulk editor is disabled', () => {
+    bulkEditorEnabled = false;
+    cookies = [mockCookie({ name: 'session' })];
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
+
+    expect(screen.queryByLabelText('cookies_table_copy_all_cookies')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('cookies_table_export_all_cookies')).toBeInTheDocument();
+  });
+
+  it('shows the copy-all action when the bulk editor is enabled', () => {
+    cookies = [mockCookie({ name: 'session' })];
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
+
+    expect(screen.getByLabelText('cookies_table_copy_all_cookies')).toBeInTheDocument();
   });
 });

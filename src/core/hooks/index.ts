@@ -5,8 +5,11 @@ export { useSaveFile, type UseSaveFileReturn } from './saveFile';
 export {
   useChromeStorageState,
   useClearExistingCookiesFirst,
-  useCookieEditorEnabled,
   useCustomPath,
   useIconClickAction,
+  useCookieEditorMode,
+  useCookieEditors,
   type IconClickAction,
+  type CookieEditorMode,
+  type CookieEditors,
 } from './settings';

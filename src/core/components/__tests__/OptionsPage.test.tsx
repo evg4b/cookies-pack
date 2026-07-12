@@ -3,22 +3,24 @@ import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
 import { OptionsPage } from '../../../options/OptionsPage';
 
+type CookieEditorMode = 'bulk-editor-only' | 'editor-only' | 'both-editors';
+
 let iconClickAction: 'popup' | 'sidepanel' = 'popup';
 const setIconClickAction = vi.fn().mockImplementation((value: 'popup' | 'sidepanel') => {
   iconClickAction = value;
   return Promise.resolve();
 });
 
-let cookieEditorEnabled = true;
-const setCookieEditorEnabled = vi.fn().mockImplementation((value: boolean) => {
-  cookieEditorEnabled = value;
+let cookieEditorMode: CookieEditorMode = 'both-editors';
+const setCookieEditorMode = vi.fn().mockImplementation((value: CookieEditorMode) => {
+  cookieEditorMode = value;
   return Promise.resolve();
 });
 
 vi.mock('@core/hooks', () => ({
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
   useIconClickAction: () => [iconClickAction, setIconClickAction],
-  useCookieEditorEnabled: () => [cookieEditorEnabled, setCookieEditorEnabled],
+  useCookieEditorMode: () => [cookieEditorMode, setCookieEditorMode],
 }));
 
 describe('OptionsPage', () => {
@@ -26,7 +28,7 @@ describe('OptionsPage', () => {
     cleanup();
     vi.clearAllMocks();
     iconClickAction = 'popup';
-    cookieEditorEnabled = true;
+    cookieEditorMode = 'both-editors';
   });
 
   it('renders the icon click action options with the stored value selected', () => {
@@ -46,18 +48,36 @@ describe('OptionsPage', () => {
     expect(setIconClickAction).toHaveBeenCalledWith('sidepanel');
   });
 
-  it('renders the cookie editor toggle enabled by default', () => {
+  it('renders the editor mode options with both editors selected by default', () => {
     render(<OptionsPage/>, { wrapper: MantineProvider });
 
-    expect(screen.getByText('options_cookie_editor_enabled_label')).toBeInTheDocument();
-    expect(screen.getByLabelText('options_cookie_editor_enabled_label')).toBeChecked();
+    expect(screen.getByText('Editor mode')).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'options_editor_mode_bulk_editor_only' })).not.toBeChecked();
+    expect(screen.getByRole('radio', { name: 'options_editor_mode_editor_only' })).not.toBeChecked();
+    expect(screen.getByRole('radio', { name: 'options_editor_mode_both_editors' })).toBeChecked();
   });
 
-  it('persists disabling the cookie editor', () => {
+  it('reflects a previously stored editor mode as selected', () => {
+    cookieEditorMode = 'editor-only';
     render(<OptionsPage/>, { wrapper: MantineProvider });
 
-    fireEvent.click(screen.getByLabelText('options_cookie_editor_enabled_label'));
+    expect(screen.getByRole('radio', { name: 'options_editor_mode_editor_only' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: 'options_editor_mode_both_editors' })).not.toBeChecked();
+  });
 
-    expect(setCookieEditorEnabled).toHaveBeenCalledWith(false);
+  it('persists selecting the bulk-editor-only mode', () => {
+    render(<OptionsPage/>, { wrapper: MantineProvider });
+
+    fireEvent.click(screen.getByRole('radio', { name: 'options_editor_mode_bulk_editor_only' }));
+
+    expect(setCookieEditorMode).toHaveBeenCalledWith('bulk-editor-only');
+  });
+
+  it('persists selecting the editor-only mode', () => {
+    render(<OptionsPage/>, { wrapper: MantineProvider });
+
+    fireEvent.click(screen.getByRole('radio', { name: 'options_editor_mode_editor_only' }));
+
+    expect(setCookieEditorMode).toHaveBeenCalledWith('editor-only');
   });
 });

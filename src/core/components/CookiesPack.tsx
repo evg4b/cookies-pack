@@ -1,6 +1,7 @@
 import { FC, useCallback, useState } from 'react';
 import { CookieEditor, CookiesBatchUpdate, CookiesTable, SupportingWrapper } from '@core/components';
 import { Flex } from '@mantine/core';
+import { useCookieEditors } from '@core/hooks';
 
 type Cookie = chrome.cookies.Cookie;
 type EditorState = { open: true; cookie?: Cookie } | { open: false };
@@ -11,6 +12,8 @@ export const CookiesPack: FC = () => {
   const openAddCookie = useCallback(() => setEditor({ open: true }), []);
   const openEditCookie = useCallback((cookie: Cookie) => setEditor({ open: true, cookie }), []);
   const closeEditor = useCallback(() => setEditor({ open: false }), []);
+
+  const { bulkEditorEnabled } = useCookieEditors();
 
   if (editor.open) {
     return (
@@ -26,9 +29,11 @@ export const CookiesPack: FC = () => {
         <Flex flex={3} direction="column" style={{ overflow: 'hidden' }}>
           <CookiesTable onAddCookie={openAddCookie} onEditCookie={openEditCookie}/>
         </Flex>
-        <Flex flex={1} direction="column">
-          <CookiesBatchUpdate style={{ padding: '0.5em' }}/>
-        </Flex>
+        {bulkEditorEnabled && (
+          <Flex flex={1} direction="column">
+            <CookiesBatchUpdate style={{ padding: '0.5em' }}/>
+          </Flex>
+        )}
       </SupportingWrapper>
     </Flex>
   );

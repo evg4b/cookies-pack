@@ -103,10 +103,6 @@
     "message": "Действие при клике по значку на панели инструментов",
     "description": "The label for the icon-click-action setting"
   },
-  "options_icon_click_action_description": {
-    "message": "Выберите, что происходит при клике по значку Cookies Pack на панели инструментов.",
-    "description": "The description for the icon-click-action setting"
-  },
   "options_icon_click_action_popup": {
     "message": "Открывать всплывающее окно",
     "description": "The option to open the popup on icon click"
@@ -130,6 +126,30 @@
   "options_cookie_editor_enabled_description": {
     "message": "Показывать действия добавления и редактирования cookie во всплывающем окне и боковой панели. По умолчанию включено.",
     "description": "The description for the cookie-editor-enabled setting"
+  },
+  "options_editor_mode_bulk_editor_only": {
+    "message": "Только массовый редактор",
+    "description": "The label for the bulk_editor_only editor mode option"
+  },
+  "options_editor_mode_bulk_editor_only_description": {
+    "message": "Показывать только редактор заголовка cookie для массового обновления.",
+    "description": "The description for the bulk_editor_only editor mode option"
+  },
+  "options_editor_mode_editor_only": {
+    "message": "Только редактор",
+    "description": "The label for the editor_only editor mode option"
+  },
+  "options_editor_mode_editor_only_description": {
+    "message": "Показывать только редактор одного cookie.",
+    "description": "The description for the editor_only editor mode option"
+  },
+  "options_editor_mode_both_editors": {
+    "message": "Оба редактора",
+    "description": "The label for the both_editors editor mode option"
+  },
+  "options_editor_mode_both_editors_description": {
+    "message": "Показывать и редактор заголовка cookie для массового обновления, и редактор одного cookie.",
+    "description": "The description for the both_editors editor mode option"
   },
 
   "cookie_editor_title_add": {

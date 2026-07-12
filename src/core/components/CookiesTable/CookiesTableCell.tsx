@@ -1,11 +1,11 @@
-import { Box, Table, Tooltip } from '@mantine/core';
+import { Box, type MantineBreakpoint, Table, Text, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { type FC, type KeyboardEvent, useCallback } from 'react';
 import { useTranslation } from '@core/hooks';
 
 export interface CookiesTableCellProps {
   value: string;
-  visibleFrom?: 'xs' | undefined;
+  visibleFrom?: MantineBreakpoint;
 }
 
 export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value, visibleFrom }) => {
@@ -37,7 +37,9 @@ export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value, visibleFrom
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
         }}>
-          {copied ? t('cell_copied') : value}
+          {copied
+            ? <Text size="xs" c="dimmed">{t('cell_copied')}</Text>
+            : value}
         </Box>
       </Tooltip>
     </Table.Td>

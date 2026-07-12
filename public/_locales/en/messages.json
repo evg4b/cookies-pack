@@ -103,10 +103,6 @@
     "message": "Toolbar icon click action",
     "description": "The label for the icon-click-action setting"
   },
-  "options_icon_click_action_description": {
-    "message": "Choose what happens when you click the Cookies Pack icon in the toolbar.",
-    "description": "The description for the icon-click-action setting"
-  },
   "options_icon_click_action_popup": {
     "message": "Open popup",
     "description": "The option to open the popup on icon click"
@@ -130,6 +126,30 @@
   "options_cookie_editor_enabled_description": {
     "message": "Show the add and edit cookie actions in the popup and side panel. Enabled by default.",
     "description": "The description for the cookie-editor-enabled setting"
+  },
+  "options_editor_mode_bulk_editor_only": {
+    "message": "Bulk editor only",
+    "description": "The label for the bulk_editor_only editor mode option"
+  },
+  "options_editor_mode_bulk_editor_only_description": {
+    "message": "Only show the bulk cookie header editor.",
+    "description": "The description for the bulk_editor_only editor mode option"
+  },
+  "options_editor_mode_editor_only": {
+    "message": "Editor only",
+    "description": "The label for the editor_only editor mode option"
+  },
+  "options_editor_mode_editor_only_description": {
+    "message": "Only show the single_cookie editor.",
+    "description": "The description for the editor_only editor mode option"
+  },
+  "options_editor_mode_both_editors": {
+    "message": "Both editors",
+    "description": "The label for the both_editors editor mode option"
+  },
+  "options_editor_mode_both_editors_description": {
+    "message": "Show both the bulk cookie header editor and the single_cookie editor.",
+    "description": "The description for the both_editors editor mode option"
   },
 
   "cookie_editor_title_add": {
