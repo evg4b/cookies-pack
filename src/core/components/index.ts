@@ -3,3 +3,4 @@ export { CookiesBatchUpdate, type CookiesBatchUpdateProps } from './CookiesBatch
 export { CookiesPack } from './CookiesPack';
 export { CookieEditor, type CookieEditorProps } from './CookieEditor/CookieEditor';
 export { SupportingWrapper } from './SupportingWrapper';
+export { IconButton, type IconButtonProps } from './IconButton';

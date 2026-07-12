@@ -17,6 +17,7 @@ export const cookiesPackTheme = createTheme({
     }),
     Tooltip: Tooltip.extend({
       defaultProps: {
+        withArrow: true,
         openDelay: 300,
         multiline: true,
         maw: 220,

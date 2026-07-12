@@ -1,11 +1,12 @@
 import { FC, useCallback } from 'react';
-import { ActionIcon, EmptyState, Flex, Table, Tooltip } from '@mantine/core';
+import { EmptyState, Flex, Table } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCheck, IconCookieOff, IconCopy, IconDownload, IconPlus } from '@tabler/icons-react';
 import { useCookieEditorEnabled, useCookies, useSaveFile, useTranslation } from '@core/hooks';
 import { encodeJetbrainsCookies, joinCookiesHeader } from '@core/utils';
 import { CookieTableRow } from './CookieTableRow';
-import { ActionsCell } from '@core/components/CookiesTable/ActionsCell.tsx';
+import { ActionsCell } from './ActionsCell';
+import { IconButton } from '@core/components';
 
 export type CookiesTableProps = {
   onAddCookie: () => void;
@@ -15,7 +16,7 @@ export type CookiesTableProps = {
 export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie }) => {
   const { cookies, removeCookie } = useCookies();
   const t = useTranslation('cookies_table');
-  const { copy, copied } = useClipboard({ timeout: 1500 });
+  const { copy, copied } = useClipboard({ timeout: 500 });
   const { saveFile } = useSaveFile();
   const [cookieEditorEnabled] = useCookieEditorEnabled();
 
@@ -36,11 +37,11 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
   }, [saveFile, cookies, t]);
 
   const addCookieAction = cookieEditorEnabled && (
-    <Tooltip label={t('add_cookie')}>
-      <ActionIcon aria-label={t('add_cookie')} onClick={onAddCookie}>
-        <IconPlus size={16}/>
-      </ActionIcon>
-    </Tooltip>
+    <IconButton
+      label={t('add_cookie')}
+      onClick={onAddCookie}
+      icon={IconPlus}
+    />
   );
 
   if (!cookies.length) {
@@ -79,21 +80,18 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
             <Table.Th>{t('columns_value')}</Table.Th>
             <ActionsCell Component={Table.Th}>
               {addCookieAction}
-              <Tooltip label={t('copy_all_cookies')}>
-                <ActionIcon
-                  aria-label={t('copy_all_cookies')}
-                  color={copied ? 'green' : undefined}
-                  variant={copied ? 'filled' : 'subtle'}
-                  onClick={copyAll}
-                >
-                  {copied ? <IconCheck size={16}/> : <IconCopy size={16}/>}
-                </ActionIcon>
-              </Tooltip>
-              <Tooltip label={t('export_all_cookies')}>
-                <ActionIcon aria-label={t('export_all_cookies')} onClick={exportAll}>
-                  <IconDownload size={16}/>
-                </ActionIcon>
-              </Tooltip>
+              <IconButton
+                label={t('copy_all_cookies')}
+                onClick={copyAll}
+                icon={copied ? IconCheck : IconCopy}
+                color={copied ? 'green' : undefined}
+                variant={(copied ? 'filled' : 'subtle')}
+              />
+              <IconButton
+                label={t('export_all_cookies')}
+                onClick={exportAll}
+                icon={IconDownload}
+              />
             </ActionsCell>
           </Table.Tr>
         </Table.Thead>
