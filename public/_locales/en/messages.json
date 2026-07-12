@@ -127,6 +127,10 @@
     "message": "Show the add and edit cookie actions in the popup and side panel. Enabled by default.",
     "description": "The description for the cookie-editor-enabled setting"
   },
+  "options_editor_mode_label": {
+    "message": "Editor mode",
+    "description": "The label for the editor-mode setting"
+  },
   "options_editor_mode_bulk_editor_only": {
     "message": "Bulk editor only",
     "description": "The label for the bulk_editor_only editor mode option"

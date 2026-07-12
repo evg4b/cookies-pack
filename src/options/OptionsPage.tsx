@@ -60,7 +60,7 @@ export const OptionsPage: FC = () => {
             ))}
           </Stack>
         </Radio.Group>
-        <Radio.Group label="Editor mode" value={cookieEditorMode} onChange={setCookieEditorMode}>
+        <Radio.Group label={t('editor_mode_label')} value={cookieEditorMode} onChange={setCookieEditorMode}>
           <Stack gap="xs" mt="xs">
             {editorModes.map(mode => (
               <Radio.Card value={mode.value} p="sm" radius="md" aria-label={t(mode.label)}>

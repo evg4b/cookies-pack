@@ -127,6 +127,10 @@
     "message": "Показывать действия добавления и редактирования cookie во всплывающем окне и боковой панели. По умолчанию включено.",
     "description": "The description for the cookie-editor-enabled setting"
   },
+  "options_editor_mode_label": {
+    "message": "Режим редактора",
+    "description": "The label for the editor-mode setting"
+  },
   "options_editor_mode_bulk_editor_only": {
     "message": "Только массовый редактор",
     "description": "The label for the bulk_editor_only editor mode option"

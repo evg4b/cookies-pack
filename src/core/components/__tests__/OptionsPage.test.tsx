@@ -51,7 +51,7 @@ describe('OptionsPage', () => {
   it('renders the editor mode options with both editors selected by default', () => {
     render(<OptionsPage/>, { wrapper: MantineProvider });
 
-    expect(screen.getByText('Editor mode')).toBeInTheDocument();
+    expect(screen.getByText('options_editor_mode_label')).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'options_editor_mode_bulk_editor_only' })).not.toBeChecked();
     expect(screen.getByRole('radio', { name: 'options_editor_mode_editor_only' })).not.toBeChecked();
     expect(screen.getByRole('radio', { name: 'options_editor_mode_both_editors' })).toBeChecked();

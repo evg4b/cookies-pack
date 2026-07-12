@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { EmptyState, Flex, Table } from '@mantine/core';
+import { EmptyState, Flex, Stack, Table } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCheck, IconCookieOff, IconCopy, IconDownload, IconPlus } from '@tabler/icons-react';
 import { useCookieEditors, useCookies, useSaveFile, useTranslation } from '@core/hooks';
@@ -46,18 +46,18 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
 
   if (!cookies.length) {
     return (
-      <Flex direction="column" flex={1}>
+      <Stack flex={1}>
         <Flex justify="flex-end" p="xs">
           {addCookieAction}
         </Flex>
-        <Flex direction="column" flex={1} align="center" justify="center">
+        <Stack flex={1} align="center" justify="center">
           <EmptyState
             icon={<IconCookieOff/>}
             title={t('empty_title')}
             description={t('empty_description')}
           />
-        </Flex>
-      </Flex>
+        </Stack>
+      </Stack>
     );
   }
 
