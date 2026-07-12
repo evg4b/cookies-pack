@@ -1,4 +1,4 @@
-import { createContext, useContext, useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react';
 
 type Cookie = chrome.cookies.Cookie;
 type Listener = () => void;
@@ -13,13 +13,6 @@ interface CookiesState {
 interface SetCookieDetails extends Omit<chrome.cookies.SetDetails, 'url'> {
   url?: string;
 }
-
-export const ChromeContext = createContext(chrome);
-
-export const useTabs = () => {
-  const chrome = useContext(ChromeContext);
-  return chrome.tabs;
-};
 
 const createCookiesStore = () => {
   let state: CookiesState = {

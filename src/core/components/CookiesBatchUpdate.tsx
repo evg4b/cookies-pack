@@ -1,8 +1,8 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import { Button, Chip, Flex, Input, PolymorphicComponentProps, Textarea } from '@mantine/core';
-import { useClearExistingCookiesFirst, useCookies, useCustomPath, useTabs, useTranslation } from '@core/hooks';
+import { useActiveTab, useClearExistingCookiesFirst, useCookies, useCustomPath, useTranslation } from '@core/hooks';
 import { parseCookieHeader } from '@core/utils';
-import { useModeValue } from '@core/theme/provider.tsx';
+import { useModeValue } from '@core/theme/provider';
 import { IconTrash } from '@tabler/icons-react';
 
 export type CookiesBatchUpdateProps = PolymorphicComponentProps<'div'>;
@@ -11,32 +11,15 @@ const textValue = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): 
 
 export const CookiesBatchUpdate: FC<CookiesBatchUpdateProps> = (props) => {
   const t = useTranslation('cookies_batch_update');
-  const tabs = useTabs();
+  const { url: tabUrl } = useActiveTab();
   const { setCookie, removeAllCookies } = useCookies();
   const [clearFirst, setClearFirst] = useClearExistingCookiesFirst();
   const [customPath, setCustomPath] = useCustomPath();
 
-  const [currentUrl, setCurrentUrl] = useState('');
-  const [currentPath, setCurrentPath] = useState('/');
+  const currentUrl = tabUrl ?? '';
+  const currentPath = tabUrl ? new URL(tabUrl).pathname : '/';
   const [path, setPath] = useState('/');
   const [newCookies, setNewCookies] = useState('');
-
-  useEffect(() => {
-    let cancelled = false;
-
-    void tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
-      if (cancelled || !tab.url) {
-        return;
-      }
-
-      setCurrentUrl(tab.url);
-      setCurrentPath(new URL(tab.url).pathname);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [tabs]);
 
   useEffect(() => {
     setPath(customPath ? currentPath : '/');

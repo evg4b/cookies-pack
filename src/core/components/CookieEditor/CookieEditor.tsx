@@ -1,12 +1,12 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useRef } from 'react';
 import { ActionIcon, Button, Flex, ScrollArea, Select, Stack, Text, TextInput, Tooltip } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { IconArrowLeft } from '@tabler/icons-react';
-import { useCookies, useTabs, useTranslation } from '@core/hooks';
-import { SecureChip } from './SecureChip.tsx';
-import { HttpOnlyChip } from './HttpOnlyChip.tsx';
-import { SessionChip } from './SessionChip.tsx';
+import { useActiveTab, useCookies, useTranslation } from '@core/hooks';
+import { SecureChip } from './SecureChip';
+import { HttpOnlyChip } from './HttpOnlyChip';
+import { SessionChip } from './SessionChip';
 
 type Cookie = chrome.cookies.Cookie;
 type SameSite = Cookie['sameSite'];
@@ -71,9 +71,10 @@ const cookieToValues = (cookie: Cookie): CookieFormValues => ({
 
 export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
   const t = useTranslation('cookie_editor');
-  const tabs = useTabs();
+  const { url: tabUrl } = useActiveTab();
   const { setCookie, removeCookie } = useCookies();
-  const [tabHostname, setTabHostname] = useState<string | null>(null);
+  const tabHostname = tabUrl ? new URL(tabUrl).hostname : null;
+  const prefilledRef = useRef(false);
 
   const form = useForm<CookieFormValues>({
     initialValues: cookie ? cookieToValues(cookie) : emptyValues,
@@ -96,31 +97,19 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
   });
 
   useEffect(() => {
-    let cancelled = false;
+    if (cookie || prefilledRef.current || !tabUrl) {
+      return;
+    }
 
-    void tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
-      if (cancelled || !tab.url) {
-        return;
-      }
-
-      const url = new URL(tab.url);
-      setTabHostname(url.hostname);
-
-      if (!cookie) {
-        form.setFieldValue('domain', url.hostname);
-        form.setFieldValue('path', url.pathname);
-        form.setFieldValue('secure', url.protocol === 'https:');
-      }
-    });
-
-    return () => {
-      cancelled = true;
-    };
-    // Runs once on mount: `cookie` and `tabs` are fixed for the lifetime of
-    // a mounted editor, and re-running this would clobber user edits to the
-    // prefilled domain/path/secure fields.
+    prefilledRef.current = true;
+    const url = new URL(tabUrl);
+    form.setFieldValue('domain', url.hostname);
+    form.setFieldValue('path', url.pathname);
+    form.setFieldValue('secure', url.protocol === 'https:');
+    // Prefills once, the first time the active tab URL becomes available;
+    // re-running on a later tab change would clobber user edits.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [tabUrl, cookie]);
 
   const submit = useCallback(
     (values: CookieFormValues) => void (async () => {

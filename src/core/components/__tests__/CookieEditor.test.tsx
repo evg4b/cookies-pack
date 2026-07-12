@@ -1,18 +1,20 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
-import { CookieEditor } from '../CookieEditor/CookieEditor.tsx';
+import { CookieEditor } from '../CookieEditor/CookieEditor';
 
 type Cookie = chrome.cookies.Cookie;
 
 const setCookie = vi.fn().mockResolvedValue(null);
 const removeCookie = vi.fn().mockResolvedValue(undefined);
-const query = vi.fn().mockResolvedValue([{ url: 'https://example.com/current/path' }]);
 const onClose = vi.fn();
+
+const DEFAULT_TAB_URL = 'https://example.com/current/path';
+let activeTabUrl: string | null = DEFAULT_TAB_URL;
 
 vi.mock('@core/hooks', () => ({
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
-  useTabs: () => ({ query }),
+  useActiveTab: () => ({ url: activeTabUrl, tab: null, loading: false, error: null, refresh: vi.fn() }),
   useCookies: () => ({ setCookie, removeCookie }),
 }));
 
@@ -34,6 +36,7 @@ describe('CookieEditor', () => {
   afterEach(() => {
     cleanup();
     vi.clearAllMocks();
+    activeTabUrl = DEFAULT_TAB_URL;
   });
 
   it('pre-fills domain, path and secure from the active tab when adding a cookie', async () => {
@@ -155,7 +158,7 @@ describe('CookieEditor', () => {
   });
 
   it('accepts a domain that is a parent of the current tab domain', async () => {
-    query.mockResolvedValueOnce([{ url: 'https://sub.example.com/current/path' }]);
+    activeTabUrl = 'https://sub.example.com/current/path';
     render(<CookieEditor onClose={onClose}/>, { wrapper: MantineProvider });
     await screen.findByDisplayValue('sub.example.com');
 
@@ -182,7 +185,7 @@ describe('CookieEditor', () => {
   });
 
   it('accepts a domain without a www prefix when the tab domain has one', async () => {
-    query.mockResolvedValueOnce([{ url: 'https://www.example.com/current/path' }]);
+    activeTabUrl = 'https://www.example.com/current/path';
     render(<CookieEditor onClose={onClose}/>, { wrapper: MantineProvider });
     await screen.findByDisplayValue('www.example.com');
 
