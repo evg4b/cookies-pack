@@ -1,5 +1,6 @@
 import { FC, useCallback, useEffect } from 'react';
 import { ActionIcon, Button, Flex, ScrollArea, Select, Stack, Switch, Text, TextInput, Tooltip } from '@mantine/core';
+import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { useCookies, useTabs, useTranslation } from '@core/hooks';
@@ -21,19 +22,10 @@ interface CookieFormValues {
   httpOnly: boolean;
   sameSite: SameSite;
   session: boolean;
-  expirationDate: string;
+  expirationDate: Date | null;
 }
 
-const pad = (value: number): string => value.toString().padStart(2, '0');
-
-const toDatetimeLocal = (seconds: number): string => {
-  const date = new Date(seconds * 1000);
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-};
-
-const fromDatetimeLocal = (value: string): number => Math.floor(new Date(value).getTime() / 1000);
-
-const defaultExpiration = (): string => toDatetimeLocal(Math.floor(Date.now() / 1000) + 24 * 60 * 60);
+const defaultExpiration = (): Date => new Date(Date.now() + 24 * 60 * 60 * 1000);
 
 const buildUrl = (domain: string, path: string, secure: boolean): string =>
   `${secure ? 'https' : 'http'}://${domain.replace(/^\./, '')}${path || '/'}`;
@@ -59,7 +51,7 @@ const cookieToValues = (cookie: Cookie): CookieFormValues => ({
   httpOnly: cookie.httpOnly,
   sameSite: cookie.sameSite,
   session: cookie.session,
-  expirationDate: cookie.expirationDate ? toDatetimeLocal(cookie.expirationDate) : defaultExpiration(),
+  expirationDate: cookie.expirationDate ? new Date(cookie.expirationDate * 1000) : defaultExpiration(),
 });
 
 export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
@@ -117,7 +109,9 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
           secure: values.secure,
           httpOnly: values.httpOnly,
           sameSite: values.sameSite,
-          expirationDate: values.session ? undefined : fromDatetimeLocal(values.expirationDate),
+          expirationDate: values.session || !values.expirationDate
+            ? undefined
+            : Math.floor(values.expirationDate.getTime() / 1000),
           storeId: cookie?.storeId,
         });
 
@@ -194,11 +188,11 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
               key={form.key('session')}
               {...form.getInputProps('session', { type: 'checkbox' })}
             />
-            <TextInput
-              type="datetime-local"
+            <DateTimePicker
               label={t('expiration_label')}
               disabled={form.values.session}
               withAsterisk={!form.values.session}
+              clearable
               key={form.key('expirationDate')}
               {...form.getInputProps('expirationDate')}
             />
