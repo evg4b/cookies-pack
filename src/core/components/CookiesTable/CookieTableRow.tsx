@@ -1,8 +1,9 @@
-import { ActionIcon, Flex, Table, Tooltip } from '@mantine/core';
+import { ActionIcon, Table, Tooltip } from '@mantine/core';
 import { IconPencil, IconTrash } from '@tabler/icons-react';
 import { type FC, useCallback } from 'react';
 import { useTranslation } from '@core/hooks';
 import { CookiesTableCell } from './CookiesTableCell';
+import { ActionsCell } from './ActionsCell';
 
 export type CookieTableRowProps = {
   cookie: chrome.cookies.Cookie
@@ -34,22 +35,20 @@ export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, 
       <Table.Td>
         <CookiesTableCell value={cookie.value ?? 'N/A'}/>
       </Table.Td>
-      <Table.Td>
-        <Flex justify="flex-end" pr="xs" gap="xs">
-          {onEdit && (
-            <Tooltip label={t('edit_cookie')}>
-              <ActionIcon aria-label={t('edit_cookie')} onClick={editCookieCallback}>
-                <IconPencil size={16}/>
-              </ActionIcon>
-            </Tooltip>
-          )}
-          <Tooltip label={t('delete_cookie')}>
-            <ActionIcon aria-label={t('delete_cookie')} color="red" onClick={removeCookieCallback}>
-              <IconTrash size={16}/>
+      <ActionsCell>
+        {onEdit && (
+          <Tooltip label={t('edit_cookie')}>
+            <ActionIcon aria-label={t('edit_cookie')} onClick={editCookieCallback}>
+              <IconPencil size={16}/>
             </ActionIcon>
           </Tooltip>
-        </Flex>
-      </Table.Td>
+        )}
+        <Tooltip label={t('delete_cookie')}>
+          <ActionIcon aria-label={t('delete_cookie')} color="red" onClick={removeCookieCallback}>
+            <IconTrash size={16}/>
+          </ActionIcon>
+        </Tooltip>
+      </ActionsCell>
     </Table.Tr>
   );
 };

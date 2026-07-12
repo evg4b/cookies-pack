@@ -5,6 +5,7 @@ import { IconCheck, IconCookieOff, IconCopy, IconDownload, IconPlus } from '@tab
 import { useCookieEditorEnabled, useCookies, useSaveFile, useTranslation } from '@core/hooks';
 import { encodeJetbrainsCookies, joinCookiesHeader } from '@core/utils';
 import { CookieTableRow } from './CookieTableRow';
+import { ActionsCell } from '@core/components/CookiesTable/ActionsCell.tsx';
 
 export type CookiesTableProps = {
   onAddCookie: () => void;
@@ -76,26 +77,24 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
             <Table.Th w="25%">{t('columns_name')}</Table.Th>
             <Table.Th w="15%" visibleFrom="xs">{t('columns_path')}</Table.Th>
             <Table.Th>{t('columns_value')}</Table.Th>
-            <Table.Th w={104}>
-              <Flex gap="xs" direction="row" justify="flex-end" pr="xs" align="center" wrap="nowrap">
-                {addCookieAction}
-                <Tooltip label={t('copy_all_cookies')}>
-                  <ActionIcon
-                    aria-label={t('copy_all_cookies')}
-                    color={copied ? "green" : undefined}
-                    variant={copied ? "filled" : "subtle"}
-                    onClick={copyAll}
-                  >
-                    {copied ? <IconCheck size={16}/> : <IconCopy size={16}/>}
-                  </ActionIcon>
-                </Tooltip>
-                <Tooltip label={t('export_all_cookies')}>
-                  <ActionIcon aria-label={t('export_all_cookies')} onClick={exportAll}>
-                    <IconDownload size={16}/>
-                  </ActionIcon>
-                </Tooltip>
-              </Flex>
-            </Table.Th>
+            <ActionsCell Component={Table.Th}>
+              {addCookieAction}
+              <Tooltip label={t('copy_all_cookies')}>
+                <ActionIcon
+                  aria-label={t('copy_all_cookies')}
+                  color={copied ? 'green' : undefined}
+                  variant={copied ? 'filled' : 'subtle'}
+                  onClick={copyAll}
+                >
+                  {copied ? <IconCheck size={16}/> : <IconCopy size={16}/>}
+                </ActionIcon>
+              </Tooltip>
+              <Tooltip label={t('export_all_cookies')}>
+                <ActionIcon aria-label={t('export_all_cookies')} onClick={exportAll}>
+                  <IconDownload size={16}/>
+                </ActionIcon>
+              </Tooltip>
+            </ActionsCell>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
