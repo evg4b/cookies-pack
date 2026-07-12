@@ -14,6 +14,7 @@
 - Import or update cookies from a standard HTTP header string
 - Export cookies
   to [JetBrains http client format](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#manage_cookies)
+- Side panel with a cookie list
 
 ## Required permissions:
 

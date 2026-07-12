@@ -1,0 +1,7 @@
+@import "@core/styles.css";
+
+body {
+  margin: 0;
+  width: 600px;
+  height: 400px;
+}
