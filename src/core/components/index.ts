@@ -3,4 +3,3 @@ export { CookiesBatchUpdate, type CookiesBatchUpdateProps } from './CookiesBatch
 export { CookiesPack } from './CookiesPack';
 export { CookieEditor, type CookieEditorProps } from './CookieEditor';
 export { SupportingWrapper } from './SupportingWrapper';
-export { OptionsPage } from './OptionsPage';
