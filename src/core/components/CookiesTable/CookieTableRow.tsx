@@ -2,7 +2,7 @@ import { ActionIcon, Flex, Table, Tooltip } from '@mantine/core';
 import { IconPencil, IconTrash } from '@tabler/icons-react';
 import { type FC, useCallback } from 'react';
 import { useTranslation } from '@core/hooks';
-import { CookiesTableCell } from '@core/components/CookiesTableCell.tsx';
+import { CookiesTableCell } from './CookiesTableCell';
 
 export type CookieTableRowProps = {
   cookie: chrome.cookies.Cookie
@@ -11,7 +11,6 @@ export type CookieTableRowProps = {
 }
 
 export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, onEdit }) => {
-
   const t = useTranslation('cookies_table');
 
   const removeCookieCallback = useCallback(
