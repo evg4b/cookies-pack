@@ -26,7 +26,7 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
   });
 
   return (
-    <Flex direction="column" flex={1} style={{ overflow: 'hidden' }}>
+    <Stack flex={1} style={{ overflow: 'hidden' }}>
       <Flex direction="row" align="center" gap="xs" p="xs">
         <Tooltip label={t('back')}>
           <ActionIcon aria-label={t('back')} onClick={onClose}>
@@ -112,6 +112,6 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
           {t('save')}
         </Button>
       </Flex>
-    </Flex>
+    </Stack>
   );
 };

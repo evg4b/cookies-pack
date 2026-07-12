@@ -46,7 +46,7 @@ export const OptionsPage: FC = () => {
         <Radio.Group label={t('icon_click_action_label')} value={iconClickAction} onChange={setIconClickAction}>
           <Stack gap="xs" mt="xs">
             {iconActions.map(mode => (
-              <Radio.Card value={mode.value} p="sm" radius="md" aria-label={t(mode.label)}>
+              <Radio.Card value={mode.value} aria-label={t(mode.label)}>
                 <Group wrap="nowrap" align="flex-start" gap="sm">
                   <Radio.Indicator/>
                   <Stack gap={2}>
@@ -63,7 +63,7 @@ export const OptionsPage: FC = () => {
         <Radio.Group label={t('editor_mode_label')} value={cookieEditorMode} onChange={setCookieEditorMode}>
           <Stack gap="xs" mt="xs">
             {editorModes.map(mode => (
-              <Radio.Card value={mode.value} p="sm" radius="md" aria-label={t(mode.label)}>
+              <Radio.Card value={mode.value} aria-label={t(mode.label)}>
                 <Group wrap="nowrap" align="flex-start" gap="sm">
                   <Radio.Indicator/>
                   <Stack gap={2}>

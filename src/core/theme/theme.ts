@@ -1,4 +1,4 @@
-import { ActionIcon, Chip, createTheme, Tooltip } from '@mantine/core';
+import { ActionIcon, Chip, createTheme, Radio, Tooltip } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 
 export const cookiesPackTheme = createTheme({
@@ -27,6 +27,12 @@ export const cookiesPackTheme = createTheme({
         tooltip: {
           wordBreak: 'break-word',
         },
+      },
+    }),
+    RadioCard: Radio.Card.extend({
+      defaultProps: {
+        p: 'sm',
+        radius: 'md',
       },
     }),
     DateTimePicker: DateTimePicker.extend({

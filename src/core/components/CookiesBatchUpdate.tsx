@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
-import { Button, Chip, Flex, Input, PolymorphicComponentProps, Textarea } from '@mantine/core';
+import { Button, Chip, Flex, Input, PolymorphicComponentProps, Stack, Textarea } from '@mantine/core';
 import { useActiveTab, useClearExistingCookiesFirst, useCookies, useCustomPath, useTranslation } from '@core/hooks';
 import { parseCookieHeader } from '@core/utils';
 import { useModeValue } from '@core/theme/provider';
@@ -47,7 +47,7 @@ export const CookiesBatchUpdate: FC<CookiesBatchUpdateProps> = (props) => {
   });
 
   return (
-    <Flex {...props} flex={1} gap="xs" direction="column">
+    <Stack {...props} flex={1} gap="xs">
       <Textarea
         flex="1 0 auto"
         placeholder={t('placeholder')}
@@ -75,6 +75,6 @@ export const CookiesBatchUpdate: FC<CookiesBatchUpdateProps> = (props) => {
           {clearFirst ? t('replace_cookies') : t('add_cookies')}
         </Button>
       </Flex>
-    </Flex>
+    </Stack>
   );
 };
