@@ -25,7 +25,7 @@ describe('OptionsPage', () => {
     iconClickAction = 'popup';
     render(<OptionsPage/>, { wrapper: MantineProvider });
 
-    expect(screen.getByText('options_title')).toBeInTheDocument();
+    expect(screen.getByText('options_icon_click_action_label')).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'options_icon_click_action_popup' })).toBeChecked();
     expect(screen.getByRole('radio', { name: 'options_icon_click_action_sidepanel' })).not.toBeChecked();
   });
