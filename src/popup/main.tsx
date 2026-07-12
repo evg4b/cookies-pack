@@ -4,6 +4,7 @@ import { CookiesPackThemeProvider } from '@core/theme';
 import { CookiesPack } from '@core/components';
 
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 import './index.css';
 
 createRoot(document.body).render(

@@ -13,7 +13,7 @@ const sourceRoot = resolve(__dirname, 'src');
 export default defineConfig({
   test: {
     globals: true,
-    environment: 'jsdom',
+    environment: 'happy-dom',
     setupFiles: [resolve(sourceRoot, 'test/setup.ts')],
     coverage: {
       provider: 'v8',

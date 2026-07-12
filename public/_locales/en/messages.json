@@ -45,6 +45,14 @@
     "message": "Delete cookie",
     "description": "The accessible label for the delete-cookie row action"
   },
+  "cookies_table_add_cookie": {
+    "message": "Add cookie",
+    "description": "The accessible label for the add-cookie header action"
+  },
+  "cookies_table_edit_cookie": {
+    "message": "Edit cookie",
+    "description": "The accessible label for the edit-cookie row action"
+  },
   "cookies_table_cell_copied": {
     "message": "Copied!",
     "description": "The message briefly shown in a cookie table cell after its value is copied to the clipboard"
@@ -95,10 +103,6 @@
     "message": "Toolbar icon click action",
     "description": "The label for the icon-click-action setting"
   },
-  "options_icon_click_action_description": {
-    "message": "Choose what happens when you click the Cookies Pack icon in the toolbar.",
-    "description": "The description for the icon-click-action setting"
-  },
   "options_icon_click_action_popup": {
     "message": "Open popup",
     "description": "The option to open the popup on icon click"
@@ -114,5 +118,142 @@
   "options_icon_click_action_sidepanel_description": {
     "message": "Opens Cookies Pack in the browser's side panel.",
     "description": "The description of the open-side-panel option"
+  },
+  "options_cookie_editor_enabled_label": {
+    "message": "Enable cookie editor",
+    "description": "The label for the cookie-editor-enabled setting"
+  },
+  "options_cookie_editor_enabled_description": {
+    "message": "Show the add and edit cookie actions in the popup and side panel. Enabled by default.",
+    "description": "The description for the cookie-editor-enabled setting"
+  },
+  "options_editor_mode_label": {
+    "message": "Editor mode",
+    "description": "The label for the editor-mode setting"
+  },
+  "options_editor_mode_bulk_editor_only": {
+    "message": "Bulk editor only",
+    "description": "The label for the bulk_editor_only editor mode option"
+  },
+  "options_editor_mode_bulk_editor_only_description": {
+    "message": "Only show the bulk cookie header editor.",
+    "description": "The description for the bulk_editor_only editor mode option"
+  },
+  "options_editor_mode_editor_only": {
+    "message": "Editor only",
+    "description": "The label for the editor_only editor mode option"
+  },
+  "options_editor_mode_editor_only_description": {
+    "message": "Only show the single_cookie editor.",
+    "description": "The description for the editor_only editor mode option"
+  },
+  "options_editor_mode_both_editors": {
+    "message": "Both editors",
+    "description": "The label for the both_editors editor mode option"
+  },
+  "options_editor_mode_both_editors_description": {
+    "message": "Show both the bulk cookie header editor and the single_cookie editor.",
+    "description": "The description for the both_editors editor mode option"
+  },
+
+  "cookie_editor_title_add": {
+    "message": "Add cookie",
+    "description": "The title of the cookie editor page when adding a new cookie"
+  },
+  "cookie_editor_title_edit": {
+    "message": "Edit cookie",
+    "description": "The title of the cookie editor page when editing an existing cookie"
+  },
+  "cookie_editor_back": {
+    "message": "Back",
+    "description": "The accessible label for the back action leaving the cookie editor"
+  },
+  "cookie_editor_name_label": {
+    "message": "Name",
+    "description": "The label for the cookie name field"
+  },
+  "cookie_editor_name_placeholder": {
+    "message": "Cookie name",
+    "description": "The placeholder for the cookie name field"
+  },
+  "cookie_editor_value_label": {
+    "message": "Value",
+    "description": "The label for the cookie value field"
+  },
+  "cookie_editor_value_placeholder": {
+    "message": "Cookie value",
+    "description": "The placeholder for the cookie value field"
+  },
+  "cookie_editor_domain_label": {
+    "message": "Domain",
+    "description": "The label for the cookie domain field"
+  },
+  "cookie_editor_domain_placeholder": {
+    "message": "example.com",
+    "description": "The placeholder for the cookie domain field"
+  },
+  "cookie_editor_path_label": {
+    "message": "Path",
+    "description": "The label for the cookie path field"
+  },
+  "cookie_editor_path_placeholder": {
+    "message": "/",
+    "description": "The placeholder for the cookie path field"
+  },
+  "cookie_editor_same_site_label": {
+    "message": "SameSite",
+    "description": "The label for the cookie SameSite select"
+  },
+  "cookie_editor_same_site_no_restriction": {
+    "message": "No restriction",
+    "description": "The SameSite=None option"
+  },
+  "cookie_editor_same_site_lax": {
+    "message": "Lax",
+    "description": "The SameSite=Lax option"
+  },
+  "cookie_editor_same_site_strict": {
+    "message": "Strict",
+    "description": "The SameSite=Strict option"
+  },
+  "cookie_editor_same_site_unspecified": {
+    "message": "Unspecified",
+    "description": "The SameSite=Unspecified option"
+  },
+  "cookie_editor_secure_label": {
+    "message": "Secure",
+    "description": "The label for the cookie secure switch"
+  },
+  "cookie_editor_http_only_label": {
+    "message": "HTTP only",
+    "description": "The label for the cookie HTTP-only switch"
+  },
+  "cookie_editor_session_label": {
+    "message": "Session cookie",
+    "description": "The label for the session-cookie switch"
+  },
+  "cookie_editor_expiration_label": {
+    "message": "Expires",
+    "description": "The label for the cookie expiration date field"
+  },
+  "cookie_editor_error_required": {
+    "message": "This field is required",
+    "description": "The validation error shown when a required cookie editor field is empty"
+  },
+  "cookie_editor_error_path": {
+    "message": "Path must start with /",
+    "description": "The validation error shown when the cookie path does not start with a slash"
+  },
+  "cookie_editor_error_domain_mismatch": {
+    "message": "Domain must match or be a parent of $1",
+    "description": "The validation error shown when the cookie domain does not match the current tab's domain"
+  },
+  "cookie_editor_cancel": {
+    "message": "Cancel",
+    "description": "The label for the cancel button in the cookie editor"
+  },
+  "cookie_editor_save": {
+    "message": "Save",
+    "description": "The label for the save button in the cookie editor"
   }
 }

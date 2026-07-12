@@ -7,14 +7,14 @@ const setCookie = vi.fn().mockResolvedValue(null);
 const removeAllCookies = vi.fn().mockResolvedValue(undefined);
 const setClearFirst = vi.fn().mockResolvedValue(undefined);
 const setCustomPath = vi.fn().mockResolvedValue(undefined);
-const query = vi.fn().mockResolvedValue([{ url: 'https://example.com/current/path' }]);
 
 let clearFirst = true;
 let customPath = false;
+let activeTabUrl: string | null = 'https://example.com/current/path';
 
 vi.mock('@core/hooks', () => ({
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
-  useTabs: () => ({ query }),
+  useActiveTab: () => ({ url: activeTabUrl, tab: null, loading: false, error: null, refresh: vi.fn() }),
   useCookies: () => ({ setCookie, removeAllCookies }),
   useClearExistingCookiesFirst: () => [clearFirst, setClearFirst],
   useCustomPath: () => [customPath, setCustomPath],
@@ -24,6 +24,7 @@ describe('CookiesBatchUpdate', () => {
   beforeEach(() => {
     clearFirst = true;
     customPath = false;
+    activeTabUrl = 'https://example.com/current/path';
   });
 
   afterEach(() => {
@@ -75,9 +76,7 @@ describe('CookiesBatchUpdate', () => {
     clearFirst = true;
     render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
 
-    await waitFor(() => expect(query).toHaveBeenCalled());
-
-    const textarea = screen.getByPlaceholderText('cookies_batch_update_placeholder');
+    const textarea = await screen.findByPlaceholderText('cookies_batch_update_placeholder');
     fireEvent.change(textarea, { target: { value: 'foo=bar; bat=baz' } });
     fireEvent.click(screen.getByText('cookies_batch_update_replace_cookies'));
 
@@ -93,9 +92,7 @@ describe('CookiesBatchUpdate', () => {
     clearFirst = false;
     render(<CookiesBatchUpdate/>, { wrapper: MantineProvider });
 
-    await waitFor(() => expect(query).toHaveBeenCalled());
-
-    const textarea = screen.getByPlaceholderText('cookies_batch_update_placeholder');
+    const textarea = await screen.findByPlaceholderText('cookies_batch_update_placeholder');
     fireEvent.change(textarea, { target: { value: 'foo=bar' } });
     fireEvent.click(screen.getByText('cookies_batch_update_add_cookies'));
 
