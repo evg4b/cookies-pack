@@ -106,18 +106,19 @@ describe('CookieEditor', () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it('pre-fills the form with the cookie being edited', () => {
+  it('pre-fills the form with the cookie being edited', async () => {
     render(<CookieEditor cookie={editedCookie} onClose={onClose}/>, { wrapper: MantineProvider });
 
     expect(screen.getByText('cookie_editor_title_edit')).toBeInTheDocument();
     expect(screen.getByDisplayValue('existing')).toBeInTheDocument();
     expect(screen.getByDisplayValue('val')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('example.com')).toBeInTheDocument();
     expect(screen.getByDisplayValue('/old')).toBeInTheDocument();
+    await screen.findByDisplayValue('example.com');
   });
 
   it('removes the original cookie before setting the updated one when identity fields change', async () => {
     render(<CookieEditor cookie={editedCookie} onClose={onClose}/>, { wrapper: MantineProvider });
+    await screen.findByDisplayValue('example.com');
 
     fireEvent.change(screen.getByLabelText(/^cookie_editor_path_label/), { target: { value: '/new' } });
     fireEvent.click(screen.getByRole('button', { name: 'cookie_editor_save' }));
@@ -130,6 +131,7 @@ describe('CookieEditor', () => {
 
   it('does not remove the original cookie when identity fields are unchanged', async () => {
     render(<CookieEditor cookie={editedCookie} onClose={onClose}/>, { wrapper: MantineProvider });
+    await screen.findByDisplayValue('example.com');
 
     fireEvent.change(screen.getByLabelText('cookie_editor_value_label'), { target: { value: 'new_val' } });
     fireEvent.click(screen.getByRole('button', { name: 'cookie_editor_save' }));
@@ -138,5 +140,42 @@ describe('CookieEditor', () => {
       expect(setCookie).toHaveBeenCalledWith('existing', 'new_val', expect.anything());
     });
     expect(removeCookie).not.toHaveBeenCalled();
+  });
+
+  it('rejects a domain that does not match or is not a parent of the current tab domain', async () => {
+    render(<CookieEditor onClose={onClose}/>, { wrapper: MantineProvider });
+    await screen.findByDisplayValue('example.com');
+
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_name_label/), { target: { value: 'my_cookie' } });
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_domain_label/), { target: { value: 'other.com' } });
+    fireEvent.click(screen.getByRole('button', { name: 'cookie_editor_save' }));
+
+    expect(await screen.findByText('cookie_editor_error_domain_mismatch')).toBeInTheDocument();
+    expect(setCookie).not.toHaveBeenCalled();
+  });
+
+  it('accepts a domain that is a parent of the current tab domain', async () => {
+    query.mockResolvedValueOnce([{ url: 'https://sub.example.com/current/path' }]);
+    render(<CookieEditor onClose={onClose}/>, { wrapper: MantineProvider });
+    await screen.findByDisplayValue('sub.example.com');
+
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_name_label/), { target: { value: 'my_cookie' } });
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_domain_label/), { target: { value: 'example.com' } });
+    fireEvent.click(screen.getByRole('button', { name: 'cookie_editor_save' }));
+
+    await waitFor(() => {
+      expect(setCookie).toHaveBeenCalledWith('my_cookie', '', expect.objectContaining({ domain: 'example.com' }));
+    });
+  });
+
+  it('rejects an edited domain that does not match the current tab domain', async () => {
+    render(<CookieEditor cookie={editedCookie} onClose={onClose}/>, { wrapper: MantineProvider });
+    await screen.findByDisplayValue('example.com');
+
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_domain_label/), { target: { value: 'other.com' } });
+    fireEvent.click(screen.getByRole('button', { name: 'cookie_editor_save' }));
+
+    expect(await screen.findByText('cookie_editor_error_domain_mismatch')).toBeInTheDocument();
+    expect(setCookie).not.toHaveBeenCalled();
   });
 });

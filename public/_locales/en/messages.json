@@ -220,6 +220,10 @@
     "message": "Path must start with /",
     "description": "The validation error shown when the cookie path does not start with a slash"
   },
+  "cookie_editor_error_domain_mismatch": {
+    "message": "Domain must match or be a parent of $1",
+    "description": "The validation error shown when the cookie domain does not match the current tab's domain"
+  },
   "cookie_editor_cancel": {
     "message": "Cancel",
     "description": "The label for the cancel button in the cookie editor"

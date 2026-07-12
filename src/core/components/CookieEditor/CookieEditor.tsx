@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { ActionIcon, Button, Flex, ScrollArea, Select, Stack, Text, TextInput, Tooltip } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
@@ -33,6 +33,16 @@ const defaultExpiration = (): Date => new Date(Date.now() + 24 * 60 * 60 * 1000)
 const buildUrl = (domain: string, path: string, secure: boolean): string =>
   `${secure ? 'https' : 'http'}://${domain.replace(/^\./, '')}${path || '/'}`;
 
+const isDomainAllowed = (tabHostname: string, domain: string): boolean => {
+  const normalized = domain.trim().replace(/^\./, '').toLowerCase();
+  if (!normalized) {
+    return false;
+  }
+
+  const host = tabHostname.toLowerCase();
+  return host === normalized || host.endsWith(`.${normalized}`);
+};
+
 const emptyValues: CookieFormValues = {
   name: '',
   value: '',
@@ -61,22 +71,29 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
   const t = useTranslation('cookie_editor');
   const tabs = useTabs();
   const { setCookie, removeCookie } = useCookies();
+  const [tabHostname, setTabHostname] = useState<string | null>(null);
 
   const form = useForm<CookieFormValues>({
     initialValues: cookie ? cookieToValues(cookie) : emptyValues,
     validate: {
       name: (value) => (value.trim() ? null : t('error_required')),
-      domain: (value) => (value.trim() ? null : t('error_required')),
+      domain: (value) => {
+        if (!value.trim()) {
+          return t('error_required');
+        }
+
+        if (tabHostname && !isDomainAllowed(tabHostname, value)) {
+          return t('error_domain_mismatch', tabHostname);
+        }
+
+        return null;
+      },
       path: (value) => (value.startsWith('/') ? null : t('error_path')),
       expirationDate: (value, values) => (!values.session && !value ? t('error_required') : null),
     },
   });
 
   useEffect(() => {
-    if (cookie) {
-      return;
-    }
-
     let cancelled = false;
 
     void tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
@@ -85,16 +102,23 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
       }
 
       const url = new URL(tab.url);
-      form.setFieldValue('domain', url.hostname);
-      form.setFieldValue('path', url.pathname);
-      form.setFieldValue('secure', url.protocol === 'https:');
+      setTabHostname(url.hostname);
+
+      if (!cookie) {
+        form.setFieldValue('domain', url.hostname);
+        form.setFieldValue('path', url.pathname);
+        form.setFieldValue('secure', url.protocol === 'https:');
+      }
     });
 
     return () => {
       cancelled = true;
     };
+    // Runs once on mount: `cookie` and `tabs` are fixed for the lifetime of
+    // a mounted editor, and re-running this would clobber user edits to the
+    // prefilled domain/path/secure fields.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cookie, tabs]);
+  }, []);
 
   const submit = useCallback(
     (values: CookieFormValues) => void (async () => {
