@@ -1,8 +1,19 @@
 import { FC, useCallback, useEffect } from 'react';
-import { ActionIcon, Button, Flex, ScrollArea, Select, Stack, Switch, Text, TextInput, Tooltip } from '@mantine/core';
+import {
+  ActionIcon,
+  Button,
+  Chip,
+  Flex,
+  ScrollArea,
+  Select,
+  Stack,
+  Text,
+  TextInput,
+  Tooltip,
+} from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
-import { IconArrowLeft } from '@tabler/icons-react';
+import { IconArrowLeft, IconClockHour2, IconLock, IconShield } from '@tabler/icons-react';
 import { useCookies, useTabs, useTranslation } from '@core/hooks';
 
 type Cookie = chrome.cookies.Cookie;
@@ -173,27 +184,42 @@ export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
               key={form.key('sameSite')}
               {...form.getInputProps('sameSite')}
             />
-            <Switch
-              label={t('secure_label')}
-              key={form.key('secure')}
-              {...form.getInputProps('secure', { type: 'checkbox' })}
-            />
-            <Switch
-              label={t('http_only_label')}
-              key={form.key('httpOnly')}
-              {...form.getInputProps('httpOnly', { type: 'checkbox' })}
-            />
-            <Switch
-              label={t('session_label')}
-              key={form.key('session')}
-              {...form.getInputProps('session', { type: 'checkbox' })}
-            />
+            <Flex direction="row" gap="xs">
+              <Chip
+                color="green"
+                icon={<IconLock size={14} />}
+                key={form.key('secure')}
+                {...form.getInputProps('secure', { type: 'checkbox' })}
+              >
+                {t('secure_label')}
+              </Chip>
+              <Chip
+                color="cyan"
+                icon={<IconShield size={14} />}
+                key={form.key('httpOnly')}
+                {...form.getInputProps('httpOnly', { type: 'checkbox' })}
+              >
+                {t('http_only_label')}
+              </Chip>
+              <Chip
+                color="blue"
+                icon={<IconClockHour2 size={14} />}
+                key={form.key('session')}
+                {...form.getInputProps('session', { type: 'checkbox' })}
+              >
+                {t('session_label')}
+              </Chip>
+            </Flex>
             <DateTimePicker
+              key={form.key('expirationDate')}
               label={t('expiration_label')}
               disabled={form.values.session}
               withAsterisk={!form.values.session}
               clearable
-              key={form.key('expirationDate')}
+              timePickerProps={{
+                withDropdown: true,
+                popoverProps: { withinPortal: false },
+              }}
               {...form.getInputProps('expirationDate')}
             />
           </Stack>
