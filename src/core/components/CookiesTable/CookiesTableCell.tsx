@@ -1,14 +1,15 @@
 import { Box, type MantineBreakpoint, Table, Text, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
-import { type FC, type KeyboardEvent, useCallback } from 'react';
+import { type FC, JSX, type KeyboardEvent, useCallback } from 'react';
 import { useTranslation } from '@core/hooks';
 
 export interface CookiesTableCellProps {
   value: string;
   visibleFrom?: MantineBreakpoint;
+  tooltip?: JSX.Element,
 }
 
-export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value, visibleFrom }) => {
+export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value, visibleFrom, tooltip }) => {
   const t = useTranslation('cookies_table');
 
   const { copied, copy } = useClipboard({ timeout: 500 });
@@ -29,7 +30,7 @@ export const CookiesTableCell: FC<CookiesTableCellProps> = ({ value, visibleFrom
       onClick={onClick}
       onKeyDown={onKeyDown}
     >
-      <Tooltip label={value}>
+      <Tooltip label={tooltip ?? value}>
         <Box style={{
           display: 'block',
           width: '100%',

@@ -1,14 +1,16 @@
-import { Chip } from '@mantine/core';
+import { Chip, ChipProps } from '@mantine/core';
 import { IconClockHour2 } from '@tabler/icons-react';
-import { FC } from 'react';
-import { GetInputPropsReturnType } from '@mantine/form';
+import { type FC } from 'react';
 import { useTranslation } from '@core/hooks';
+import { iconSize } from '@core/components/CookieEditor/helpers.ts';
 
-export const SessionChip: FC<GetInputPropsReturnType> = (props) => {
+export type SessionChipProps = Omit<ChipProps, 'color' | 'icon' | 'children'>;
+export const SessionChip: FC<SessionChipProps> = (props) => {
   const t = useTranslation('cookie_editor');
+  const icon = <IconClockHour2 size={iconSize(props.size)}/>;
 
   return (
-    <Chip {...props} color="blue" icon={<IconClockHour2 size={14}/>}>
+    <Chip {...props} color="blue" icon={icon}>
       {t('session_label')}
     </Chip>
   );

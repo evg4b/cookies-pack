@@ -1,4 +1,4 @@
-import { ActionIcon, Chip, createTheme, Radio, Tooltip } from '@mantine/core';
+import { ActionIcon, Chip, createTheme, DataList, Radio, Tooltip } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 
 export const cookiesPackTheme = createTheme({
@@ -20,8 +20,12 @@ export const cookiesPackTheme = createTheme({
         withArrow: true,
         openDelay: 300,
         multiline: true,
-        maw: 220,
+        maw: 400,
         fz: 'xs',
+        transitionProps: {
+          transition: 'pop',
+          duration: 100,
+        },
       },
       styles: {
         tooltip: {
@@ -42,6 +46,12 @@ export const cookiesPackTheme = createTheme({
           withDropdown: true,
           popoverProps: { withinPortal: false },
         },
+      },
+    }),
+    DataList: DataList.extend({
+      defaultProps: {
+        size: 'xs',
+        labelWidth: '80px',
       },
     }),
   },
