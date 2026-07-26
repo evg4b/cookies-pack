@@ -6,6 +6,7 @@ import zip from 'vite-plugin-zip-pack'
 import manifest from './manifest.config.js'
 import { name, version } from './package.json'
 import { resolve } from 'path';
+import { tmpdir } from 'os';
 
 const debug = process.env.__DEV__ === 'true';
 const sourceRoot = resolve(__dirname, 'src');
@@ -15,6 +16,10 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     setupFiles: [resolve(sourceRoot, 'test/setup.ts')],
+    execArgv: [
+      '--localstorage-file',
+      resolve(tmpdir(), './tmp-localstorage.json'),
+    ],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
