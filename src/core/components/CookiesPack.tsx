@@ -1,10 +1,16 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, PropsWithChildren, useCallback, useState } from 'react';
 import { CookieEditor, CookiesBatchUpdate, CookiesTable, SupportingWrapper } from '@core/components';
 import { Stack } from '@mantine/core';
 import { useCookieEditors } from '@core/hooks';
 
 type Cookie = chrome.cookies.Cookie;
 type EditorState = { open: true; cookie?: Cookie } | { open: false };
+
+const FullHeight: FC<PropsWithChildren> = ({ children }) => (
+  <Stack style={{ height: '100vh' }}>
+    {children}
+  </Stack>
+);
 
 export const CookiesPack: FC = () => {
   const [editor, setEditor] = useState<EditorState>({ open: false });
@@ -17,14 +23,14 @@ export const CookiesPack: FC = () => {
 
   if (editor.open) {
     return (
-      <Stack style={{ height: '100vh' }}>
+      <FullHeight>
         <CookieEditor cookie={editor.cookie} onClose={closeEditor}/>
-      </Stack>
+      </FullHeight>
     );
   }
 
   return (
-    <Stack style={{ height: '100vh' }}>
+    <FullHeight>
       <SupportingWrapper>
         <Stack flex={3} style={{ overflow: 'hidden' }}>
           <CookiesTable onAddCookie={openAddCookie} onEditCookie={openEditCookie}/>
@@ -35,6 +41,6 @@ export const CookiesPack: FC = () => {
           </Stack>
         )}
       </SupportingWrapper>
-    </Stack>
+    </FullHeight>
   );
 };

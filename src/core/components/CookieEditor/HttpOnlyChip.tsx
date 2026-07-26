@@ -2,7 +2,7 @@ import { Chip, ChipProps } from '@mantine/core';
 import { IconShield } from '@tabler/icons-react';
 import { FC } from 'react';
 import { useTranslation } from '@core/hooks';
-import { iconSize } from '@core/components/CookieEditor/helpers.ts';
+import { iconSize } from '@core/components/CookieEditor/helpers';
 
 export type HttpOnlyChipProps = Omit<ChipProps, 'color' | 'icon' | 'children'>;
 export const HttpOnlyChip: FC<HttpOnlyChipProps> = (props) => {

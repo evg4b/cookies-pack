@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import type { MockInstance } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
-import type { useActiveTab as UseActiveTabFn } from '../activeTab';
+import type { useActiveTab as UseActiveTabFn } from '../use-active-tab';
 
 type Listener = () => void;
 type TabUpdatedListener = (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo) => void;
@@ -41,7 +41,7 @@ const withActiveTab = (mockChrome: ReturnType<typeof createMockChrome>, url: str
 
 const loadHookModule = async (): Promise<{ useActiveTab: typeof UseActiveTabFn }> => {
   vi.resetModules();
-  return import('../activeTab');
+  return import('../use-active-tab');
 };
 
 describe('useActiveTab', () => {
@@ -84,7 +84,7 @@ describe('useActiveTab', () => {
 
     expect(result.current.tab).toBeNull();
     expect(result.current.url).toBeNull();
-    expect(result.current.error).toBeNull();
+    expect(result.current.error).toBeInstanceOf(TypeError);
   });
 
   it('captures an error when reading the active tab fails', async () => {
@@ -110,11 +110,11 @@ describe('useActiveTab', () => {
     expect(result.current.url).toBe('https://first.com');
 
     withActiveTab(mockChrome, 'https://second.com');
-    await act(async () => {
-      await result.current.refresh();
+    act(() => {
+      result.current.refresh();
     });
 
-    expect(result.current.url).toBe('https://second.com');
+    await waitFor(() => { expect(result.current.url).toBe('https://second.com'); });
   });
 
   it('reloads when chrome.tabs.onActivated fires', async () => {

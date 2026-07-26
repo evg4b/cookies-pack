@@ -1,6 +1,7 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { renderHook, waitFor, act } from '@testing-library/react';
-import type { useChromeStorageState as UseChromeStorageStateFn, useCookieEditorMode as UseCookieEditorModeFn, useCookieEditors as UseCookieEditorsFn } from '../settings';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import type { useChromeStorageState as UseChromeStorageStateFn } from '@core/stores/common-settings-store';
+import type { useCookieEditorMode as UseCookieEditorModeFn, useCookieEditors as UseCookieEditorsFn } from '../settings';
 
 type StorageChangeListener = (changes: Record<string, chrome.storage.StorageChange>) => void;
 
@@ -38,7 +39,7 @@ const createMockChrome = () => {
 
 const loadHookModule = async (): Promise<{ useChromeStorageState: typeof UseChromeStorageStateFn }> => {
   vi.resetModules();
-  return import('../settings');
+  return import('@core/stores/common-settings-store');
 };
 
 const loadEditorModeModule = async (): Promise<{
@@ -68,7 +69,8 @@ describe('useChromeStorageState', () => {
     const { useChromeStorageState } = await loadHookModule();
     const { result } = renderHook(() => useChromeStorageState(uniqueKey, false));
 
-    expect(result.current[0]).toBe(false);
+    const [state] = result.current;
+    expect(state).toBe(false);
   });
 
   it('updates to the persisted value once storage.sync.get resolves', async () => {
@@ -79,7 +81,8 @@ describe('useChromeStorageState', () => {
     const { result } = renderHook(() => useChromeStorageState(uniqueKey, false));
 
     await waitFor(() => {
-      expect(result.current[0]).toBe(true);
+      const [state] = result.current;
+      expect(state).toBe(true);
     });
   });
 
@@ -89,14 +92,17 @@ describe('useChromeStorageState', () => {
     const { useChromeStorageState } = await loadHookModule();
     const { result } = renderHook(() => useChromeStorageState(uniqueKey, false));
     await waitFor(() => {
-      expect(result.current[0]).toBe(false);
+      const [state] = result.current;
+      expect(state).toBe(false);
     });
 
-    await act(async () => {
-      await result.current[1](true);
+    act(() => {
+      const [, setValue] = result.current;
+      setValue(true);
     });
 
-    expect(result.current[0]).toBe(true);
+    const [newState] = result.current;
+    expect(newState).toBe(true);
     expect(mockChrome.api.storage.sync.set).toHaveBeenCalledWith({ [uniqueKey]: true });
   });
 
@@ -106,14 +112,16 @@ describe('useChromeStorageState', () => {
     const { useChromeStorageState } = await loadHookModule();
     const { result } = renderHook(() => useChromeStorageState(uniqueKey, false));
     await waitFor(() => {
-      expect(result.current[0]).toBe(false);
+      const [state] = result.current;
+      expect(state).toBe(false);
     });
 
     act(() => {
       mockChrome.emitChange(uniqueKey, true);
     });
 
-    expect(result.current[0]).toBe(true);
+    const [newState] = result.current;
+    expect(newState).toBe(true);
   });
 
   it('shares state between two hook instances using the same key', async () => {
@@ -124,17 +132,21 @@ describe('useChromeStorageState', () => {
     const second = renderHook(() => useChromeStorageState(uniqueKey, false));
 
     await waitFor(() => {
-      expect(first.result.current[0]).toBe(false);
+      const [firstState] = second.result.current;
+      expect(firstState).toBe(false);
     });
     await waitFor(() => {
-      expect(second.result.current[0]).toBe(false);
+      const [secondState] = first.result.current;
+      expect(secondState).toBe(false);
     });
 
-    await act(async () => {
-      await first.result.current[1](true);
+    act(() => {
+      const [, setValue] = first.result.current;
+      setValue(true);
     });
 
-    expect(second.result.current[0]).toBe(true);
+    const [newState] = second.result.current;
+    expect(newState).toBe(true);
   });
 });
 
@@ -155,7 +167,8 @@ describe('useCookieEditors', () => {
     const { useCookieEditorMode } = await loadEditorModeModule();
     const { result } = renderHook(() => useCookieEditorMode());
 
-    expect(result.current[0]).toBe('both-editors');
+    const [mode] = result.current;
+    expect(mode).toBe('both-editors');
   });
 
   it('enables both editors for the both-editors mode', async () => {
@@ -193,11 +206,13 @@ describe('useCookieEditors', () => {
     const editors = renderHook(() => useCookieEditors());
 
     await waitFor(() => {
-      expect(mode.result.current[0]).toBe('both-editors');
+      const [state] = mode.result.current;
+      expect(state).toBe('both-editors');
     });
 
-    await act(async () => {
-      await mode.result.current[1]('editor-only');
+    act(() => {
+      const [, setMode] = mode.result.current;
+      setMode('editor-only');
     });
 
     expect(editors.result.current).toEqual({ bulkEditorEnabled: false, editorEnabled: true });

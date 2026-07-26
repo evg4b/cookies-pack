@@ -1,16 +1,13 @@
-import { useSyncExternalStore } from 'react';
+import { type Listener, type Tab, type Unsubscribe } from './types';
 
-type Tab = chrome.tabs.Tab;
-type Listener = () => void;
-
-interface ActiveTabState {
+export interface ActiveTabState {
   tab: Tab | null;
   url: string | null;
   loading: boolean;
   error: Error | null;
 }
 
-const createActiveTabStore = () => {
+export const createActiveTabStore = () => {
   let state: ActiveTabState = {
     tab: null,
     url: null,
@@ -31,8 +28,8 @@ const createActiveTabStore = () => {
   const loadActiveTab = async (): Promise<void> => {
     setState({ loading: true });
     try {
-      const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-      setState({ tab: tabs[0] ?? null, url: tabs[0]?.url ?? null, error: null, loading: false });
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      setState({ tab, url: tab.url ?? null, error: null, loading: false });
     } catch (error) {
       console.error('Failed to load the active tab:', error);
       setState({
@@ -59,25 +56,10 @@ const createActiveTabStore = () => {
 
   return {
     getSnapshot: (): ActiveTabState => state,
-    subscribe: (listener: Listener): (() => void) => {
+    subscribe: (listener: Listener): Unsubscribe => {
       listeners.add(listener);
       return () => void listeners.delete(listener);
     },
-    refresh: (): Promise<void> => loadActiveTab(),
+    refresh: (): void => void loadActiveTab(),
   };
 };
-
-const store = createActiveTabStore();
-
-export interface UseActiveTabReturn extends ActiveTabState {
-  refresh: () => Promise<void>;
-}
-
-export function useActiveTab(): UseActiveTabReturn {
-  const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
-
-  return {
-    ...state,
-    refresh: store.refresh,
-  };
-}

@@ -1,6 +1,6 @@
 import { MantineProvider } from '@mantine/core';
 import { createContext, FC, PropsWithChildren, useContext, useMemo } from 'react';
-import { cookiesPackTheme } from './theme.ts';
+import { cookiesPackTheme } from './theme';
 
 export type CookiesPackThemeProviderProps = PropsWithChildren & CookiesPackThemeContext;
 

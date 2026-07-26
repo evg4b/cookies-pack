@@ -2,7 +2,7 @@ import { Chip, ChipProps } from '@mantine/core';
 import { IconLock } from '@tabler/icons-react';
 import { FC } from 'react';
 import { useTranslation } from '@core/hooks';
-import { iconSize } from '@core/components/CookieEditor/helpers.ts';
+import { iconSize } from '@core/components/CookieEditor/helpers';
 
 export type SecureChipProps = Omit<ChipProps, 'color' | 'icon' | 'children'>;
 export const SecureChip: FC<SecureChipProps> = (props) => {

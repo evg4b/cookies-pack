@@ -1,20 +1,19 @@
-import { useSyncExternalStore } from 'react';
+import { type Listener, type Unsubscribe } from './types';
 
-type Cookie = chrome.cookies.Cookie;
-type Listener = () => void;
+export type Cookie = chrome.cookies.Cookie;
 
-interface CookiesState {
+export interface CookiesState {
   cookies: Cookie[];
   url: string | null;
   loading: boolean;
   error: Error | null;
 }
 
-interface SetCookieDetails extends Omit<chrome.cookies.SetDetails, 'url'> {
+export interface SetCookieDetails extends Omit<chrome.cookies.SetDetails, 'url'> {
   url?: string;
 }
 
-const createCookiesStore = () => {
+export const createCookiesStore = () => {
   let state: CookiesState = {
     cookies: [],
     url: null,
@@ -34,8 +33,8 @@ const createCookiesStore = () => {
 
   const getActiveTabUrl = async (): Promise<string | null> => {
     try {
-      const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-      return tabs[0]?.url ?? null;
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      return tab.url ?? null;
     } catch (error) {
       console.error('Failed to get active tab URL:', error);
       return null;
@@ -149,7 +148,7 @@ const createCookiesStore = () => {
 
   return {
     getSnapshot: (): CookiesState => state,
-    subscribe: (listener: Listener): (() => void) => {
+    subscribe: (listener: Listener): Unsubscribe => {
       listeners.add(listener);
       return () => void listeners.delete(listener);
     },
@@ -160,26 +159,3 @@ const createCookiesStore = () => {
     refresh,
   };
 };
-
-const store = createCookiesStore();
-
-export interface UseCookiesReturn extends CookiesState {
-  setCookie: (name: string, value: string, details?: SetCookieDetails) => Promise<Cookie | null>;
-  removeCookie: (name: string, url?: string) => Promise<void>;
-  removeAllCookies: () => Promise<void>;
-  getCookie: (name: string) => Cookie | undefined;
-  refresh: () => Promise<void>;
-}
-
-export function useCookies(): UseCookiesReturn {
-  const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
-
-  return {
-    ...state,
-    setCookie: store.setCookie,
-    removeCookie: store.removeCookie,
-    removeAllCookies: store.removeAllCookies,
-    getCookie: store.getCookie,
-    refresh: store.refresh,
-  };
-}
