@@ -10,7 +10,7 @@ interface StorageStore<T> {
 
 const stores = new Map<string, StorageStore<unknown>>();
 
-const createStorageStore = <T,>(key: string, defaultValue: T): StorageStore<T> => {
+const createStorageStore = <T, >(key: string, defaultValue: T): StorageStore<T> => {
   let state = defaultValue;
   const listeners = new Set<Listener>();
 
@@ -55,7 +55,7 @@ const createStorageStore = <T,>(key: string, defaultValue: T): StorageStore<T> =
   };
 };
 
-const getStore = <T,>(key: string, defaultValue: T): StorageStore<T> => {
+const getStore = <T, >(key: string, defaultValue: T): StorageStore<T> => {
   const existing = stores.get(key);
   if (existing) {
     return existing as StorageStore<T>;
@@ -66,7 +66,7 @@ const getStore = <T,>(key: string, defaultValue: T): StorageStore<T> => {
   return store;
 };
 
-export const useChromeStorageState = <T,>(key: string, defaultValue: T): [T, (value: T) => Promise<void>] => {
+export const useChromeStorageState = <T, >(key: string, defaultValue: T): [T, (value: T) => Promise<void>] => {
   const store = getStore(key, defaultValue);
   const value = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
   const setValue = useCallback((next: T) => store.setValue(next), [store]);
@@ -84,3 +84,21 @@ export type IconClickAction = 'popup' | 'sidepanel';
 
 export const useIconClickAction = (): [IconClickAction, (value: IconClickAction) => Promise<void>] =>
   useChromeStorageState<IconClickAction>('iconClickAction', 'popup');
+
+export type CookieEditorMode = 'bulk-editor-only' | 'editor-only' | 'both-editors';
+
+export const useCookieEditorMode = (): [CookieEditorMode, (value: CookieEditorMode) => Promise<void>] =>
+  useChromeStorageState<CookieEditorMode>('cookieEditorMode', 'both-editors');
+
+export interface CookieEditors {
+  bulkEditorEnabled: boolean;
+  editorEnabled: boolean;
+}
+export const useCookieEditors = (): CookieEditors => {
+  const [mode] = useCookieEditorMode();
+
+  return {
+    bulkEditorEnabled: mode === 'bulk-editor-only' || mode === 'both-editors',
+    editorEnabled: mode === 'editor-only' || mode === 'both-editors',
+  };
+};

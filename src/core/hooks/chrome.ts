@@ -1,4 +1,4 @@
-import { createContext, useContext, useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react';
 
 type Cookie = chrome.cookies.Cookie;
 type Listener = () => void;
@@ -13,13 +13,6 @@ interface CookiesState {
 interface SetCookieDetails extends Omit<chrome.cookies.SetDetails, 'url'> {
   url?: string;
 }
-
-export const ChromeContext = createContext(chrome);
-
-export const useTabs = () => {
-  const chrome = useContext(ChromeContext);
-  return chrome.tabs;
-};
 
 const createCookiesStore = () => {
   let state: CookiesState = {
@@ -80,7 +73,9 @@ const createCookiesStore = () => {
   const setCookie = async (name: string, value: string, details?: SetCookieDetails): Promise<Cookie | null> => {
     try {
       const url = details?.url ?? (await getActiveTabUrl());
-      if (!url) throw new Error('Cannot set cookie without a valid URL');
+      if (!url) {
+        throw new Error('Cannot set cookie without a valid URL');
+      }
 
       await chrome.cookies.set({
         ...details,
@@ -100,7 +95,9 @@ const createCookiesStore = () => {
   const removeCookie = async (name: string, url?: string): Promise<void> => {
     try {
       const targetUrl = url ?? (await getActiveTabUrl());
-      if (!targetUrl) throw new Error('Cannot remove cookie without a valid URL');
+      if (!targetUrl) {
+        throw new Error('Cannot remove cookie without a valid URL');
+      }
 
       await chrome.cookies.remove({ url: targetUrl, name });
       await loadCookies();
@@ -113,7 +110,9 @@ const createCookiesStore = () => {
   const removeAllCookies = async (): Promise<void> => {
     try {
       const url = await getActiveTabUrl();
-      if (!url) throw new Error('Cannot remove cookies without a valid URL');
+      if (!url) {
+        throw new Error('Cannot remove cookies without a valid URL');
+      }
 
       const cookiesToRemove = [...state.cookies];
       await Promise.all(cookiesToRemove.map((cookie) => chrome.cookies.remove({ url, name: cookie.name })));
@@ -152,9 +151,7 @@ const createCookiesStore = () => {
     getSnapshot: (): CookiesState => state,
     subscribe: (listener: Listener): (() => void) => {
       listeners.add(listener);
-      return () => {
-        listeners.delete(listener);
-      };
+      return () => void listeners.delete(listener);
     },
     setCookie,
     removeCookie,

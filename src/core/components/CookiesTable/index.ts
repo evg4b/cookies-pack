@@ -1,0 +1,1 @@
+export { CookiesTable, type CookiesTableProps } from './CookiesTable';

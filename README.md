@@ -1,5 +1,7 @@
 <div align="center">
-   <img src="public/icon-512.png" alt="logo" height="200"/>
+  <a href="https://chromewebstore.google.com/detail/cookies-pack/liambpelhpbcajeemlnenigobnklkiog">
+    <img src="public/icon-512.png" alt="logo" height="200"/>  
+  </a>
    <h1> Cookies pack </h1>
    <div>
         This is an open-source cookie management extension that is powerful and easy to use. It allows you to manage, import, and export cookies for sites with just a few clicks.
