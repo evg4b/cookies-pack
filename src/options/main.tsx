@@ -6,10 +6,11 @@ import { OptionsPage } from './OptionsPage';
 import '@mantine/core/styles.css';
 import './index.css';
 
-createRoot(document.body).render(
-  <StrictMode>
-    <CookiesPackThemeProvider mode="popup">
-      <OptionsPage/>
-    </CookiesPackThemeProvider>
-  </StrictMode>,
-);
+createRoot(document.body)
+  .render(
+    <StrictMode>
+      <CookiesPackThemeProvider mode="popup">
+        <OptionsPage/>
+      </CookiesPackThemeProvider>
+    </StrictMode>,
+  );
