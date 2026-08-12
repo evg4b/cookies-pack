@@ -11,11 +11,12 @@ const onClose = vi.fn();
 
 const DEFAULT_TAB_URL = 'https://example.com/current/path';
 let activeTabUrl: string | null = DEFAULT_TAB_URL;
+let existingCookies: Cookie[] = [];
 
 vi.mock('@core/hooks', () => ({
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
   useActiveTab: () => ({ url: activeTabUrl, tab: null, loading: false, error: null, refresh: vi.fn() }),
-  useCookies: () => ({ setCookie, removeCookie }),
+  useCookies: () => ({ cookies: existingCookies, setCookie, removeCookie }),
 }));
 
 const editedCookie: Cookie = {
@@ -37,6 +38,7 @@ describe('CookieEditor', () => {
     cleanup();
     vi.clearAllMocks();
     activeTabUrl = DEFAULT_TAB_URL;
+    existingCookies = [];
   });
 
   it('pre-fills domain, path and secure from the active tab when adding a cookie', async () => {
@@ -78,6 +80,31 @@ describe('CookieEditor', () => {
 
     expect(await screen.findAllByText('cookie_editor_error_required')).not.toHaveLength(0);
     expect(setCookie).not.toHaveBeenCalled();
+  });
+
+  it('shows a validation error and does not submit when adding a cookie whose name already exists', async () => {
+    existingCookies = [editedCookie];
+    render(<CookieEditor onClose={onClose}/>, { wrapper: MantineProvider });
+    await screen.findByDisplayValue('example.com');
+
+    fireEvent.change(screen.getByLabelText(/^cookie_editor_name_label/), { target: { value: 'existing' } });
+    fireEvent.click(screen.getByRole('button', { name: 'cookie_editor_save' }));
+
+    expect(await screen.findByText('cookie_editor_error_duplicate_name')).toBeInTheDocument();
+    expect(setCookie).not.toHaveBeenCalled();
+  });
+
+  it('allows editing a cookie and keeping its own name even though it already exists', async () => {
+    existingCookies = [editedCookie];
+    render(<CookieEditor cookie={editedCookie} onClose={onClose}/>, { wrapper: MantineProvider });
+    await screen.findByDisplayValue('example.com');
+
+    fireEvent.click(screen.getByRole('button', { name: 'cookie_editor_save' }));
+
+    await waitFor(() => {
+      expect(setCookie).toHaveBeenCalledWith('existing', 'val', expect.anything());
+    });
+    expect(screen.queryByText('cookie_editor_error_duplicate_name')).not.toBeInTheDocument();
   });
 
   it('disables the expiration field while session is enabled, and enables it otherwise', async () => {

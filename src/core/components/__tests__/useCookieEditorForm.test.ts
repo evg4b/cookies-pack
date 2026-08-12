@@ -10,11 +10,12 @@ const onClose = vi.fn();
 
 const DEFAULT_TAB_URL = 'https://example.com/current/path';
 let activeTabUrl: string | null = DEFAULT_TAB_URL;
+let existingCookies: Cookie[] = [];
 
 vi.mock('@core/hooks', () => ({
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
   useActiveTab: () => ({ url: activeTabUrl, tab: null, loading: false, error: null, refresh: vi.fn() }),
-  useCookies: () => ({ setCookie, removeCookie }),
+  useCookies: () => ({ cookies: existingCookies, setCookie, removeCookie }),
 }));
 
 const editedCookie: Cookie = {
@@ -35,6 +36,7 @@ describe('useCookieEditorForm', () => {
   afterEach(() => {
     vi.clearAllMocks();
     activeTabUrl = DEFAULT_TAB_URL;
+    existingCookies = [];
   });
 
   describe('add mode', () => {
@@ -149,6 +151,41 @@ describe('useCookieEditorForm', () => {
       });
 
       expect(result.current.form.errors.domain).toBeUndefined();
+    });
+
+    it('rejects a name that already exists when adding a cookie', () => {
+      existingCookies = [editedCookie];
+      const { result } = renderHook(() => useCookieEditorForm({ onClose }));
+
+      act(() => {
+        result.current.form.setFieldValue('name', 'existing');
+        result.current.form.validate();
+      });
+
+      expect(result.current.form.errors.name).toBe('cookie_editor_error_duplicate_name');
+    });
+
+    it('accepts a name that does not collide with an existing cookie when adding', () => {
+      existingCookies = [editedCookie];
+      const { result } = renderHook(() => useCookieEditorForm({ onClose }));
+
+      act(() => {
+        result.current.form.setFieldValue('name', 'brand_new');
+        result.current.form.validate();
+      });
+
+      expect(result.current.form.errors.name).toBeUndefined();
+    });
+
+    it('does not reject the cookie being edited for colliding with its own existing name', () => {
+      existingCookies = [editedCookie];
+      const { result } = renderHook(() => useCookieEditorForm({ cookie: editedCookie, onClose }));
+
+      act(() => {
+        result.current.form.validate();
+      });
+
+      expect(result.current.form.errors.name).toBeUndefined();
     });
   });
 

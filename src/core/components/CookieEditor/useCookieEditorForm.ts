@@ -71,14 +71,24 @@ const cookieToValues = (cookie: Cookie): CookieFormValues => ({
 export const useCookieEditorForm = ({ cookie, onClose }: UseCookieEditorFormProps): UseCookieEditorFormReturn => {
   const t = useTranslation('cookie_editor');
   const { url: tabUrl } = useActiveTab();
-  const { setCookie, removeCookie } = useCookies();
+  const { cookies, setCookie, removeCookie } = useCookies();
   const tabHostname = tabUrl ? new URL(tabUrl).hostname : null;
   const prefilledRef = useRef(false);
 
   const form = useForm<CookieFormValues>({
     initialValues: cookie ? cookieToValues(cookie) : emptyValues,
     validate: {
-      name: (value) => (value.trim() ? null : t('error_required')),
+      name: (value) => {
+        if (!value.trim()) {
+          return t('error_required');
+        }
+
+        if (!cookie && cookies.some((existing) => existing.name === value.trim())) {
+          return t('error_duplicate_name');
+        }
+
+        return null;
+      },
       domain: (value) => {
         if (!value.trim()) {
           return t('error_required');

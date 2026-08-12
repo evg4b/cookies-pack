@@ -248,6 +248,10 @@
     "message": "Domain must match or be a parent of $1",
     "description": "The validation error shown when the cookie domain does not match the current tab's domain"
   },
+  "cookie_editor_error_duplicate_name": {
+    "message": "A cookie with this name already exists",
+    "description": "The validation error shown when adding a cookie whose name already exists"
+  },
   "cookie_editor_cancel": {
     "message": "Cancel",
     "description": "The label for the cancel button in the cookie editor"
