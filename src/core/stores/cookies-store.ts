@@ -4,7 +4,7 @@ export type Cookie = chrome.cookies.Cookie;
 
 export interface CookiesState {
   cookies: Cookie[];
-  url: string | null;
+  url: URL | null;
   loading: boolean;
   error: Error | null;
 }
@@ -31,10 +31,10 @@ export const createCookiesStore = () => {
     notifyListeners();
   };
 
-  const getActiveTabUrl = async (): Promise<string | null> => {
+  const getActiveTabUrl = async (): Promise<URL | null> => {
     try {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      return tab.url ?? null;
+      return tab.url ? new URL(tab.url) : null;
     } catch (error) {
       console.error('Failed to get active tab URL:', error);
       return null;
@@ -45,7 +45,7 @@ export const createCookiesStore = () => {
     setState({ loading: true });
     try {
       const url = await getActiveTabUrl();
-      const cookies = url ? await chrome.cookies.getAll({ url }) : [];
+      const cookies = url ? await chrome.cookies.getAll({ url: url.toString() }) : [];
       setState({ cookies, url, error: null, loading: false });
     } catch (error) {
       console.error('Failed to load cookies:', error);
@@ -61,7 +61,7 @@ export const createCookiesStore = () => {
   const handleCookiesChanged = async (): Promise<void> => {
     try {
       const url = await getActiveTabUrl();
-      const cookies = url ? await chrome.cookies.getAll({ url }) : [];
+      const cookies = url ? await chrome.cookies.getAll({ url: url.toString() }) : [];
       setState({ cookies, url, error: null });
     } catch (error) {
       console.error('Failed to handle cookie change:', error);
@@ -78,7 +78,7 @@ export const createCookiesStore = () => {
 
       await chrome.cookies.set({
         ...details,
-        url,
+        url: url.toString(),
         name,
         value,
       });
@@ -98,7 +98,7 @@ export const createCookiesStore = () => {
         throw new Error('Cannot remove cookie without a valid URL');
       }
 
-      await chrome.cookies.remove({ url: targetUrl, name });
+      await chrome.cookies.remove({ url: targetUrl.toString(), name });
       await loadCookies();
     } catch (error) {
       console.error('Failed to remove cookie:', error);
@@ -114,7 +114,7 @@ export const createCookiesStore = () => {
       }
 
       const cookiesToRemove = [...state.cookies];
-      await Promise.all(cookiesToRemove.map((cookie) => chrome.cookies.remove({ url, name: cookie.name })));
+      await Promise.all(cookiesToRemove.map((cookie) => chrome.cookies.remove({ url: url.toString(), name: cookie.name })));
       setState({ cookies: [], error: null });
     } catch (error) {
       console.error('Failed to remove all cookies:', error);

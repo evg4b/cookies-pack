@@ -25,11 +25,12 @@ const saveFile = vi.fn();
 const onAddCookie = vi.fn();
 const onEditCookie = vi.fn();
 let cookies: Cookie[] = [];
+let url: URL | null = new URL('https://example.com/path');
 let editorEnabled = true;
 let bulkEditorEnabled = true;
 
 vi.mock('@core/hooks', () => ({
-  useCookies: () => ({ cookies, removeCookie }),
+  useCookies: () => ({ cookies, removeCookie, url }),
   useSaveFile: () => ({ saveFile }),
   useCookieEditors: () => ({ editorEnabled, bulkEditorEnabled }),
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
@@ -43,6 +44,7 @@ vi.mock('@mantine/hooks', async (importOriginal) => ({
 describe('CookiesTable', () => {
   beforeEach(() => {
     cookies = [];
+    url = new URL('https://example.com/path');
     editorEnabled = true;
     bulkEditorEnabled = true;
   });
@@ -126,6 +128,19 @@ describe('CookiesTable', () => {
 
     expect(saveFile).toHaveBeenCalledWith(
       expect.stringContaining('x.com\t/\ta\t1\t-1'),
+      expect.objectContaining({ suggestedName: 'example.com.cookies' }),
+    );
+  });
+
+  it('falls back to the default filename when the active tab URL is unavailable', () => {
+    url = null;
+    cookies = [mockCookie({ name: 'a', value: '1', domain: 'x.com', path: '/', expirationDate: undefined })];
+    render(<CookiesTable onAddCookie={onAddCookie} onEditCookie={onEditCookie}/>, { wrapper: MantineProvider });
+
+    fireEvent.click(screen.getByLabelText('cookies_table_export_all_cookies'));
+
+    expect(saveFile).toHaveBeenCalledWith(
+      expect.anything(),
       expect.objectContaining({ suggestedName: 'cookies_table_export_filename' }),
     );
   });

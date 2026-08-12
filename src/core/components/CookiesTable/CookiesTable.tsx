@@ -14,7 +14,7 @@ export type CookiesTableProps = {
 };
 
 export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie }) => {
-  const { cookies, removeCookie } = useCookies();
+  const { cookies, removeCookie, url } = useCookies();
   const t = useTranslation('cookies_table');
   const { copy, copied } = useClipboard({ timeout: 500 });
   const { saveFile } = useSaveFile();
@@ -25,8 +25,9 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
   }, [copy, cookies]);
 
   const exportAll = useCallback(() => {
+    const hostname = url?.hostname;
     void saveFile(encodeJetbrainsCookies(cookies), {
-      suggestedName: t('export_filename'),
+      suggestedName: hostname ? `${hostname}.cookies` : t('export_filename'),
       types: [
         {
           description: t('export_description'),
@@ -34,7 +35,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
         },
       ],
     });
-  }, [saveFile, cookies, t]);
+  }, [saveFile, cookies, t, url]);
 
   const addCookieAction = editorEnabled && (
     <IconButton

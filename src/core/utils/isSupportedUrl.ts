@@ -1,13 +1,5 @@
 const SUPPORTED_PROTOCOLS = new Set(['http:', 'https:']);
 
-export const isSupportedUrl = (url: string | null | undefined): boolean => {
-  if (!url) {
-    return false;
-  }
-
-  try {
-    return SUPPORTED_PROTOCOLS.has(new URL(url).protocol);
-  } catch {
-    return false;
-  }
+export const isSupportedUrl = (url: URL | null | undefined): boolean => {
+  return SUPPORTED_PROTOCOLS.has(url?.protocol ?? '');
 };

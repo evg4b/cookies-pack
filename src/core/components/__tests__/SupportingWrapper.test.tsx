@@ -3,7 +3,7 @@ import { render, screen, cleanup } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
 import { SupportingWrapper } from '../SupportingWrapper';
 
-let url: string | null = 'https://example.com/page';
+let url: URL | null = new URL('https://example.com/page');
 
 vi.mock('@core/hooks', () => ({
   useTranslation: (namespace: string) => (key: string) => `${namespace}_${key}`,
@@ -17,14 +17,14 @@ describe('SupportingWrapper', () => {
   });
 
   it('renders the children when the current page is a supported http(s) page', () => {
-    url = 'https://example.com/page';
+    url = new URL('https://example.com/page');
     render(<SupportingWrapper><div>child content</div></SupportingWrapper>, { wrapper: MantineProvider });
 
     expect(screen.getByText('child content')).toBeInTheDocument();
   });
 
   it('renders the unsupported empty state for internal browser pages', () => {
-    url = 'chrome://extensions';
+    url = new URL('chrome://extensions');
     render(<SupportingWrapper><div>child content</div></SupportingWrapper>, { wrapper: MantineProvider });
 
     expect(screen.queryByText('child content')).not.toBeInTheDocument();
