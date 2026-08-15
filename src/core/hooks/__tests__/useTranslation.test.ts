@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import { useTranslation } from '../use-translation';
+import { useTranslation } from '../useTranslation';
 
 describe('useTranslation', () => {
   let getMessage: ReturnType<typeof vi.fn>;

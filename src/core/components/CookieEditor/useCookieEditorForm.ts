@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useForm, UseFormReturnType } from '@mantine/form';
+import { useForm, type UseFormReturnType } from '@mantine/form';
 import { useActiveTab, useCookies, useTranslation } from '@core/hooks';
-
-type Cookie = chrome.cookies.Cookie;
-type SameSite = Cookie['sameSite'];
 
 export interface CookieFormValues {
   name: string;

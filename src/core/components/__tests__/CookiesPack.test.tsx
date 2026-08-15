@@ -1,10 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
-import type { PropsWithChildren } from 'react';
+import  { type PropsWithChildren } from 'react';
 import { CookiesPack } from '../CookiesPack';
-
-type Cookie = chrome.cookies.Cookie;
 
 const mockCookie: Cookie = {
   name: 'session',

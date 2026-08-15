@@ -1,24 +1,38 @@
-import { describe, it, expect } from 'vitest';
-import { isSupportedUrl } from '../isSupportedUrl';
+import { describe, expect, it } from 'vitest';
+import { isSupportedUrl } from '@core/utils';
 
 describe('isSupportedUrl', () => {
-  it('returns false for null or undefined', () => {
-    expect(isSupportedUrl(null)).toBe(false);
-    expect(isSupportedUrl(undefined)).toBe(false);
+  it('returns false for null', () => {
+    expect(isSupportedUrl(null))
+      .toBe(false);
   });
 
-  it('returns true for http and https pages', () => {
-    expect(isSupportedUrl(new URL('http://example.com'))).toBe(true);
-    expect(isSupportedUrl(new URL('https://example.com/path'))).toBe(true);
+  it('returns false for undefined', () => {
+    expect(isSupportedUrl(undefined))
+      .toBe(false);
   });
 
-  it('returns false for internal browser pages', () => {
-    expect(isSupportedUrl(new URL('chrome://extensions'))).toBe(false);
-    expect(isSupportedUrl(new URL('chrome://newtab'))).toBe(false);
-    expect(isSupportedUrl(new URL('edge://settings'))).toBe(false);
-    expect(isSupportedUrl(new URL('about:blank'))).toBe(false);
-    expect(isSupportedUrl(new URL('chrome-extension://abcdefg/options.html'))).toBe(false);
-    expect(isSupportedUrl(new URL('devtools://devtools/bundled/inspector.html'))).toBe(false);
-    expect(isSupportedUrl(new URL('view-source:https://example.com'))).toBe(false);
+  const supportedUrls = [
+    'https://www.google.com',
+    'http://www.example.com/path?query=value',
+  ];
+
+  it.each(supportedUrls)('returns true for %s', (url) => {
+    expect(isSupportedUrl(new URL(url))).toBe(true);
+  });
+
+  const unsupportedUrls = [
+    'chrome://extensions',
+    'chrome://newtab',
+    'edge://settings',
+    'about:blank',
+    'chrome-extension://abcdefg/options.html',
+    'devtools://devtools/bundled/inspector.html',
+    'view-source:https://example.com',
+  ];
+
+  it.each(unsupportedUrls)('returns false for %s', (url) => {
+    expect(isSupportedUrl(new URL(url))).toBe(false);
   });
 });
+

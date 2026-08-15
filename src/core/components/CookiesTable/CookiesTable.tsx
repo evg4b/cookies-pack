@@ -8,10 +8,10 @@ import { CookieTableRow } from './CookieTableRow';
 import { ActionsCell } from './ActionsCell';
 import { IconButton } from '@core/components';
 
-export type CookiesTableProps = {
+export interface CookiesTableProps {
   onAddCookie: () => void;
-  onEditCookie: (cookie: chrome.cookies.Cookie) => void;
-};
+  onEditCookie: (cookie: Cookie) => void;
+}
 
 export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie }) => {
   const { cookies, removeCookie, url } = useCookies();

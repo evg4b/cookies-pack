@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { Cookie, CookiesState, createCookiesStore, SetCookieDetails } from '@core/stores/cookies-store';
+import { CookiesState, createCookiesStore, SetCookieDetails } from '@core/stores/createCookiesStore';
 
 const store = createCookiesStore();
 

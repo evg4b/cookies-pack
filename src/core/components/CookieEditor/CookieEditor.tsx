@@ -6,15 +6,13 @@ import { useTranslation } from '@core/hooks';
 import { SecureChip } from './SecureChip';
 import { HttpOnlyChip } from './HttpOnlyChip';
 import { SessionChip } from './SessionChip';
-import { useModeValue } from '@core/theme/provider.tsx';
+import { useModeValue } from '@core/theme/provider';
 import { useCookieEditorForm } from './useCookieEditorForm';
 
-type Cookie = chrome.cookies.Cookie;
-
-export type CookieEditorProps = {
+export interface CookieEditorProps {
   cookie?: Cookie;
   onClose: () => void;
-};
+}
 
 export const CookieEditor: FC<CookieEditorProps> = ({ cookie, onClose }) => {
   const t = useTranslation('cookie_editor');

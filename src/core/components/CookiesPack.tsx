@@ -3,7 +3,6 @@ import { CookieEditor, CookiesBatchUpdate, CookiesTable, SupportingWrapper } fro
 import { Stack } from '@mantine/core';
 import { useCookieEditors } from '@core/hooks';
 
-type Cookie = chrome.cookies.Cookie;
 type EditorState = { open: true; cookie?: Cookie } | { open: false };
 
 const FullHeight: FC<PropsWithChildren> = ({ children }) => (

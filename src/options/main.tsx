@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { CookiesPackThemeProvider } from '@core/theme';
-import { OptionsPage } from './OptionsPage';
+import { OptionsPage } from './components';
 
 import '@mantine/core/styles.css';
 import './index.css';

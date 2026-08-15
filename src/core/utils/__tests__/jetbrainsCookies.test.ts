@@ -1,8 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { encodeJetbrainsCookies } from '../jetbrainsCookies';
 
-type Cookie = chrome.cookies.Cookie;
-
 const mockCookie = (overrides?: Partial<Cookie>): Cookie => ({
   name: 'test_cookie',
   value: 'test_value',

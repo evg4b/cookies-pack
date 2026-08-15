@@ -3,8 +3,6 @@ import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
 import { CookiesTable } from '../CookiesTable/CookiesTable';
 
-type Cookie = chrome.cookies.Cookie;
-
 const mockCookie = (overrides?: Partial<Cookie>): Cookie => ({
   name: 'test_cookie',
   value: 'test_value',

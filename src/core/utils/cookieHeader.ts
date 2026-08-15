@@ -1,4 +1,3 @@
-type Cookie = chrome.cookies.Cookie;
 type SetDetails = chrome.cookies.SetDetails;
 
 export const parseCookieHeader = (header: string | null | undefined, url: string, path: string): SetDetails[] => {

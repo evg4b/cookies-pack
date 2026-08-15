@@ -1,10 +1,9 @@
 import { type FC } from 'react';
-import { Container, Group, Radio, Stack, Text } from '@mantine/core';
+import { Container, Radio, Stack } from '@mantine/core';
 import { useCookieEditorMode, useIconClickAction, useTranslation } from '@core/hooks';
+import { OptionCard, OptionCardProps } from './OptionCard';
 
-type CardOption<T> = { value: T, label: string, description: string };
-
-const iconActions: CardOption<string>[] = [
+const iconActions: OptionCardProps[] = [
   {
     value: 'popup',
     label: 'icon_click_action_popup',
@@ -17,7 +16,7 @@ const iconActions: CardOption<string>[] = [
   },
 ];
 
-const editorModes: CardOption<string>[] = [
+const editorModes: OptionCardProps[] = [
   {
     value: 'bulk-editor-only',
     label: 'editor_mode_bulk_editor_only',
@@ -46,34 +45,24 @@ export const OptionsPage: FC = () => {
         <Radio.Group label={t('icon_click_action_label')} value={iconClickAction} onChange={setIconClickAction}>
           <Stack gap="xs" mt="xs">
             {iconActions.map(mode => (
-              <Radio.Card key={mode.value} value={mode.value} aria-label={t(mode.label)}>
-                <Group wrap="nowrap" align="flex-start" gap="sm">
-                  <Radio.Indicator/>
-                  <Stack gap={2}>
-                    <Text>{t(mode.label)}</Text>
-                    <Text size="xs" c="dimmed">
-                      {t(mode.description)}
-                    </Text>
-                  </Stack>
-                </Group>
-              </Radio.Card>
+              <OptionCard
+                key={mode.value}
+                value={mode.value}
+                label={t(mode.label)}
+                description={t(mode.description)}
+              />
             ))}
           </Stack>
         </Radio.Group>
         <Radio.Group label={t('editor_mode_label')} value={cookieEditorMode} onChange={setCookieEditorMode}>
           <Stack gap="xs" mt="xs">
             {editorModes.map(mode => (
-              <Radio.Card key={mode.value} value={mode.value} aria-label={t(mode.label)}>
-                <Group wrap="nowrap" align="flex-start" gap="sm">
-                  <Radio.Indicator/>
-                  <Stack gap={2}>
-                    <Text>{t(mode.label)}</Text>
-                    <Text size="xs" c="dimmed">
-                      {t(mode.description)}
-                    </Text>
-                  </Stack>
-                </Group>
-              </Radio.Card>
+              <OptionCard
+                key={mode.value}
+                value={mode.value}
+                label={t(mode.label)}
+                description={t(mode.description)}
+              />
             ))}
           </Stack>
         </Radio.Group>

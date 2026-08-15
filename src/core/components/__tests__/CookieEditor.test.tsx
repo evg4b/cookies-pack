@@ -3,8 +3,6 @@ import { render, screen, cleanup, fireEvent, waitFor } from '@testing-library/re
 import { MantineProvider } from '@mantine/core';
 import { CookieEditor } from '../CookieEditor/CookieEditor';
 
-type Cookie = chrome.cookies.Cookie;
-
 const setCookie = vi.fn().mockResolvedValue(null);
 const removeCookie = vi.fn().mockResolvedValue(undefined);
 const onClose = vi.fn();

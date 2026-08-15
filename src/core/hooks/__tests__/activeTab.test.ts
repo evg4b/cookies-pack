@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import type { MockInstance } from 'vitest';
+import  { type MockInstance } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
-import type { useActiveTab as UseActiveTabFn } from '../use-active-tab';
+import  { type useActiveTab as UseActiveTabFn } from '../useActiveTab';
 
 type Listener = () => void;
 type TabUpdatedListener = (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo) => void;
@@ -41,7 +41,7 @@ const withActiveTab = (mockChrome: ReturnType<typeof createMockChrome>, url: str
 
 const loadHookModule = async (): Promise<{ useActiveTab: typeof UseActiveTabFn }> => {
   vi.resetModules();
-  return import('../use-active-tab');
+  return import('../useActiveTab');
 };
 
 describe('useActiveTab', () => {

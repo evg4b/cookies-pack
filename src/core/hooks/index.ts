@@ -1,7 +1,7 @@
-export { useTranslation } from './use-translation';
-export { useCookies } from './use-cookies';
-export { useActiveTab } from './use-active-tab';
-export { useSaveFile } from './use-save-file';
+export { useTranslation } from './useTranslation';
+export { useCookies } from './useCookies';
+export { useActiveTab } from './useActiveTab';
+export { useSaveFile } from './useSaveFile';
 export {
   useClearExistingCookiesFirst,
   useCustomPath,

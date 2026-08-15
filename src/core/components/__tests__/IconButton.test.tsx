@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
-import type { FC } from 'react';
+import  { type FC } from 'react';
 import { IconButton } from '../IconButton';
 
 const MockIcon: FC<{ size: number }> = ({ size }) => <svg data-testid="mock-icon" data-size={size}/>;

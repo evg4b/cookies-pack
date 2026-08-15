@@ -4,13 +4,13 @@ import { type FC, useCallback, useMemo } from 'react';
 import { useCookieEditors, useTranslation } from '@core/hooks';
 import { CookiesTableCell } from './CookiesTableCell';
 import { ActionsCell } from './ActionsCell';
-import { IconButton } from '../IconButton.tsx';
-import { CookieTooltip } from '@core/components/CookiesTable/CookieTooltip.tsx';
+import { IconButton } from '../IconButton';
+import { CookieTooltip } from '@core/components/CookiesTable/CookieTooltip';
 
-export type CookieTableRowProps = {
-  cookie: chrome.cookies.Cookie
-  removeCookie: (cookieName: string) => void
-  onEdit: (cookie: chrome.cookies.Cookie) => void
+export interface CookieTableRowProps {
+  cookie: Cookie;
+  removeCookie: (cookieName: string) => Promise<void>;
+  onEdit: (cookie: Cookie) => void;
 }
 
 export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, onEdit }) => {
@@ -31,19 +31,9 @@ export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, 
 
   return (
     <Table.Tr>
-      <CookiesTableCell
-        tooltip={tooltip}
-        value={cookie.name ?? 'N/A'}
-      />
-      <CookiesTableCell
-        tooltip={tooltip}
-        visibleFrom="xs"
-        value={cookie.path ?? 'N/A'}
-      />
-      <CookiesTableCell
-        tooltip={tooltip}
-        value={cookie.value ?? 'N/A'}
-      />
+      <CookiesTableCell tooltip={tooltip} value={cookie.name}/>
+      <CookiesTableCell tooltip={tooltip} visibleFrom="xs" value={cookie.path}/>
+      <CookiesTableCell tooltip={tooltip} value={cookie.value}/>
       <ActionsCell>
         {editorEnabled && (
           <IconButton

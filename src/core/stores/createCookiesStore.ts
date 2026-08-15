@@ -1,7 +1,5 @@
 import { type Listener, type Unsubscribe } from './types';
 
-export type Cookie = chrome.cookies.Cookie;
-
 export interface CookiesState {
   cookies: Cookie[];
   url: URL | null;

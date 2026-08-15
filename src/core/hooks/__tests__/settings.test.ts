@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, renderHook, waitFor } from '@testing-library/react';
-import type { useChromeStorageState as UseChromeStorageStateFn } from '@core/stores/common-settings-store';
-import type { useCookieEditorMode as UseCookieEditorModeFn, useCookieEditors as UseCookieEditorsFn } from '../settings';
+import  { type useChromeStorageState as UseChromeStorageStateFn } from '@core/stores/useChromeStorageState';
+import  { type useCookieEditorMode as UseCookieEditorModeFn, type useCookieEditors as UseCookieEditorsFn } from '../settings';
 
 type StorageChangeListener = (changes: Record<string, chrome.storage.StorageChange>) => void;
 
@@ -39,7 +39,7 @@ const createMockChrome = () => {
 
 const loadHookModule = async (): Promise<{ useChromeStorageState: typeof UseChromeStorageStateFn }> => {
   vi.resetModules();
-  return import('@core/stores/common-settings-store');
+  return import('@core/stores/useChromeStorageState');
 };
 
 const loadEditorModeModule = async (): Promise<{

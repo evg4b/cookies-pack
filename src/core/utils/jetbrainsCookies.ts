@@ -1,5 +1,3 @@
-type Cookie = chrome.cookies.Cookie;
-
 const FILE_HEADER = '# domain\tpath\tname\tvalue\tdate';
 const VALUE_SEPARATOR = '\t';
 const LINE_SEPARATOR = '\n';
@@ -28,4 +26,5 @@ const encodeCookie = (cookie: Cookie): string => {
 };
 
 export const encodeJetbrainsCookies = (cookies: Cookie[]): string =>
-  [FILE_HEADER, ...cookies.map(encodeCookie)].join(LINE_SEPARATOR);
+  [FILE_HEADER, ...cookies.map(encodeCookie)]
+    .join(LINE_SEPARATOR);

@@ -1,10 +1,10 @@
 import { DataList, Flex } from '@mantine/core';
-import { HttpOnlyChip } from '@core/components/CookieEditor/HttpOnlyChip.tsx';
+import { HttpOnlyChip } from '@core/components/CookieEditor/HttpOnlyChip';
 import { FC } from 'react';
-import { SessionChip } from '@core/components/CookieEditor/SessionChip.tsx';
-import { SecureChip } from '@core/components/CookieEditor/SecureChip.tsx';
+import { SessionChip } from '@core/components/CookieEditor/SessionChip';
+import { SecureChip } from '@core/components/CookieEditor/SecureChip';
 
-export const CookieTooltip: FC<{ cookie: chrome.cookies.Cookie }> = ({ cookie }) => (
+export const CookieTooltip: FC<{ cookie: Cookie }> = ({ cookie }) => (
   <DataList>
     <DataList.Item>
       <DataList.ItemLabel>Name</DataList.ItemLabel>

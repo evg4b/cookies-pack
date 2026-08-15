@@ -1,9 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import type { MockInstance } from 'vitest';
+import  { type MockInstance } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
-import type { useCookies as UseCookiesFn } from '../use-cookies';
+import  { type useCookies as UseCookiesFn } from '../useCookies';
 
-type Cookie = chrome.cookies.Cookie;
 type Listener = () => void;
 type TabUpdatedListener = (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo) => void;
 
@@ -69,7 +68,7 @@ const withActiveTab = (mockChrome: ReturnType<typeof createMockChrome>, url: str
 
 const loadHookModule = async (): Promise<{ useCookies: typeof UseCookiesFn }> => {
   vi.resetModules();
-  return import('../use-cookies');
+  return import('../useCookies');
 };
 
 describe('useCookies', () => {

@@ -2,8 +2,6 @@ import { describe, it, expect, afterEach, vi } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { useCookieEditorForm } from '../CookieEditor/useCookieEditorForm';
 
-type Cookie = chrome.cookies.Cookie;
-
 const setCookie = vi.fn().mockResolvedValue(null);
 const removeCookie = vi.fn().mockResolvedValue(undefined);
 const onClose = vi.fn();

@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { ActiveTabState, createActiveTabStore } from '@core/stores/active-tab-store';
+import { ActiveTabState, createActiveTabStore } from '@core/stores/createActiveTabStore';
 
 const store = createActiveTabStore();
 
