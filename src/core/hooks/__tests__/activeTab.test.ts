@@ -111,7 +111,7 @@ describe('useActiveTab', () => {
 
     withActiveTab(mockChrome, 'https://second.com');
     act(() => {
-      result.current.refresh();
+      void result.current.refresh();
     });
 
     await waitFor(() => { expect(result.current.url).toBe('https://second.com'); });

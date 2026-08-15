@@ -62,15 +62,6 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
     );
   }
 
-  const rows = cookies.map((element) => (
-    <CookieTableRow
-      cookie={element}
-      removeCookie={removeCookie}
-      onEdit={onEditCookie}
-      key={element.name + element.domain + element.path}
-    />
-  ));
-
   return (
     <Table.ScrollContainer minWidth={10} flex={1}>
       <Table striped stickyHeader layout="fixed" width="100%">
@@ -98,7 +89,16 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
             </ActionsCell>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody>
+          {cookies.map((element) => (
+            <CookieTableRow
+              cookie={element}
+              removeCookie={removeCookie}
+              onEdit={onEditCookie}
+              key={element.name + element.domain + element.path}
+            />
+          ))}
+        </Table.Tbody>
       </Table>
     </Table.ScrollContainer>
   );

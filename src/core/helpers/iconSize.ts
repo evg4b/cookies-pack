@@ -1,4 +1,4 @@
-import { MantineSize } from '@mantine/core';
+import { type MantineSize } from '@mantine/core';
 
 const SIZE_MAPPING: Record<MantineSize, number> = {
   xs: 10,

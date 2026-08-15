@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react';
-import { CookiesState, createCookiesStore, SetCookieDetails } from '@core/stores/createCookiesStore';
+import { CookiesState, CookiesStore, SetCookieDetails } from '@core/stores/CookiesStore';
 
-const store = createCookiesStore();
+const store = new CookiesStore();
 
 export interface UseCookiesReturn extends CookiesState {
   setCookie: (name: string, value: string, details?: SetCookieDetails) => Promise<Cookie | null>;
@@ -12,14 +12,18 @@ export interface UseCookiesReturn extends CookiesState {
 }
 
 export function useCookies(): UseCookiesReturn {
-  const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
+  const state = useSyncExternalStore(
+    store.subscribe.bind(store),
+    store.getSnapshot.bind(store),
+    store.getSnapshot.bind(store),
+  );
 
   return {
     ...state,
-    setCookie: store.setCookie,
-    removeCookie: store.removeCookie,
-    removeAllCookies: store.removeAllCookies,
-    getCookie: store.getCookie,
-    refresh: store.refresh,
+    setCookie: store.setCookie.bind(store),
+    removeCookie: store.removeCookie.bind(store),
+    removeAllCookies: store.removeAllCookies.bind(store),
+    getCookie: store.getCookie.bind(store),
+    refresh: store.refresh.bind(store),
   };
 }

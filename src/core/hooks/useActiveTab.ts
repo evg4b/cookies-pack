@@ -1,14 +1,19 @@
 import { useSyncExternalStore } from 'react';
-import { ActiveTabState, createActiveTabStore } from '@core/stores/createActiveTabStore';
+import { Store } from '@core/stores/types';
+import { ActiveTabState, ActiveTabStore } from '@core/stores/ActiveTabStore';
 
-const store = createActiveTabStore();
+const store: Store<ActiveTabState> = new ActiveTabStore();
 
 export interface UseActiveTabReturn extends ActiveTabState {
-  refresh: () => void;
+  refresh: () => Promise<void>;
 }
 
-export function useActiveTab(): UseActiveTabReturn {
-  const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
+export const useActiveTab = (): UseActiveTabReturn => {
+  const state = useSyncExternalStore(
+    store.subscribe.bind(store),
+    store.getSnapshot.bind(store),
+    store.getSnapshot.bind(store),
+  );
 
-  return { ...state, refresh: store.refresh };
-}
+  return { ...state, refresh: store.refresh.bind(store) };
+};
