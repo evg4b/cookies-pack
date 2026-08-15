@@ -4,12 +4,12 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import zip from 'vite-plugin-zip-pack'
 import manifest from './manifest.config.js'
-import { name, version } from './package.json'
+import { name, version } from './package.json' with { type: 'json' }
 import { resolve } from 'path';
 import { tmpdir } from 'os';
 
 const debug = process.env.__DEV__ === 'true';
-const sourceRoot = resolve(__dirname, 'src');
+const sourceRoot = resolve(import.meta.dirname, 'src');
 
 export default defineConfig({
   test: {
@@ -40,7 +40,7 @@ export default defineConfig({
     zip({ outDir: 'release', outFileName: `crx-${name}-${version}.zip` }),
   ],
   build: {
-    outDir: resolve(__dirname, 'dist'),
+    outDir: resolve(import.meta.dirname, 'dist'),
     sourcemap: debug,
     minify: !debug,
     cssMinify: !debug,
