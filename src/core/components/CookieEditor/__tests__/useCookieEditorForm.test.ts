@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { useCookieEditorForm } from '../CookieEditor/useCookieEditorForm';
+import { useCookieEditorForm } from '../useCookieEditorForm';
 
 const setCookie = vi.fn().mockResolvedValue(null);
 const removeCookie = vi.fn().mockResolvedValue(undefined);

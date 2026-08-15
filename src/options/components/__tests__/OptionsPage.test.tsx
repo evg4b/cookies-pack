@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
-import { OptionsPage } from '../../../options/components/OptionsPage';
+import { OptionsPage } from '../OptionsPage';
 
 type CookieEditorMode = 'bulk-editor-only' | 'editor-only' | 'both-editors';
 

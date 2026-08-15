@@ -30,18 +30,20 @@ The extension has no background service worker — it's UI-only. There are two H
 - `src/popup/main.tsx` → toolbar popup (`CookiesPackThemeProvider mode="popup"`)
 - `src/sidepanel/main.tsx` → side panel (`CookiesPackThemeProvider mode="sidebar"`)
 
-Both wrap `<CookiesPack/>` (`src/core/components/CookiesPack.tsx`), which composes `SupportingWrapper` (guards against unsupported URLs like `chrome://`), `CookiesTable`, and `CookiesBatchUpdate`. The `mode` prop threads through `useModeValue` (`src/core/theme/provider.tsx`) so components can render differently depending on whether they're in the popup vs. the side panel (e.g. textarea row count).
+Both wrap `<CookiesPack/>` (`src/core/components/CookiesPack.tsx`), which composes `SupportingWrapper` (guards against unsupported URLs like `chrome://`), `CookiesTable`, and `CookiesBatchUpdate`. The `mode` prop threads through `useModeValue` (`src/core/theme/CookiesPackThemeProvider.tsx`, re-exported from `@core/theme`) so components can render differently depending on whether they're in the popup vs. the side panel (e.g. textarea row count).
 
 ### State: external stores via `useSyncExternalStore`, no global state library
 
-There is no Redux/Zustand/Context-based state manager. Both stateful hooks follow the same pattern — a module-level store object (closures over mutable state + a `Set` of listeners) exposed to React through `useSyncExternalStore`:
+There is no Redux/Zustand/Context-based state manager. State lives in module-level stores (mutable state + a `Set` of listeners) that hooks expose to React through `useSyncExternalStore`:
 
-- `src/core/hooks/chrome.ts` (`useCookies`) — single shared store for the active tab's cookies. Loads cookies for the active tab's URL, and re-syncs automatically on `chrome.cookies.onChanged`, `chrome.tabs.onActivated`, and `chrome.tabs.onUpdated` (URL change). Exposes `setCookie`, `removeCookie`, `removeAllCookies`, `getCookie`, `refresh`.
-- `src/core/hooks/settings.ts` (`useChromeStorageState` + `useClearExistingCookiesFirst`/`useCustomPath`) — a per-key store backed by `chrome.storage.sync`, memoized in a `Map<key, store>` so multiple components sharing a key stay in sync, including across `chrome.storage.sync.onChanged`.
+- `src/core/stores/` — class-based stores extending `BaseStore` (`src/core/stores/BaseStore.ts`, which implements the `Store<T>` contract in `stores/types.ts`):
+  - `CookiesStore` — single shared store for the active tab's cookies. Re-syncs automatically on `chrome.cookies.onChanged`, `chrome.tabs.onActivated`, and `chrome.tabs.onUpdated` (URL change). Exposed by `useCookies` (`src/core/hooks/useCookies.ts`) as `setCookie`, `removeCookie`, `removeAllCookies`, `getCookie`, `refresh`.
+  - `ActiveTabStore` — the active tab and its URL, exposed by `useActiveTab` (`src/core/hooks/useActiveTab.ts`).
+- `src/core/hooks/useChromeStorageState.ts` — a per-key store backed by `chrome.storage.sync`, memoized in a `Map<key, store>` so multiple components sharing a key stay in sync, including across `chrome.storage.sync.onChanged`. `src/core/hooks/settings.ts` wraps it in the named settings hooks (`useClearExistingCookiesFirst`, `useCustomPath`, `useIconClickAction`, `useCookieEditorMode`, `useCookieEditors`).
+
+Each store is instantiated once at module scope in its hook file, so every component shares the same instance.
 
 When extending cookie or settings state, follow this store pattern rather than introducing `useState`/Context for cross-component state.
-
-`ChromeContext` in `chrome.ts` exists so `chrome` (and thus `useTabs`) can be swapped out in tests.
 
 ### i18n
 
@@ -55,13 +57,13 @@ There's no i18n library — translation goes straight through the extension's na
 
 ### Path aliases
 
-`@src/*`, `@core/*` (→ `src/core/*`), `@shared/*` are defined in both `tsconfig.app.json` and `vite.config.ts` — keep them in sync if adding new aliases. Barrel files (`components/index.ts`, `hooks/index.ts`, `utils/index.ts`) are the intended import surface for `@core/components`, `@core/hooks`, `@core/utils`.
+`@src/*`, `@core/*` (→ `src/core/*`) are defined in both `tsconfig.app.json` and `vite.config.ts` — keep them in sync if adding new aliases. Barrel files (`components/index.ts`, `hooks/index.ts`, `utils/index.ts`) are the intended import surface for `@core/components`, `@core/hooks`, `@core/utils`.
 
 ### Testing
 
 - Vitest + `@testing-library/react`, jsdom environment, global test APIs enabled (no `import { describe, it } from 'vitest'` needed).
 - Setup file `src/test/setup.ts` installs jest-dom matchers, `mock-match-media`, and a `ResizeObserver` polyfill (Mantine components rely on both).
-- Tests live in `__tests__` directories alongside the code they cover.
+- Tests live in `__tests__` directories alongside the code they cover, named after the module under test (`CookiesTable.test.tsx` next to `CookiesTable.tsx`).
 - `src/core/hooks/__tests__/` is excluded from coverage reporting (see `vite.config.ts`), since these mock the `chrome.*` APIs heavily.
 - Aim for new code to be covered by Vitest tests wherever practical (components, hooks, utils).
 

@@ -6,7 +6,7 @@ import { useTranslation } from '@core/hooks';
 import { SecureChip } from './SecureChip';
 import { HttpOnlyChip } from './HttpOnlyChip';
 import { SessionChip } from './SessionChip';
-import { useModeValue } from '@core/theme/provider';
+import { useModeValue } from '@core/theme';
 import { useCookieEditorForm } from './useCookieEditorForm';
 
 export interface CookieEditorProps {

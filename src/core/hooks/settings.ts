@@ -1,4 +1,4 @@
-import { type StateValue, useChromeStorageState } from '@core/stores/useChromeStorageState';
+import { type StateValue, useChromeStorageState } from '@core/hooks/useChromeStorageState';
 
 export const useClearExistingCookiesFirst = (): StateValue<boolean> =>
   useChromeStorageState('clearExistingCookiesFirst', true);

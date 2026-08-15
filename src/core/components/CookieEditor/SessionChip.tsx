@@ -2,7 +2,7 @@ import { Chip, ChipProps } from '@mantine/core';
 import { IconClockHour2 } from '@tabler/icons-react';
 import { type FC } from 'react';
 import { useTranslation } from '@core/hooks';
-import { iconSize } from '@core/helpers';
+import { iconSize } from '@core/utils';
 
 export type SessionChipProps = Omit<ChipProps, 'color' | 'icon' | 'children'>;
 export const SessionChip: FC<SessionChipProps> = (props) => {

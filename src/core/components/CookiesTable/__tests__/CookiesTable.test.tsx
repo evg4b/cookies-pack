@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
-import { CookiesTable } from '../CookiesTable/CookiesTable';
+import { CookiesTable } from '../CookiesTable';
 
 const mockCookie = (overrides?: Partial<Cookie>): Cookie => ({
   name: 'test_cookie',

@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { CookiesState, CookiesStore, SetCookieDetails } from '@core/stores/CookiesStore';
+import { type CookiesState, CookiesStore, type SetCookieDetails } from '@core/stores/CookiesStore';
 
 const store = new CookiesStore();
 
@@ -11,7 +11,7 @@ export interface UseCookiesReturn extends CookiesState {
   refresh: () => Promise<void>;
 }
 
-export function useCookies(): UseCookiesReturn {
+export const useCookies = (): UseCookiesReturn => {
   const state = useSyncExternalStore(
     store.subscribe.bind(store),
     store.getSnapshot.bind(store),
@@ -26,4 +26,4 @@ export function useCookies(): UseCookiesReturn {
     getCookie: store.getCookie.bind(store),
     refresh: store.refresh.bind(store),
   };
-}
+};

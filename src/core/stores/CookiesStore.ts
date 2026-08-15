@@ -58,7 +58,7 @@ export class CookiesStore extends BaseStore<CookiesState> {
       this.setState({ error: error instanceof Error ? error : new Error(String(error)) });
       return null;
     }
-  };
+  }
 
   public async removeCookie(name: string, url?: string): Promise<void> {
     try {
@@ -96,7 +96,7 @@ export class CookiesStore extends BaseStore<CookiesState> {
 
   public getCookie(name: string): Cookie | undefined {
     return this.state.cookies.find((c) => c.name === name);
-  };
+  }
 
   public refresh(): Promise<void> {
     return this.loadCookies();
@@ -117,7 +117,7 @@ export class CookiesStore extends BaseStore<CookiesState> {
         loading: false,
       });
     }
-  };
+  }
 
   private async getActiveTabUrl(): Promise<URL | null> {
     try {
@@ -127,7 +127,7 @@ export class CookiesStore extends BaseStore<CookiesState> {
       console.error('Failed to get active tab URL:', error);
       return null;
     }
-  };
+  }
 
   private async handleCookiesChanged(): Promise<void> {
     try {
@@ -138,5 +138,5 @@ export class CookiesStore extends BaseStore<CookiesState> {
       console.error('Failed to handle cookie change:', error);
       this.setState({ error: error instanceof Error ? error : new Error(String(error)) });
     }
-  };
+  }
 }

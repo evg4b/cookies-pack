@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { CookiesPackThemeProvider } from '@src/core/theme';
+import { CookiesPackThemeProvider } from '@core/theme';
 import { CookiesPack } from '@core/components';
 
 import '@mantine/core/styles.css';

@@ -4,25 +4,25 @@ import { type FC, useCallback, useMemo } from 'react';
 import { useCookieEditors, useTranslation } from '@core/hooks';
 import { CookiesTableCell } from './CookiesTableCell';
 import { ActionsCell } from './ActionsCell';
+import { CookieTooltip } from './CookieTooltip';
 import { IconButton } from '../IconButton';
-import { CookieTooltip } from '@core/components/CookiesTable/CookieTooltip';
 
-export interface CookieTableRowProps {
+export interface CookiesTableRowProps {
   cookie: Cookie;
   removeCookie: (cookieName: string) => Promise<void>;
   onEdit: (cookie: Cookie) => void;
 }
 
-export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, onEdit }) => {
+export const CookiesTableRow: FC<CookiesTableRowProps> = ({ cookie, removeCookie, onEdit }) => {
   const t = useTranslation('cookies_table');
   const { editorEnabled } = useCookieEditors();
 
-  const removeCookieCallback = useCallback(
+  const handleRemove = useCallback(
     () => void removeCookie(cookie.name),
     [removeCookie, cookie.name],
   );
 
-  const editCookieCallback = useCallback(
+  const handleEdit = useCallback(
     () => onEdit(cookie),
     [onEdit, cookie],
   );
@@ -38,13 +38,13 @@ export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, 
         {editorEnabled && (
           <IconButton
             label={t('edit_cookie')}
-            onClick={editCookieCallback}
+            onClick={handleEdit}
             icon={IconPencil}
           />
         )}
         <IconButton
           label={t('delete_cookie')}
-          onClick={removeCookieCallback}
+          onClick={handleRemove}
           icon={IconTrash}
           color="red"
         />
@@ -52,4 +52,3 @@ export const CookieTableRow: FC<CookieTableRowProps> = ({ cookie, removeCookie, 
     </Table.Tr>
   );
 };
-

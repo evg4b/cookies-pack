@@ -1,11 +1,11 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
-import { Button, Chip, Flex, Input, PolymorphicComponentProps, Stack, Textarea } from '@mantine/core';
+import { Button, Chip, Flex, Input, Stack, type StackProps, Textarea } from '@mantine/core';
 import { useActiveTab, useClearExistingCookiesFirst, useCookies, useCustomPath, useTranslation } from '@core/hooks';
 import { parseCookieHeader } from '@core/utils';
-import { useModeValue } from '@core/theme/provider';
+import { useModeValue } from '@core/theme';
 import { IconTrash } from '@tabler/icons-react';
 
-export type CookiesBatchUpdateProps = PolymorphicComponentProps<'div'>;
+export type CookiesBatchUpdateProps = StackProps;
 
 const textValue = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): string => event.target.value;
 

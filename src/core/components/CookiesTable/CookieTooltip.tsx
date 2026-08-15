@@ -1,10 +1,14 @@
 import { DataList, Flex } from '@mantine/core';
-import { HttpOnlyChip } from '@core/components/CookieEditor/HttpOnlyChip';
-import { FC } from 'react';
-import { SessionChip } from '@core/components/CookieEditor/SessionChip';
-import { SecureChip } from '@core/components/CookieEditor/SecureChip';
+import { type FC } from 'react';
+import { HttpOnlyChip } from '../CookieEditor/HttpOnlyChip';
+import { SecureChip } from '../CookieEditor/SecureChip';
+import { SessionChip } from '../CookieEditor/SessionChip';
 
-export const CookieTooltip: FC<{ cookie: Cookie }> = ({ cookie }) => (
+export interface CookieTooltipProps {
+  cookie: Cookie;
+}
+
+export const CookieTooltip: FC<CookieTooltipProps> = ({ cookie }) => (
   <DataList>
     <DataList.Item>
       <DataList.ItemLabel>Name</DataList.ItemLabel>
@@ -23,7 +27,7 @@ export const CookieTooltip: FC<{ cookie: Cookie }> = ({ cookie }) => (
       <DataList.ItemValue>{cookie.domain}</DataList.ItemValue>
     </DataList.Item>
     <DataList.Item>
-      <DataList.ItemLabel>Same Size</DataList.ItemLabel>
+      <DataList.ItemLabel>Same Site</DataList.ItemLabel>
       <DataList.ItemValue>{cookie.sameSite}</DataList.ItemValue>
     </DataList.Item>
     {!cookie.session && (

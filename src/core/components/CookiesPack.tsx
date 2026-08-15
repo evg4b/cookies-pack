@@ -6,7 +6,7 @@ import { useCookieEditors } from '@core/hooks';
 type EditorState = { open: true; cookie?: Cookie } | { open: false };
 
 const FullHeight: FC<PropsWithChildren> = ({ children }) => (
-  <Stack style={{ height: '100vh' }}>
+  <Stack h="100vh">
     {children}
   </Stack>
 );
@@ -36,7 +36,7 @@ export const CookiesPack: FC = () => {
         </Stack>
         {bulkEditorEnabled && (
           <Stack flex={1}>
-            <CookiesBatchUpdate style={{ padding: '0.5em' }}/>
+            <CookiesBatchUpdate p="0.5em"/>
           </Stack>
         )}
       </SupportingWrapper>

@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { MantineProvider, Table } from '@mantine/core';
-import { ActionsCell } from '../CookiesTable/ActionsCell';
+import { ActionsCell } from '../ActionsCell';
 
 const renderInTable = (ui: React.ReactNode) => render(
   <Table>

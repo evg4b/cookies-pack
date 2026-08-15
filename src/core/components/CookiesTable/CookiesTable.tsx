@@ -4,9 +4,9 @@ import { useClipboard } from '@mantine/hooks';
 import { IconCheck, IconCookieOff, IconCopy, IconDownload, IconPlus } from '@tabler/icons-react';
 import { useCookieEditors, useCookies, useSaveFile, useTranslation } from '@core/hooks';
 import { encodeJetbrainsCookies, joinCookiesHeader } from '@core/utils';
-import { CookieTableRow } from './CookieTableRow';
+import { CookiesTableRow } from './CookiesTableRow';
 import { ActionsCell } from './ActionsCell';
-import { IconButton } from '@core/components';
+import { IconButton } from '../IconButton';
 
 export interface CookiesTableProps {
   onAddCookie: () => void;
@@ -91,7 +91,7 @@ export const CookiesTable: FC<CookiesTableProps> = ({ onAddCookie, onEditCookie 
         </Table.Thead>
         <Table.Tbody>
           {cookies.map((element) => (
-            <CookieTableRow
+            <CookiesTableRow
               cookie={element}
               removeCookie={removeCookie}
               onEdit={onEditCookie}
