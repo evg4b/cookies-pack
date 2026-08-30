@@ -18,8 +18,8 @@
     "dev": "__DEV__=true vite",
     "build": "tsc -b && vite build",
     "lint": "eslint ./src",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test": "vitest --run",
+    "test:coverage": "vitest --coverage --run"
   },
   "dependencies": {
     "@mantine/core": "^9.5.2",
