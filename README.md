@@ -59,5 +59,36 @@
         </a>
       </td>
     </tr>
+    <tr>
+      <td>
+        <a href="https://microsoftedge.microsoft.com/addons/detail/cookies-pack/aafogibjpapgdpafonagbemdjlkigoio">
+          <img src="./.github/microsoft-store.png" width="160px" alt="Available in Microsoft Store">
+        </a>
+      </td>
+      <td>
+        <a href="https://microsoftedge.microsoft.com/addons/detail/cookies-pack/aafogibjpapgdpafonagbemdjlkigoio">
+          <img
+            alt="Microsoft Store" 
+            src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%liambpelhpbcajeemlnenigobnklkiog%3Fhl%3Dru-RU%26gl%3DCA&query=version&prefix=v&label=version&color=blue"
+          />    
+        </a>
+      </td>
+      <td>
+        <a href="https://microsoftedge.microsoft.com/addons/detail/cookies-pack/aafogibjpapgdpafonagbemdjlkigoio">
+          <img
+            alt="Microsoft Store Rating"
+            src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%liambpelhpbcajeemlnenigobnklkiog%3Fhl%3Dru-RU%26gl%3DCA&query=averageRating&label=rating&suffix=/5&color=blue"
+          />
+        </a>
+      </td>
+      <td>
+        <a href="https://microsoftedge.microsoft.com/addons/detail/cookies-pack/aafogibjpapgdpafonagbemdjlkigoio">
+          <img
+            alt="Microsoft Store Users"
+            src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%liambpelhpbcajeemlnenigobnklkiog%3Fhl%3Dru-RU%26gl%3DCA&query=activeInstallCount&label=users"
+          />
+        </a>
+      </td>
+    </tr>
   </tbody>
 </table>
