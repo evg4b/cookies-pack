@@ -69,7 +69,7 @@
         <a href="https://microsoftedge.microsoft.com/addons/detail/cookies-pack/aafogibjpapgdpafonagbemdjlkigoio">
           <img
             alt="Microsoft Store" 
-            src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%liambpelhpbcajeemlnenigobnklkiog%3Fhl%3Dru-RU%26gl%3DCA&query=version&prefix=v&label=version&color=blue"
+            src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Faafogibjpapgdpafonagbemdjlkigoio%3Fhl%3Den-US%26gl%3DCA&query=version&prefix=v&label=version&color=blue"
           />    
         </a>
       </td>
@@ -77,7 +77,7 @@
         <a href="https://microsoftedge.microsoft.com/addons/detail/cookies-pack/aafogibjpapgdpafonagbemdjlkigoio">
           <img
             alt="Microsoft Store Rating"
-            src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%liambpelhpbcajeemlnenigobnklkiog%3Fhl%3Dru-RU%26gl%3DCA&query=averageRating&label=rating&suffix=/5&color=blue"
+            src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Faafogibjpapgdpafonagbemdjlkigoio%3Fhl%3Den-US%26gl%3DCA&query=averageRating&label=rating&suffix=/5&color=blue"
           />
         </a>
       </td>
@@ -85,7 +85,7 @@
         <a href="https://microsoftedge.microsoft.com/addons/detail/cookies-pack/aafogibjpapgdpafonagbemdjlkigoio">
           <img
             alt="Microsoft Store Users"
-            src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%liambpelhpbcajeemlnenigobnklkiog%3Fhl%3Dru-RU%26gl%3DCA&query=activeInstallCount&label=users"
+            src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Faafogibjpapgdpafonagbemdjlkigoio%3Fhl%3Den-US%26gl%3DCA&query=activeInstallCount&label=users"
           />
         </a>
       </td>
