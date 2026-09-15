@@ -34,7 +34,7 @@ jobs:
           node-version: 24
           cache: yarn
       - run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
-      - run: yarn test --run
+      - run: yarn test
 
   build:
     name: Build
